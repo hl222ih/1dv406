@@ -1,9 +1,32 @@
-﻿body {
+﻿html, body {
     background-color: #fff6cb;
+    height: 100%;
+}
+
+header {
+    background-color: inherit;
+    color: #fff6cb;
+    font-family: 'Bodoni MT';
 }
 
 h1 {
+    width: 700px;
+    margin-left: calc(50% - 350px);
     background-color: black;
-    color: #fff6cb;
+    padding: 20px;
 }
+
+#content {
+    width: 700px;
+    margin-left: calc(50% - 350px);
+}
+
+#txtInput {
+    border-radius: 5px;
+    width: calc(100% + 20px);
+    padding: 10px;
+    resize: none;
+    margin-bottom: 10px;
+}
+
 

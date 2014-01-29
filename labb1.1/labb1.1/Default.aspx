@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="labb1._1.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="labb1._1.Default" ViewStateMode="Disabled"%>
 
 <!DOCTYPE html>
 
@@ -9,19 +9,19 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
+    <header>
         <h1>
             <asp:Label ID="lblHeader" runat="server" Text="Hur många versaler?"></asp:Label>
         </h1>
-        <p>
+    </header>
+    <div id="content">
+        <div>
             <asp:TextBox ID="txtInput" runat="server" TextMode="MultiLine" Rows="8" Columns="80"></asp:TextBox>
-        </p>
-        <p>
-            <asp:Label ID="lblInfo" runat="server" Text="Label"></asp:Label>
-        </p>
-        <p>
-            <asp:Button ID="btnPost" runat="server" Text="Button" />
-        </p>
+        </div>
+        <div>
+            <asp:Button ID="btnCountOrReset" runat="server" Text="Bestäm antalet versaler" OnClick="btnCountOrReset_Click" ViewStateMode="Inherit" />
+            <asp:Label ID="lblCountInfo" runat="server" ViewStateMode="Enabled" Visible="False"> </asp:Label>
+        </div>
     </div>
     </form>
 </body>

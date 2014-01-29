@@ -40,21 +40,21 @@ namespace labb1._1 {
         protected global::System.Web.UI.WebControls.TextBox txtInput;
         
         /// <summary>
-        /// lblInfo control.
+        /// btnCountOrReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInfo;
+        protected global::System.Web.UI.WebControls.Button btnCountOrReset;
         
         /// <summary>
-        /// btnPost control.
+        /// lblCountInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPost;
+        protected global::System.Web.UI.WebControls.Label lblCountInfo;
     }
 }
