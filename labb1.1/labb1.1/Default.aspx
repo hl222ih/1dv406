@@ -8,21 +8,21 @@
     <link rel="stylesheet" href="~/Content/Site.css"/>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <header>
-        <h1>
-            <asp:Label ID="lblHeader" runat="server" Text="Hur många versaler?"></asp:Label>
-        </h1>
-    </header>
-    <div id="content">
-        <div>
-            <asp:TextBox ID="txtInput" runat="server" TextMode="MultiLine" Rows="8" Columns="80"></asp:TextBox>
+    <form id="MainForm" runat="server">
+        <header>
+            <h1>
+                <asp:Label ID="lblHeader" runat="server" Text="Hur många versaler?"></asp:Label>
+            </h1>
+        </header>
+        <div id="content">
+            <div>
+                <asp:TextBox ID="txtInput" runat="server" TextMode="MultiLine" Rows="8" Columns="80"></asp:TextBox>
+            </div>
+            <div>
+                <asp:Button ID="btnCountOrReset" runat="server" Text="Bestäm antalet versaler" OnClick="btnCountOrReset_Click" ViewStateMode="Inherit" />
+                <asp:Label ID="lblCountInfo" runat="server" ViewStateMode="Enabled" Visible="False"> </asp:Label>
+            </div>
         </div>
-        <div>
-            <asp:Button ID="btnCountOrReset" runat="server" Text="Bestäm antalet versaler" OnClick="btnCountOrReset_Click" ViewStateMode="Inherit" />
-            <asp:Label ID="lblCountInfo" runat="server" ViewStateMode="Enabled" Visible="False"> </asp:Label>
-        </div>
-    </div>
     </form>
 </body>
 </html>
