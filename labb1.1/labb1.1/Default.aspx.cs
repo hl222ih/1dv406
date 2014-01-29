@@ -22,23 +22,20 @@ namespace labb1._1
         /// </summary>
         protected void btnCountOrReset_Click(object sender, EventArgs e)
         {
-            if (IsValid) //om data validerats på klientsidan
+            if (!lblCountInfo.Visible)
             {
-                if (!lblCountInfo.Visible)
-                {
-                    var numberOfCapitals = TextAnalyzer.GetNumberOfCapitals(txtInput.Text);
-                    lblCountInfo.Visible = true;
-                    lblCountInfo.Text = String.Format("Texten innehåller {0} versaler.", numberOfCapitals.ToString());
-                    txtInput.Enabled = false;
-                    btnCountOrReset.Text = "Rensa";
-                }
-                else
-                {
-                    lblCountInfo.Visible = false;
-                    txtInput.Enabled = true;
-                    txtInput.Text = String.Empty;
-                    txtInput.Focus();
-                }
+                var numberOfCapitals = TextAnalyzer.GetNumberOfCapitals(txtInput.Text);
+                lblCountInfo.Visible = true;
+                lblCountInfo.Text = String.Format("Texten innehåller {0} versaler.", numberOfCapitals.ToString());
+                txtInput.Enabled = false;
+                btnCountOrReset.Text = "Rensa";
+            }
+            else
+            {
+                lblCountInfo.Visible = false;
+                txtInput.Enabled = true;
+                txtInput.Text = String.Empty;
+                txtInput.Focus();
             }
         }
     }

@@ -19,7 +19,7 @@
                 <asp:TextBox ID="txtInput" runat="server" TextMode="MultiLine" Rows="8" Columns="80"></asp:TextBox>
             </div>
             <div>
-                <asp:Button ID="btnCountOrReset" runat="server" Text="Bestäm antalet versaler" OnClick="btnCountOrReset_Click" ViewStateMode="Inherit" />
+                <asp:Button ID="btnCountOrReset" runat="server" Text="Bestäm antalet versaler" OnClick="btnCountOrReset_Click"/>
                 <asp:Label ID="lblCountInfo" runat="server" ViewStateMode="Enabled" Visible="False"> </asp:Label>
             </div>
         </div>
