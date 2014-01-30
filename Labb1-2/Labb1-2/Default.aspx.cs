@@ -23,11 +23,12 @@ namespace Labb1_2
 
                 var reciept = new Reciept(subtotal);
 
-
                 lblTotalAmount.Text = reciept.Subtotal.ToString("F");
                 lblDiscountRate.Text = reciept.DiscountRate.ToString("0");
                 lblDiscount.Text = reciept.MoneyOff.ToString("F");
                 lblTotalAmountToPay.Text = reciept.Total.ToString("F");
+
+                pnlReciept.Visible = true;
             }
         }
     }
