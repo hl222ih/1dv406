@@ -11,7 +11,7 @@
     <form id="ErrorForm" runat="server">
         <header>
             <h1>
-                <asp:Label ID="lblHeader" runat="server" Text="Hur många versaler?"></asp:Label>
+                <asp:Label ID="lblHeader" runat="server" Text="Kassakvitto"></asp:Label>
             </h1>
         </header>
         <div id="content">

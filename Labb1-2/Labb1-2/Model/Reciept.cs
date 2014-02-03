@@ -11,20 +11,30 @@ namespace Labb1_2
 
         public decimal DiscountRate { get; private set; }
         public decimal MoneyOff { get; private set; }
-        public decimal Subtotal { get; private set; }
+        public decimal Subtotal {
+            get
+            {
+                return subtotal;
+            }
+            private set
+            {
+                if (value > 0)
+                {
+                    subtotal = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException("Värdet måste vara större än 0");
+                }
+            }
+        }
+
         public decimal Total { get; private set; }
 
         public Reciept(decimal subtotal)
         {
-            if (subtotal > 0)
-            {
-                this.subtotal = subtotal;
-                Calculate();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Värdet måste vara större än 0");
-            }
+            Subtotal = subtotal;
+            Calculate();
         }
 
         private void Calculate()
