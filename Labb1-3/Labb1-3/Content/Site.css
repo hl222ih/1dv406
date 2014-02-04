@@ -19,6 +19,7 @@ h1 {
 }
 
 #content {
+    position: relative;
     width: 700px;
     margin-left: calc(50% - 350px);
 }
@@ -103,4 +104,61 @@ h1 {
     color: red;
     font-weight: bold;
     margin-left: 5px;
+}
+
+#tblResults {
+    position: relative;
+    margin-left: 20px;
+    border: 1px solid black;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+th {
+    display: table-cell;
+    background-color: black;
+    color: #fff6cb;
+    border: 1px solid black; 
+    width: 120px;
+}
+
+td {
+    display: table-cell;
+    text-align: center;
+}
+
+#tblResults tr:nth-of-type(odd) {
+    background-color: #f2e8b9;
+}
+
+input:focus, input:active {
+    outline: none;
+    border-color: #abed9e;
+    box-shadow: 0 0 4px #abed9e;
+}
+
+input:hover {
+    outline: none;
+    border-color: #baffad;
+}
+
+#column1 {
+    border: 2px inset #f2e8b9;
+    padding: 10px;
+}
+
+#column1, #column2 {
+    float: left;
+    width:300px;
+}
+
+#lblStart, #lblEnd, #lblStep {
+    display: inline-block;
+    width: 100px;
+}
+
+#lblConvertType, #btnConvert {
+    display: block;
+    margin-top: 5px;
 }
