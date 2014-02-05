@@ -148,15 +148,6 @@ namespace Labb1_3 {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStep;
         
         /// <summary>
-        /// cpvStepInteger control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator cpvStepInteger;
-        
-        /// <summary>
         /// rvStep control.
         /// </summary>
         /// <remarks>
