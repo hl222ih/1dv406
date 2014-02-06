@@ -38,7 +38,7 @@ CC BY-NC-SA 3.0 Ahmad Hania http://www.iconarchive.com/artist/ahmadhania.html
                     <asp:Button ID="btnGuess" runat="server" Text="Gissa" OnClick="btnGuess_Click" />
                 </div>
                 <div> <!-- tidigare gissnignar -->
-                    <asp:Label ID="lblPreviousGuesses" runat="server" Text="Dina tidigare gissningar: {0}." Visible="False"></asp:Label>
+                    <asp:Label ID="lblPreviousGuesses" runat="server" Text="Dina gissningar: {0}." Visible="False"></asp:Label>
                 </div>
                 <div> <!-- svarsresultat på gissningen -->
                 <asp:PlaceHolder ID="phGuessResult" runat="server" Visible="False"></asp:PlaceHolder>
