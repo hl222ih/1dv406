@@ -32,6 +32,10 @@ namespace Labb1_4
             {
                 SecretNumber = new SecretNumber();
             }
+            //Det sker nån krock så att validationsummary inte visas när man trycker enter om knappen inte också har fokus.
+            //Efter lite Googlande hittade jag en kodsnutt som rådde bot på problemet.
+            //Igon postade den här kodraden på http://forums.asp.net/t/1100563.aspx .
+            MainForm.Attributes.Add("onkeydown", "javascript: return WebForm_FireDefaultButton (event, '" + btnGuess.ClientID + "')");
         }
 
         //händelsehanterare för gissnings-knappen.
