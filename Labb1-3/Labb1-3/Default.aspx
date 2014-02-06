@@ -34,8 +34,7 @@
                     <asp:Label ID="lblStep" runat="server" Text="Temperatursteg:"></asp:Label>
                     <asp:TextBox ID="txtStep" runat="server" AutoCompleteType="Disabled"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvStep" runat="server" ErrorMessage="Ett stegvärde måste anges" ControlToValidate="txtStep" Text="*" ForeColor="Red">*</asp:RequiredFieldValidator>
-                    <asp:CompareValidator ID="cpvStepInteger" runat="server" ErrorMessage="Stegvärdet måste vara ett heltal" Operator="DataTypeCheck" Type="Integer" ControlToValidate="txtStep" Text="*" ForeColor="Red">*</asp:CompareValidator>
-                    <asp:RangeValidator ID="rvStep" runat="server" ErrorMessage="Stegvärdet måste vara inom det slutna intervallet 1 till 100" Type="Integer" MinimumValue="1" MaximumValue="100" ControlToValidate="txtStep" Text="*" ForeColor="Red">*</asp:RangeValidator>
+                    <asp:RangeValidator ID="rvStep" runat="server" ErrorMessage="Stegvärdet måste vara ett heltal inom det slutna intervallet 1 till 100" Type="Integer" MinimumValue="1" MaximumValue="100" ControlToValidate="txtStep" Text="*" ForeColor="Red">*</asp:RangeValidator>
                 </div>
                 <div>
                     <asp:Label ID="lblConvertType" runat="server" Text="Typ av konvertering:"></asp:Label>

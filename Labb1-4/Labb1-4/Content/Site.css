@@ -19,6 +19,7 @@ h1 {
 }
 
 #content {
+    position: relative;
     width: 700px;
     margin-left: calc(50% - 350px);
 }
@@ -103,4 +104,115 @@ h1 {
     color: red;
     font-weight: bold;
     margin-left: 5px;
+}
+
+#tblResults {
+    position: relative;
+    margin-left: 20px;
+    border: 1px solid black;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+th {
+    display: table-cell;
+    background-color: black;
+    color: #fff6cb;
+    border: 1px solid black; 
+    width: 120px;
+}
+
+td {
+    display: table-cell;
+    text-align: center;
+}
+
+#tblResults tr:nth-of-type(odd) {
+    background-color: #f2e8b9;
+}
+
+input:focus, input:active {
+    outline: none;
+    border-color: #db9eed;
+    box-shadow: 0 0 4px #db9eed;
+}
+
+input:hover {
+    outline: none;
+    border-color: #ceadff;
+}
+
+#column1 {
+    border: 2px inset #f2e8b9;
+    padding: 10px;
+}
+
+#column1, #column2 {
+    float: left;
+    width:300px;
+}
+
+#lblStart, #lblEnd, #lblStep {
+    display: inline-block;
+    width: 100px;
+}
+
+#lblConvertType, #btnConvert {
+    display: block;
+    margin-top: 5px;
+}
+
+#txtGuess {
+    display: inline-block;
+    width: 40px;
+    padding-left: 5px;
+}
+
+#infoBox {
+    position: relative;
+    display: block;
+    width: 400px;
+    min-height: 110px;
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: #bce7f5;
+    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
+
+#infoBox img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: -2px;
+}
+
+#btnNewNumber {
+    position: absolute;
+    display: block;
+    width: 200px;
+    bottom: 10px;
+    left: 115px;	
+}
+
+#vsErrors {
+    position: relative;
+    display: block;
+    width: 400px;
+    min-height: 50px;
+    border: 2px solid red;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: black;
+    line-height: none;    
+}
+
+#vsErrors ul {
+    margin-bottom: 0;
+    margin-top: 0;
 }

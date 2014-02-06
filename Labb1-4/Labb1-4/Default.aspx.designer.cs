@@ -31,15 +31,6 @@ namespace Labb1_4 {
         protected global::System.Web.UI.WebControls.Label lblHeader;
         
         /// <summary>
-        /// vsErrors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors;
-        
-        /// <summary>
         /// lblGuess control.
         /// </summary>
         /// <remarks>
@@ -85,22 +76,49 @@ namespace Labb1_4 {
         protected global::System.Web.UI.WebControls.Button btnGuess;
         
         /// <summary>
-        /// Label3 control.
+        /// lblPreviousGuesses control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblPreviousGuesses;
         
         /// <summary>
-        /// Label2 control.
+        /// phGuessResult control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.PlaceHolder phGuessResult;
+        
+        /// <summary>
+        /// lblFailed control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFailed;
+        
+        /// <summary>
+        /// lblPreviousGuess control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPreviousGuess;
+        
+        /// <summary>
+        /// lblEndNumberOfGuesses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEndNumberOfGuesses;
         
         /// <summary>
         /// btnNewNumber control.
@@ -112,12 +130,12 @@ namespace Labb1_4 {
         protected global::System.Web.UI.WebControls.Button btnNewNumber;
         
         /// <summary>
-        /// lblEndNumberOfGuesses control.
+        /// vsErrors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEndNumberOfGuesses;
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors;
     }
 }

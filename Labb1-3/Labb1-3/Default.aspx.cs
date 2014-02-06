@@ -77,16 +77,5 @@ namespace Labb1_3
                     Convert.ToInt32(txtStep.Text));
             }
         }
-
-        protected void rdbC2F_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsValid)
-            {
-                RenderTable(rdbC2F.Checked,
-                    Convert.ToInt32(txtStart.Text),
-                    Convert.ToInt32(txtEnd.Text),
-                    Convert.ToInt32(txtStep.Text));
-            }
-        }
     }
 }
