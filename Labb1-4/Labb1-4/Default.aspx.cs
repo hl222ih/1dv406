@@ -15,7 +15,8 @@ namespace Labb1_4
         {
             get 
             {
-                return (SecretNumber)Session["SecretNum"];
+                //istället för (SecretNumber)Session["SecretNum"]; för att undvika risk för InvalidCastException.
+                return Session["SecretNum"] as SecretNumber;
             }
             private set 
             { 
