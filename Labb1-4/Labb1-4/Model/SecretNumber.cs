@@ -20,9 +20,9 @@ namespace Labb1_4.Model
         public Outcome Outcome { get; set; }
 
         //egenskap: readonly-lista med gjorda gissningar
-        public IEnumerable<int> PreviousGuesses
+        public IList<int> PreviousGuesses
         {
-            get { return previousGuesses; }
+            get { return previousGuesses.AsReadOnly(); }
         }
 
         //egenskap: om gissning kan göras
