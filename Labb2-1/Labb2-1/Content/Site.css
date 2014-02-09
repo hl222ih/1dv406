@@ -25,3 +25,43 @@ h1 {
     width: 700px;
     margin-left: calc(50% - 350px);
 }
+
+#confirmBox {
+    color: #8f9b55;
+    background-color: #eef4d2;
+    border: 2px solid #8f9b55;
+    height: 50px;
+}
+        
+#errorBox {
+    color: #cb0201;
+    background-color: #f6cac9;
+    border: 2px solid #cb0201;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#imageBox {
+    height: 300px;
+}
+
+#thumbImageBox {
+    border: 2px solid #dcdcd4;
+    height: 50px;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#lblChooseFile {
+    display: inline-block;
+    width: 150px;
+}
+
+#pnlUpload fieldset{
+    border: 2px solid #dcdcd4;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+}
