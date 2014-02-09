@@ -15,7 +15,7 @@ namespace Labb2_1.Model
         static readonly string PhysicalUploadedImagesPath;
         static readonly Regex SanitizePath;
 
-        static public Gallery()
+        static Gallery()
         {
             ApprovedExtensions = new Regex(@"^.*\.(?:gif|jpg|png)$", RegexOptions.IgnoreCase);
             PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), "Uploads");
@@ -26,7 +26,7 @@ namespace Labb2_1.Model
         //returnera en IEnumerable collection innehållande textsträngar
         //med de filnamn i Upload-katalogen som har tillåtna bildfils-
         //ändelser.
-        static IEnumerable<string> GetImageNames()
+        public static IEnumerable<string> GetImageNames()
         {
             var di = new DirectoryInfo(PhysicalUploadedImagesPath);
             
@@ -41,13 +41,13 @@ namespace Labb2_1.Model
         }
 
         //kontrollerar om angivet filnamn finns i Upload-katalogen.
-        static bool ImageExists(string fileName)
+        public static bool ImageExists(string fileName)
         {
             return File.Exists(Path.Combine(PhysicalUploadedImagesPath, fileName));
         }
 
         //kontrollerar om angivet Image-objekt har tillåten MIME-typ.
-        static bool IsValidImage(Image image)
+        public static bool IsValidImage(Image image)
         {
             return (image.RawFormat.Guid.Equals(ImageFormat.Png.Guid) ||
                 image.RawFormat.Guid.Equals(ImageFormat.Jpeg.Guid) ||
@@ -57,7 +57,7 @@ namespace Labb2_1.Model
             //(Isåfall tar denna metod inte hänsyn till den risken.)
         }
 
-        static void SaveImage(Stream stream, string fileName)
+        public static void SaveImage(Stream stream, string fileName)
         {
             //skapa ett Image-objekt av den inskickade strömmen
             var image = System.Drawing.Image.FromStream(stream);
@@ -96,7 +96,7 @@ namespace Labb2_1.Model
             var thumbnail = image.GetThumbnailImage(60, 45, null, System.IntPtr.Zero);
 
             //skapa ett filnamn för miniatyrbilden som motsvarar filnamnet för bilden.
-            var thumbFileName = Path.Combine(String.Format("{0}{1}", Path.GetFileNameWithoutExtension(fileName), "-thumb"), Path.GetExtension(fileName));
+            var thumbFileName = String.Format("{0}{1}{2}", Path.GetFileNameWithoutExtension(fileName), "-thumb", Path.GetExtension(fileName));
 
             //Sannolikheten är väl inte så stor att filen innehållande miniatyrbilden redan finns,
             //men om den finns, måste det vara ok att skriva över den.
@@ -106,7 +106,7 @@ namespace Labb2_1.Model
             }
 
             //spara miniatyrbildfilen.
-            thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, "Thumbs", thumbFileName)); //ok
+            thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, "Thumbs", thumbFileName));
 
         }
 

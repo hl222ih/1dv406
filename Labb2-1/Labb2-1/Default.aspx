@@ -41,9 +41,8 @@
 
             </div>
             <div>
-                <asp:Button ID="btnChooseFile" runat="server" Text="Välj fil" />
-                <asp:Label ID="lblChooseFile" runat="server" Text="Ingen fil har valts"></asp:Label>
-                <asp:Button ID="btnUpload" runat="server" Text="Ladda upp" />
+                <asp:FileUpload ID="fuChooseFile" runat="server"/>
+                <asp:Button ID="btnUpload" runat="server" Text="Ladda upp" OnClick="btnUpload_Click" />
             </div>
         </asp:Panel>
     </div>

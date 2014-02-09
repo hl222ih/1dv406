@@ -49,22 +49,13 @@ namespace Labb2_1 {
         protected global::System.Web.UI.WebControls.Panel pnlUpload;
         
         /// <summary>
-        /// btnChooseFile control.
+        /// fuChooseFile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnChooseFile;
-        
-        /// <summary>
-        /// lblChooseFile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChooseFile;
+        protected global::System.Web.UI.WebControls.FileUpload fuChooseFile;
         
         /// <summary>
         /// btnUpload control.
