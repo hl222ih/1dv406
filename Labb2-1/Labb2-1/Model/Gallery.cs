@@ -96,17 +96,17 @@ namespace Labb2_1.Model
             var thumbnail = image.GetThumbnailImage(60, 45, null, System.IntPtr.Zero);
 
             //skapa ett filnamn för miniatyrbilden som motsvarar filnamnet för bilden.
-            var thumbFileName = Path.Combine(Path.GetFileNameWithoutExtension(fileName), "-thumb", Path.GetExtension(fileName));
+            var thumbFileName = Path.Combine(String.Format("{0}{1}", Path.GetFileNameWithoutExtension(fileName), "-thumb"), Path.GetExtension(fileName));
 
             //Sannolikheten är väl inte så stor att filen innehållande miniatyrbilden redan finns,
             //men om den finns, måste det vara ok att skriva över den.
             if (ImageExists(thumbFileName))
             {
-                File.Delete(Path.Combine(PhysicalUploadedImagesPath, thumbFileName));
+                File.Delete(String.Format("{0}{1}", PhysicalUploadedImagesPath, thumbFileName));
             }
 
             //spara miniatyrbildfilen.
-            thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, thumbFileName)); //ok
+            thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, "Thumbs", thumbFileName)); //ok
 
         }
 
