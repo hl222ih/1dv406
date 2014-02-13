@@ -15,34 +15,53 @@
         </h1>
     </header>
     <div id="content">
-        <div id="confirmBox">
-
-        </div>
+        <!--bekräftelseruta-->
+        <asp:Panel ID="pnlConfirmBox" runat="server" Visible="False">
+             <p>Uppladdning av filen lyckades.</p>
+        </asp:Panel>
+        <!--huvudområdet där den stora bilden visas-->
         <div id="imageBox">
-
+            <asp:Image ID="imgFull" runat="server" Visible="False" />
         </div>
+        <!--området där miniatyrbilderna visas-->
         <div id="thumbImageBox">
-            <asp:Repeater ID="rptImageBox" runat="server">
+            
+            <!--hämtar ImageInfo-listan för bildfilerna i bildkatalogen
+                genom anrop av metoden Repeater_GetData-->
+            <asp:Repeater ID="rptImageBox" runat="server" 
+                ItemType="Labb2_1.Model.ImageInfo"
+                SelectMethod="Repeater_GetData">
                 <HeaderTemplate>
-                    <table>
+                    <ul>
                 </HeaderTemplate>
+                <!--ItemTemplate renderas ut för varje "Item" i ImageInfo-listan-->
                 <ItemTemplate>
-                    <asp:HyperLink ID="hlThumbImage" runat="server">
-                        <asp:Image ID="imgThumbImage" runat="server" />
-                    </asp:HyperLink>
+                    <li>
+                        <asp:HyperLink ID="lbThumbImage" runat="server"
+                            NavigateUrl='<%# String.Format("Default.aspx?image={0}", 
+                                Server.UrlEncode(Item.FileName)) %>'>
+                        
+                            <asp:Image ID="imgThumbImage" runat="server"
+                                ImageUrl='<%# "~/Uploads/Thumbs/" + Item.ThumbName %>' />
+                        </asp:HyperLink>
+                    </li>
                 </ItemTemplate>
                 <FooterTemplate>
-                    </table>
+                    </ul>
                 </FooterTemplate>
             </asp:Repeater>
         </div>
+        <!--Uppladdningsrutan-->
         <asp:Panel ID="pnlUpload" runat="server" GroupingText="Ladda upp bild">
-            <div id="errorBox">
-
-            </div>
+            <!--rutan som visas om fil inte valts eller om den har felaktig filändelse-->
+            <asp:Panel ID="pnlErrorBox" runat="server">
+                <asp:ValidationSummary ID="vsErrors" runat="server" HeaderText="Valideringen misslyckades. Åtgärda felen och försök igen." />
+            </asp:Panel>
             <div>
-                <asp:FileUpload ID="fuChooseFile" runat="server"/>
+                <asp:FileUpload ID="fuChooseFile" runat="server" ViewStateMode="Enabled"/>
                 <asp:Button ID="btnUpload" runat="server" Text="Ladda upp" OnClick="btnUpload_Click" />
+                <asp:RequiredFieldValidator ID="rfvChooseFile" runat="server" ErrorMessage="Ingen fil har valts" Text="*" ControlToValidate="fuChooseFile"></asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="revChooseFile" runat="server" ErrorMessage="Filformatet stöds ej" Text="*" ControlToValidate="fuChooseFile" ValidationExpression=".+\.(?:jpg|gif|png)$"></asp:RegularExpressionValidator>
             </div>
         </asp:Panel>
     </div>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Drawing;
@@ -18,7 +17,7 @@ namespace Labb2_1.Model
         static Gallery()
         {
             ApprovedExtensions = new Regex(@"^.*\.(?:gif|jpg|png)$", RegexOptions.IgnoreCase);
-            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), "Uploads");
+            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), "Uploads"); 
             var invalidChars = new string(Path.GetInvalidFileNameChars());
             SanitizePath = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
         }
@@ -26,28 +25,32 @@ namespace Labb2_1.Model
         //returnera en IEnumerable collection innehållande textsträngar
         //med de filnamn i Upload-katalogen som har tillåtna bildfils-
         //ändelser.
-        public static IEnumerable<string> GetImageNames()
+        public IEnumerable<ImageInfo> GetImageInfos()
         {
             var di = new DirectoryInfo(PhysicalUploadedImagesPath);
             
             //I en lista över alla filer i Upload-katalogen,
+            //med sina respektive miniatyrbilder i Upload/Thumbs-katalogen
             //välj ut de filer vars filnamn som har filändelser
             //som överensstämmer med ApprovedExtensions-regexet.
-            var fileNames = di.GetFiles()
-                .Select(fi => fi.Name)
-                .Where(fiName => ApprovedExtensions.IsMatch(fiName));
 
-            return fileNames;
+            var imageInfos = di.GetFiles()
+                .Select(fi => new ImageInfo(fi.Name, 
+                    String.Format("{0}{1}{2}", 
+                    Path.GetFileNameWithoutExtension(fi.Name), "-thumb", fi.Extension)))
+                .Where(ii => ApprovedExtensions.IsMatch(ii.FileName)).AsEnumerable();
+
+            return imageInfos;
         }
 
         //kontrollerar om angivet filnamn finns i Upload-katalogen.
-        public static bool ImageExists(string fileName)
+        public bool ImageExists(string fileName)
         {
             return File.Exists(Path.Combine(PhysicalUploadedImagesPath, fileName));
         }
 
         //kontrollerar om angivet Image-objekt har tillåten MIME-typ.
-        public static bool IsValidImage(Image image)
+        public bool IsValidImage(Image image)
         {
             return (image.RawFormat.Guid.Equals(ImageFormat.Png.Guid) ||
                 image.RawFormat.Guid.Equals(ImageFormat.Jpeg.Guid) ||
@@ -57,7 +60,7 @@ namespace Labb2_1.Model
             //(Isåfall tar denna metod inte hänsyn till den risken.)
         }
 
-        public static void SaveImage(Stream stream, string fileName)
+        public void SaveImage(Stream stream, string fileName)
         {
             //skapa ett Image-objekt av den inskickade strömmen
             var image = System.Drawing.Image.FromStream(stream);
@@ -82,7 +85,7 @@ namespace Labb2_1.Model
             {
                 var index = 1;
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                while (ImageExists(String.Format("{0} ({1})", fileNameWithoutExtension, index)))
+                while (ImageExists(String.Format("{0} ({1}){2}", fileNameWithoutExtension, index, Path.GetExtension(fileName))))
                 {
                     index++;
                 }
@@ -107,8 +110,6 @@ namespace Labb2_1.Model
 
             //spara miniatyrbildfilen.
             thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, "Thumbs", thumbFileName));
-
         }
-
     }
 }

@@ -31,6 +31,24 @@ namespace Labb2_1 {
         protected global::System.Web.UI.WebControls.Label lblHeader;
         
         /// <summary>
+        /// pnlConfirmBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlConfirmBox;
+        
+        /// <summary>
+        /// imgFull control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgFull;
+        
+        /// <summary>
         /// rptImageBox control.
         /// </summary>
         /// <remarks>
@@ -49,6 +67,24 @@ namespace Labb2_1 {
         protected global::System.Web.UI.WebControls.Panel pnlUpload;
         
         /// <summary>
+        /// pnlErrorBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlErrorBox;
+        
+        /// <summary>
+        /// vsErrors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors;
+        
+        /// <summary>
         /// fuChooseFile control.
         /// </summary>
         /// <remarks>
@@ -65,5 +101,23 @@ namespace Labb2_1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpload;
+        
+        /// <summary>
+        /// rfvChooseFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvChooseFile;
+        
+        /// <summary>
+        /// revChooseFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revChooseFile;
     }
 }
