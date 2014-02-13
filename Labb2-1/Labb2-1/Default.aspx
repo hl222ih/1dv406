@@ -34,7 +34,6 @@
                 <HeaderTemplate>
                     <ul>
                 </HeaderTemplate>
-                <!--ItemTemplate renderas ut för varje "Item" i ImageInfo-listan-->
                 <ItemTemplate>
                     <li>
                         <asp:HyperLink ID="lbThumbImage" runat="server"

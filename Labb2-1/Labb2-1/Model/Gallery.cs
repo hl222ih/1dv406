@@ -62,13 +62,22 @@ namespace Labb2_1.Model
 
         public void SaveImage(Stream stream, string fileName)
         {
-            //skapa ett Image-objekt av den inskickade strömmen
-            var image = System.Drawing.Image.FromStream(stream);
+            Image image;
+
+            try
+            {
+                //skapa ett Image-objekt av den inskickade strömmen
+                image = System.Drawing.Image.FromStream(stream);
+            }
+            catch
+            {
+                throw new BadImageFormatException("Filen kunde inte tolkas som en bildfil");
+            }
 
             //testa om filnamnet har korrekt filändelse, annars kasta undantag
             if (!ApprovedExtensions.IsMatch(Path.GetExtension(fileName)))
             {
-                throw new ArgumentException(String.Format("Incorrect file extension, {0}", Path.GetExtension(fileName)));
+                throw new ArgumentException(String.Format("Filändelsen {0} är inte giltig", Path.GetExtension(fileName)));
             }
 
             //ta bort otillåtna tecken från filnamnet
@@ -77,7 +86,7 @@ namespace Labb2_1.Model
             //testa om bilden är i korrekt Mime-format, annars kasta undantag
             if (!IsValidImage(image))
             {
-                throw new ArgumentException("Image format cannot be recognized");
+                throw new ArgumentException("Filens MIME-typ kunde inte kännas igen");
             }
 
             //kolla om filnamnet är upptaget, och döp isåfall om filen med ett index

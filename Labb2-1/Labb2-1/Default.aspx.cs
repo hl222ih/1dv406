@@ -31,13 +31,47 @@ namespace Labb2_1
         {
             if (IsValid)
             {
-                Gallery.SaveImage(fuChooseFile.PostedFile.InputStream, fuChooseFile.FileName);
-                //vill egentligen hantera undantag här, men förstår inte
-                //hur jag inifrån code-behind kan komma åt och visa validationsummary-rutan :(
+                if (!fuChooseFile.HasFile)
+                {
+                    ThrowException("Vald fil existerar inte");
+                    return;
+                }
 
-                //eftersom inte programmet har krashat ännu så lyckades uppladdningen:
-                pnlConfirmBox.Visible = true;
+                if (fuChooseFile.PostedFile.ContentLength > 4194304)
+                {
+                    ThrowException("Filens storlek får inte överstiga 4MB");
+                    return;
+                }
+
+                try
+                {
+                    Gallery.SaveImage(fuChooseFile.PostedFile.InputStream, fuChooseFile.FileName);
+                    //eftersom inte programmet har krashat ännu så lyckades uppladdningen:
+                    pnlConfirmBox.Visible = true;
+                }
+                catch (BadImageFormatException ex)
+                {
+                    ThrowException(ex.Message);
+                }
+                catch (ArgumentException ex)
+                {
+                    ThrowException(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    ThrowException(String.Format("Ett fel inträffade, ({0})", ex.Message));
+                }
             }
+        }
+
+        protected void ThrowException(string errorMessage)
+        {
+            var validator = new CustomValidator
+            {
+                IsValid = false,
+                ErrorMessage = errorMessage
+            };
+            Page.Validators.Add(validator);
         }
 
         public IEnumerable<ImageInfo> Repeater_GetData()
