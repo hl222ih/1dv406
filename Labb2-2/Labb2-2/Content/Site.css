@@ -1,0 +1,120 @@
+﻿body, html {
+    background-color: #fff6cb;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    height: 100%;
+}
+
+header {
+    background-color: inherit;
+    color: #fff6cb;
+    font-family: 'Bodoni MT';
+}
+
+h1 {
+    width: 660px;
+    margin-left: calc(50% - 350px);
+    background-color: black;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 36px;
+}
+
+
+#content {
+    position: relative;
+    width: 700px;
+    margin-left: calc(50% - 350px);
+}
+
+img {
+  height: 100%;
+  width:  auto;
+}
+
+#pnlConfirmBox {
+    color: #8f9b55;
+    background-color: #eef4d2;
+    border: 2px solid #8f9b55;
+    height: 50px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+        
+#vsErrors {
+    position: relative;
+    display: block;
+    padding: 15px;
+    line-height: none;    
+
+    color: #cb0201;
+    background-color: #f6cac9;
+    border: 2px solid #cb0201;
+    height: 25px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#imageBox {
+    text-align: center;
+    height: 340px;
+}
+
+#thumbImageBox {
+    border: 2px solid #dcdcd4;
+    height: 100px;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.selectedThumbLink {
+    display: inline-block;
+    -moz-box-sizing:    border-box;
+   -webkit-box-sizing: border-box;
+    box-sizing:        border-box;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    background-color:  rgb(106, 84, 221);
+    padding-left: 4px;
+    padding-top: 4px;
+}
+
+#thumbImageBox ul, #thumbImageBox li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    height: 100%;
+    width: 120px;
+    display: inline-block;
+}
+
+#thumbImageBox img {
+    height: 95%;
+    width: 95%;
+}
+
+#lblChooseFile {
+    display: inline-block;
+    width: 150px;
+}
+
+#pnlUpload fieldset {
+    border: 2px solid #dcdcd4;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+}
+
+#rfvChooseFile, #revChooseFile {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+}
