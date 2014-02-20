@@ -60,7 +60,7 @@ namespace Labb2_1.Model
             //(Isåfall tar denna metod inte hänsyn till den risken.)
         }
 
-        public void SaveImage(Stream stream, string fileName)
+        public string SaveImage(Stream stream, string fileName)
         {
             Image image;
 
@@ -104,6 +104,8 @@ namespace Labb2_1.Model
             //spara bilden i en fil.
             image.Save(Path.Combine(PhysicalUploadedImagesPath, fileName));
 
+            var newFileName = fileName;
+
             //skapa en miniatyrbild av bilden
             var thumbnail = image.GetThumbnailImage(60, 45, null, System.IntPtr.Zero);
 
@@ -119,6 +121,8 @@ namespace Labb2_1.Model
 
             //spara miniatyrbildfilen.
             thumbnail.Save(Path.Combine(PhysicalUploadedImagesPath, "Thumbs", thumbFileName));
+
+            return newFileName;
         }
     }
 }

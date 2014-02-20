@@ -74,7 +74,21 @@ img {
     margin-bottom: 8px;
 }
 
+.selectedThumbLink {
+    display: inline-block;
+    -moz-box-sizing:    border-box;
+   -webkit-box-sizing: border-box;
+    box-sizing:        border-box;
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    background-color:  rgb(106, 84, 221);
+    padding-left: 4px;
+    padding-top: 4px;
+}
+
 #thumbImageBox ul, #thumbImageBox li {
+    position: relative;
     margin: 0;
     padding: 0;
     list-style-type: none;

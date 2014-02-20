@@ -30,13 +30,13 @@
                 genom anrop av metoden Repeater_GetData-->
             <asp:Repeater ID="rptImageBox" runat="server" 
                 ItemType="Labb2_1.Model.ImageInfo"
-                SelectMethod="Repeater_GetData">
+                SelectMethod="Repeater_GetData" OnItemCreated="rptImageBox_ItemCreated">
                 <HeaderTemplate>
                     <ul>
                 </HeaderTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink ID="lbThumbImage" runat="server"
+                        <asp:HyperLink ID="lbThumbImage" CssClass="thumbLink" runat="server"
                             NavigateUrl='<%# String.Format("Default.aspx?image={0}", 
                                 Server.UrlEncode(Item.FileName)) %>'>
                         
@@ -58,7 +58,7 @@
             </asp:Panel>
             <div>
                 <asp:FileUpload ID="fuChooseFile" runat="server" ViewStateMode="Enabled"/>
-                <asp:Button ID="btnUpload" runat="server" Text="Ladda upp" OnClick="btnUpload_Click" />
+                <asp:Button ID="btnUpload" runat="server" Text="Ladda upp" OnClick="btnUpload_Click" style="height: 26px" />
                 <asp:RequiredFieldValidator ID="rfvChooseFile" runat="server" ErrorMessage="Ingen fil har valts" Text="*" ControlToValidate="fuChooseFile"></asp:RequiredFieldValidator>
                 <asp:RegularExpressionValidator ID="revChooseFile" runat="server" ErrorMessage="Filformatet stöds ej" Text="*" ControlToValidate="fuChooseFile" ValidationExpression=".+\.(?:jpg|gif|png)$"></asp:RegularExpressionValidator>
             </div>

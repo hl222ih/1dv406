@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Labb2_1.Model;
 using System.IO;
+using System.Web.UI.HtmlControls;
 
 namespace Labb2_1
 {
@@ -31,6 +32,9 @@ namespace Labb2_1
         {
             if (IsValid)
             {
+                Response.Redirect(String.Format("Default.aspx?image={0}",
+                                Server.UrlEncode(fuChooseFile.FileName)));
+
                 if (!fuChooseFile.HasFile)
                 {
                     ThrowException("Vald fil existerar inte");
@@ -45,7 +49,8 @@ namespace Labb2_1
 
                 try
                 {
-                    Gallery.SaveImage(fuChooseFile.PostedFile.InputStream, fuChooseFile.FileName);
+                    var newFileName = Gallery.SaveImage(fuChooseFile.PostedFile.InputStream, fuChooseFile.FileName);
+
                     //eftersom inte programmet har krashat ännu så lyckades uppladdningen:
                     pnlConfirmBox.Visible = true;
                 }
@@ -77,6 +82,21 @@ namespace Labb2_1
         public IEnumerable<ImageInfo> Repeater_GetData()
         {
             return Gallery.GetImageInfos();
+        }
+
+        protected void rptImageBox_ItemCreated(object sender, RepeaterItemEventArgs e)
+        {
+            if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
+            {
+                if (Request.QueryString["image"] != null)
+                {
+                    if (Request.QueryString["image"] == ((ImageInfo)e.Item.DataItem).FileName)
+                    {
+                        HyperLink link = (HyperLink)e.Item.FindControl("lbThumbImage");
+                        link.CssClass = "selectedThumbLink";
+                    }
+                }
+            }
         }
     }
 }
