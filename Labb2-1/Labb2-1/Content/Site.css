@@ -44,8 +44,33 @@ img {
     margin-bottom: 5px;
     padding-top: 5px;
     padding-left: 5px;
+    -webkit-animation: fadeout 1s, height 1s;
+    animation: fadeout 1s, height 1s;
+    -webkit-animation-delay:4s;
+    animation-delay:4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
-        
+
+@keyframes height {
+    from { height: 50px; }
+    to   { height: 0; }
+}
+@-webkit-keyframes height {
+    from { height: 50px; }
+    to   { height: 0; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+@-webkit-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+     
 #vsErrors {
     position: relative;
     display: block;

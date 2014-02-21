@@ -16,7 +16,7 @@
     </header>
     <div id="content">
         <!--bekräftelseruta-->
-        <asp:Panel ID="pnlConfirmBox" runat="server" Visible="False">
+        <asp:Panel ID="pnlConfirmBox" runat="server" Visible="False" ViewStateMode="Enabled">
              <p>Uppladdning av filen lyckades.</p>
         </asp:Panel>
         <!--huvudområdet där den stora bilden visas-->

@@ -25,6 +25,10 @@ namespace Labb2_1
             {
                 imgFull.ImageUrl = String.Format("{0}{1}", "~/Uploads/", Request.QueryString["image"]);
                 imgFull.Visible = true;
+                if (Request.QueryString["upload"] == "success")
+                {
+                    pnlConfirmBox.Visible = true;
+                }
             }
         }
 
@@ -32,9 +36,6 @@ namespace Labb2_1
         {
             if (IsValid)
             {
-                Response.Redirect(String.Format("Default.aspx?image={0}",
-                                Server.UrlEncode(fuChooseFile.FileName)));
-
                 if (!fuChooseFile.HasFile)
                 {
                     ThrowException("Vald fil existerar inte");
@@ -52,7 +53,9 @@ namespace Labb2_1
                     var newFileName = Gallery.SaveImage(fuChooseFile.PostedFile.InputStream, fuChooseFile.FileName);
 
                     //eftersom inte programmet har krashat ännu så lyckades uppladdningen:
-                    pnlConfirmBox.Visible = true;
+                    Response.Redirect(String.Format("Default.aspx?image={0}&upload=success",
+                                    Server.UrlEncode(fuChooseFile.FileName)));
+
                 }
                 catch (BadImageFormatException ex)
                 {
