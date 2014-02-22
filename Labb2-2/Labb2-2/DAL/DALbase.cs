@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
+using System.Web.Configuration;
 
 namespace Labb2_2.DAL
 {
@@ -12,12 +13,12 @@ namespace Labb2_2.DAL
 
         static DALbase()
         {
-
+            connectionString = WebConfigurationManager.ConnectionStrings["myConnectionString"].ConnectionString;
         }
 
         protected SqlConnection CreateConnection()
         {
-            throw new NotImplementedException("inte implementerat");
+            return new SqlConnection(connectionString);
         }
     }
 }
