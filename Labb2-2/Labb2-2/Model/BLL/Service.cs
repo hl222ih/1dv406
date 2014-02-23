@@ -48,6 +48,8 @@ namespace Labb2_2.BLL
 
         public void SaveContact(Contact contact)
         {
+            ValidateContact(contact);
+
             if (contact.ContactID == 0)
             {
                 ContactDAL.InsertContact(contact);
@@ -55,6 +57,36 @@ namespace Labb2_2.BLL
             else
             {
                 ContactDAL.UpdateContact(contact);
+            }
+        }
+
+        private void ValidateContact(Contact contact)
+        {
+            var ex = new ArgumentException();
+
+            if (contact.EmailAddress == null)
+            {
+            }
+            else
+            {
+                if (contact.EmailAddress.Length > 50)
+                {
+                    ex.Data.Add("EmailAddressLength", "The e-mail address is too long");
+                }
+            }
+            if (contact.FirstName.Length > 50)
+            {
+                ex.Data.Add("FirstNameLength", "The first name is too long");
+            }
+            if (contact.LastName.Length > 50)
+            {
+                ex.Data.Add("LastNameLength", "The last name is too long");
+            }
+            
+
+            if (ex.Data.Count > 0)
+            {
+                throw ex;
             }
         }
     }
