@@ -74,8 +74,8 @@
     <Content Include="Scripts\jquery-2.1.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BLL\Contact.cs" />
-    <Compile Include="Model\BLL\Service.cs" />
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\Service.cs" />
     <Compile Include="Model\DAL\ContactDAL.cs" />
     <Compile Include="Model\DAL\DALbase.cs" />
     <Compile Include="Default.aspx.cs">
@@ -119,7 +119,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>9685</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49610/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

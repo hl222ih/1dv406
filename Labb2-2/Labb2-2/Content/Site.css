@@ -2,7 +2,7 @@
     background-color: #fff6cb;
     padding: 0;
     margin: 0;
-    line-height: 0;
+    line-height: 1;
     height: 100%;
 }
 
@@ -13,8 +13,8 @@ header {
 }
 
 h1 {
-    width: 660px;
-    margin-left: calc(50% - 350px);
+    width: 860px;
+    margin-left: calc(50% - 450px);
     background-color: black;
     padding: 20px;
     margin-top: 10px;
@@ -22,13 +22,14 @@ h1 {
     padding-top: 30px;
     padding-bottom: 30px;
     font-size: 36px;
+    text-align: center;
 }
 
 
 #content {
     position: relative;
-    width: 700px;
-    margin-left: calc(50% - 350px);
+    width: 720px;
+    margin-left: calc(50% - 360px);
 }
 
 img {
@@ -40,24 +41,63 @@ img {
     color: #8f9b55;
     background-color: #eef4d2;
     border: 2px solid #8f9b55;
-    height: 50px;
+    height: 100px;
     margin-bottom: 5px;
     padding-top: 5px;
     padding-left: 5px;
+    -webkit-animation: fadeout 1s, height 1s;
+    animation: fadeout 1s, height 1s;
+    -webkit-animation-delay:4s;
+    animation-delay:4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
-        
-#vsErrors {
+
+@keyframes height {
+    from { height: 100px; min-height: 100px; padding: 15px; margin-bottom: 15px; }
+    to   { height: 0; min-height: 0px; padding: 0; margin-bottom: 0; }
+}
+@-webkit-keyframes height {
+    from { height: 100px; min-height: 100px; padding: 15px; margin-bottom: 15px; }
+    to   { height: 0; min-height: 0; padding: 0; margin-bottom: 0 }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+@-webkit-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+#vsErrors1, #vsErrors2 {
     position: relative;
     display: block;
     padding: 15px;
+    min-height: 100px;
     line-height: none;    
-
     color: #cb0201;
     background-color: #f6cac9;
     border: 2px solid #cb0201;
     height: 25px;
     margin-top: 10px;
     margin-bottom: 15px;
+    -webkit-animation: fadeout 1s, height 1s;
+    animation: fadeout 1s, height 1s;
+    -webkit-animation-delay:4s;
+    animation-delay:4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+#pnlErrorBox1, #pnlErrorBox2 {
+    overflow: hidden;
+}
+
+.validators {
+    display: none;
 }
 
 #imageBox {
@@ -117,4 +157,115 @@ img {
     color: red;
     font-weight: bold;
     margin-left: 5px;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #f2e8b9;
+}
+
+input:focus, input:active {
+    outline: none;
+    border-color: #db9eed;
+    box-shadow: 0 0 4px #db9eed;
+}
+
+input:hover {
+    outline: none;
+    border-color: #ceadff;
+}
+
+
+.grid {
+    border: 2px inset #f2e8b9;
+    padding: 10px;
+}
+
+td {
+    width: 170px;
+}
+
+.emailcol {
+    width: 235px;
+}
+
+.emailtextbox {
+    width: 235px;
+}
+
+.buttoncol {
+    min-width: 125px;
+}
+
+/* knappkod ursprungligen från CSSButtonGenerator.com */
+.button, #lvContact_dpContact > * {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-webkit-border-top-left-radius:6px;
+	-moz-border-radius-topleft:6px;
+	border-top-left-radius:6px;
+	-webkit-border-top-right-radius:6px;
+	-moz-border-radius-topright:6px;
+	border-top-right-radius:6px;
+	-webkit-border-bottom-right-radius:6px;
+	-moz-border-radius-bottomright:6px;
+	border-bottom-right-radius:6px;
+	-webkit-border-bottom-left-radius:6px;
+	-moz-border-radius-bottomleft:6px;
+	border-bottom-left-radius:6px;
+	text-indent:0;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:arial;
+	font-size:11px;
+	font-weight:bold;
+	font-style:normal;
+	height:15px;
+	line-height:15px;
+	width:58px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.button:hover, #lvContact_dpContact > *:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+.button:active, #lvContact_dpContact > *:hover {
+	position:relative;
+	top:1px;
+}
+
+#lvContact_dpContact > .numpagerfield {
+    width: 30px;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, green), color-stop(1, lightgreen) );
+	background:-moz-linear-gradient( center top, green 5%, lightgreen 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='green', endColorstr='lightgreen');
+	background-color:black;
+    color: black;
+}
+
+.numbutton {
+    width: 30px !important; 
+}
+
+#lvContact_dpContact {
+     display: block;
+     text-align: center;
+     padding-top: 4px;
+}
+
+.aspNetDisabled {
+    display: none  !important;
+}
+
+table.grid {
+    box-shadow: 0px 18px 8px 10px black;
 }

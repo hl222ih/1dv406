@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Web.Configuration;
 
-namespace Labb2_2.DAL
+namespace Labb2_2.Model.DAL
 {
     public abstract class DALbase
     {

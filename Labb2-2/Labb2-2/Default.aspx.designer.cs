@@ -40,22 +40,40 @@ namespace Labb2_2 {
         protected global::System.Web.UI.WebControls.Panel pnlConfirmBox;
         
         /// <summary>
-        /// pnlErrorBox control.
+        /// pnlErrorBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlErrorBox;
+        protected global::System.Web.UI.WebControls.Panel pnlErrorBox1;
         
         /// <summary>
-        /// vsErrors control.
+        /// vsErrors1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors;
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors1;
+        
+        /// <summary>
+        /// pnlErrorBox2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlErrorBox2;
+        
+        /// <summary>
+        /// vsErrors2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors2;
         
         /// <summary>
         /// lvContact control.

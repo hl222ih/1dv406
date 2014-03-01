@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Labb2_2.BLL; //men borde ju inte få referera till BLL egentligen :/
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Labb2_2.DAL
+namespace Labb2_2.Model.DAL
 {
     public class ContactDAL : DALbase
     {
-
+        //radera en kontakt från databasen
         public void DeleteContact(int contactId)
         {
+            //skapa en connection till databasen
             using (var conn = CreateConnection())
             {
                 try
@@ -27,30 +27,41 @@ namespace Labb2_2.DAL
                 }
                 catch
                 {
+                    throw new ApplicationException("An error occurred while removing the contact from the database.");
                 }
             }
         }
 
+        //hämta en kontakt från databasen
         public Contact GetContactById(int contactId)
         {
+            //skapa anslutningsobjekt
             using (var conn = CreateConnection())
             {
                 try
                 {
+                    //skapa SqlCommand-objekt för att köra lagrad procedur Person.uspGetContact
                     var cmd = new SqlCommand("Person.uspGetContact", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
+                    cmd.Parameters.Add("@ContactId", SqlDbType.Int, 4).Value = contactId;
+
+                    //öppna anslutningen till databasen
                     conn.Open();
 
+                    //skapa SqlDataReader-objekt som reader refererar till
                     using (var reader = cmd.ExecuteReader())
                     {
+                        //om reader innehåller en post att läsa...
                         if (reader.Read())
                         {
+                            //ta reda på de olika kolumnernas position
                             var contactIdIndex = reader.GetOrdinal("ContactId");
                             var firstNameIndex = reader.GetOrdinal("FirstName");
                             var lastNameIndex = reader.GetOrdinal("LastName");
                             var emailAddressIndex = reader.GetOrdinal("EmailAddress");
 
+                            //läs in värdena från posten och returnera som en instans av Contact-klassen.
                             return new Contact
                             {
                                 ContactID = reader.GetInt32(contactIdIndex),
@@ -69,13 +80,14 @@ namespace Labb2_2.DAL
             }
         }
 
+        //hämta en lista med alla kontakter, från databasen
         public IEnumerable<Contact> GetContacts()
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    var contacts = new List<Contact>(100);
+                    var contacts = new List<Contact>(20000); //<-- det antal poster som finns i databasen, ungefär
 
                     var cmd = new SqlCommand("Person.uspGetContacts", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -84,6 +96,7 @@ namespace Labb2_2.DAL
 
                     using (var reader = cmd.ExecuteReader())
                     {
+                        //läs in positionerna före while-satsen så att de inte behöver läsas in gång på gång
                         var contactIdIndex = reader.GetOrdinal("ContactId");
                         var firstNameIndex = reader.GetOrdinal("FirstName");
                         var lastNameIndex = reader.GetOrdinal("LastName");
@@ -91,6 +104,7 @@ namespace Labb2_2.DAL
 
                         while (reader.Read())
                         {
+                            //skapar och lägger till Contact-objekt i listan contacts.
                             contacts.Add(new Contact
                             {
                                 ContactID = reader.GetInt32(contactIdIndex),
@@ -113,6 +127,7 @@ namespace Labb2_2.DAL
             }
         }
 
+        //hämta ett antal (maximumRows) kontakter från databasen med start från kontaktnummer startRowIndex
         public IEnumerable<Contact> GetContactsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             totalRowCount = 0;
@@ -121,13 +136,16 @@ namespace Labb2_2.DAL
             {
                 try
                 {
-                    var contacts = new List<Contact>(maximumRows);
+                    var contacts = new List<Contact>(maximumRows); //maximumRows är antalet som hämtas varje gång, alltså poster per sida.
 
                     var cmd = new SqlCommand("Person.uspGetContactsPageWise", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
+
                     cmd.Parameters.Add("@PageSize", SqlDbType.Int, 4).Value = maximumRows;
-                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int, 4).Value = startRowIndex;
+                    //inparametern för den lagrade proceduren tar sidindex, metoden tar radindex/postindex. 
+                    //räknar om post-index till sidindex (och behövdes visst lägga till en 1 för att det skulle bli rätt).
+                    cmd.Parameters.Add("@PageIndex", SqlDbType.Int, 4).Value = startRowIndex / maximumRows + 1;
                     cmd.Parameters.Add("@RecordCount", SqlDbType.Int, 4).Direction = ParameterDirection.InputOutput;
                     cmd.Parameters["@RecordCount"].Value = totalRowCount;
 
@@ -170,6 +188,7 @@ namespace Labb2_2.DAL
             }
         }
 
+        //lägga till en kontakt i databasen
         public void InsertContact(Contact contact)
         {
             using (var conn = CreateConnection())
@@ -183,15 +202,16 @@ namespace Labb2_2.DAL
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = contact.LastName;
                     cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = contact.EmailAddress;
 
-                    //hämtar ContactId som av databasen tilldelas contact
+                    //inte säker på att InputOutput gör nån nytta, Output hade nog räckt.
                     cmd.Parameters.Add("@ContactId", SqlDbType.Int, 4).Direction = ParameterDirection.InputOutput;
-
+                    //och denna är ganska meningslös...
                     cmd.Parameters["@ContactId"].Value = contact.ContactID;
-
+                    //...men det funkar nu iallafall så jag ändrar inte.
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
 
+                    //kontaktID:t som av databasen tilldelats posten lagras i Contact-objektet.
                     contact.ContactID = (int)cmd.Parameters["@ContactId"].Value;
                 }
                 catch
@@ -201,6 +221,7 @@ namespace Labb2_2.DAL
             }
         }
 
+        //uppdatera en kontakt i databasen (som har samma ContactID som den inskickade kontakten)
         public void UpdateContact(Contact contact)
         {
             using (var conn = CreateConnection())
