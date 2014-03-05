@@ -1,6 +1,32 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+
+    <asp:DropDownList ID="DropDownList1" runat="server" ItemType="Project.Model.WordType" DataValueField="WTypeId" SelectMethod="GetWordTypeData" DataTextField="WType" OnDataBound="DropDownList1_DataBound">
+
+    </asp:DropDownList>
+  <%--  <asp:Repeater ID="rptItems" runat="server"
+        ItemType=""
+        >
+        <ItemTemplate>
+            <asp:ImageButton ID="myButton" runat="server" /> <!-- ImageUrl='<%# "~/Images/Blissymbols/" + Item.FileName %>' />
+            <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
+        </ItemTemplate>
+    </asp:Repeater>           --%>
+    <asp:ListView ID="ListView1" runat="server">
+        <ItemTemplate>
+
+        </ItemTemplate>
+    </asp:ListView>
+    
+    <div runat="server" id="divControl" class="item">...</div>
+    
+    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
+    <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg" Height="200" Width="300" />
+    <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="200" Width="300" />
+    <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg" Height="200" Width="300" />
+    <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg" Height="200" Width="300" />
+    <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg" Height="200" Width="300" />
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
