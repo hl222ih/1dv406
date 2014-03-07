@@ -59,6 +59,7 @@ namespace Labb2_2
             else
             {
                 ModelState.AddModelError("", ex.Message);
+                vsErrors2.ShowModelStateErrors = true;
                 //// funkar inte eftersom det är ModelState-errors som visas här.
                 //AddValidatorControl(ex.Message);
             }
@@ -86,13 +87,16 @@ namespace Labb2_2
         public void lvContact_InsertItem(Contact contact)
         {
             Validate("InsertGroup"); //causesvalidation=true på "lägg till"-kontrollen verkar bara validera mot modelstate
+            vsErrors1.ShowModelStateErrors = true;
+            
             if (IsValid)
             {
                 //Om ModelState inte validerar måste felmeddelanden visas.
                 //ShowModelStateErrors är satt till false i utgångsläget för att inte visa både meddelanden
                 //från validation-kontrollerna och från modelstatevalideringen samtidigt.
                 //Om validation-kontrollerna validerar till true måste modelstateerrors visas.
-                vsErrors1.ShowModelStateErrors = true;
+                
+                //vsErrors1.ShowModelStateErrors = true;
 
                 if (ModelState.IsValid)
                 {
@@ -114,7 +118,8 @@ namespace Labb2_2
             else
             {
                 //sätt showmodelstateerrors till false igen om validation-kontrollerna inte valideras till true.
-                vsErrors1.ShowModelStateErrors = false;
+                
+                //vsErrors1.ShowModelStateErrors = false;
             }
             
         }
@@ -123,13 +128,16 @@ namespace Labb2_2
         public void lvContact_UpdateItem(Contact contact)
         {
             Validate("EditGroup"); //causesvalidation=true på "lägg till"-kontrollen verkar bara validera mot modelstate
+            vsErrors2.ShowModelStateErrors = true;
+
             if (IsValid)
             {
                 //Om ModelState inte validerar måste felmeddelanden visas.
                 //ShowModelStateErrors är satt till false i utgångsläget för att inte visa både meddelanden
                 //från validation-kontrollerna och från modelstatevalideringen samtidigt.
                 //Om validation-kontrollerna validerar till true måste modelstateerrors visas.
-                vsErrors2.ShowModelStateErrors = true;
+                
+                //vsErrors2.ShowModelStateErrors = true;
 
                 if (ModelState.IsValid)
                 {
@@ -157,7 +165,7 @@ namespace Labb2_2
             else
             {
                 //sätt showmodelstateerrors till false igen om validation-kontrollerna inte valideras till true.
-                vsErrors2.ShowModelStateErrors = false;
+                //vsErrors2.ShowModelStateErrors = false;
             }
         }
 

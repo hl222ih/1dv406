@@ -18,7 +18,14 @@ namespace Labb2_2.Model.DAL
 
         protected SqlConnection CreateConnection()
         {
-            return new SqlConnection(connectionString);
+            try
+            {
+                return new SqlConnection(connectionString);
+            }
+            catch
+            {
+                throw new ApplicationException("Misslyckades med att ansluta till databasen.");
+            }
         }
     }
 }
