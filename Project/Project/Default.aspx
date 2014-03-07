@@ -1,10 +1,19 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-
-    <asp:DropDownList ID="DropDownList1" runat="server" ItemType="Project.Model.WordType" DataValueField="WTypeId" SelectMethod="GetWordTypeData" DataTextField="WType" OnDataBound="DropDownList1_DataBound">
-
-    </asp:DropDownList>
+              
+    <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
+        Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.
+        DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
+        DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
+    <asp:DropDownList ID="DropDownList1" runat="server"      
+        DataValueField="WTypeId" ItemType="Project.PageModel.WordTypeItem"
+        DataTextField="WType" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" 
+        SelectMethod="GetWordTypeItemData" 
+        OnDataBound="DropDownList1_DataBound" AutoPostBack="True">
+    </asp:DropDownList>                                                           
+              
+    
   <%--  <asp:Repeater ID="rptItems" runat="server"
         ItemType=""
         >
