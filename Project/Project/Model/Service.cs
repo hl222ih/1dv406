@@ -11,25 +11,25 @@ namespace Project.Model
     public class Service
     {
         private CommunicationDAL communicationDAL;
-        private IEnumerable<WordTypeItem> wordTypeItems;
+        private IEnumerable<PageWordType> pageWordTypes;
 
         private CommunicationDAL CommunicationDAL
         {
             get { return communicationDAL ?? (communicationDAL = new CommunicationDAL()); }
         }
 
-        public IEnumerable<WordTypeItem> WordTypeItems
+        public IEnumerable<PageWordType> PageWordTypes
         {
             get 
             { 
-                if (wordTypeItems == null)
+                if (pageWordTypes == null)
                 {
                     //hårdkodade värden från databasens Color-tabell.
                     var colors = new Dictionary<int, string>() { 
                         { 1, "#fde885" }, { 2, "#f9c7af" }, { 3, "#dce8b9" },
                         { 4, "#d6ecf7" }, { 5, "#dad5d2" }, { 6, "#ffffff" } };
 
-                    wordTypeItems = GetWordTypes().Select(wt => new WordTypeItem {
+                    pageWordTypes = GetWordTypes().Select(wt => new PageWordType {
                         WType = wt.WType,
                         WTypeId = wt.WTypeId,
                         ColorId = wt.ColorId,
@@ -37,7 +37,7 @@ namespace Project.Model
                     });
                 }
 
-                return wordTypeItems;
+                return pageWordTypes;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Project.Model
 
         public string GetColorHexCodeById(int colorId)
         {
-            return WordTypeItems.First(wti => wti.ColorId == colorId).ColorHexCode;
+            return PageWordTypes.First(pwt => pwt.ColorId == colorId).ColorHexCode;
         }
 
 

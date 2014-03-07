@@ -7,10 +7,10 @@
         DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
         DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
     <asp:DropDownList ID="DropDownList1" runat="server"      
-        DataValueField="WTypeId" ItemType="Project.PageModel.WordTypeItem"
+        DataValueField="WTypeId" ItemType="Project.PageModel.PageWordType"
         DataTextField="WType" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" 
-        SelectMethod="GetWordTypeItemData" 
-        OnDataBound="DropDownList1_DataBound" AutoPostBack="True">
+        SelectMethod="GetPageWordTypeData" 
+        OnDataBound="ddlPageWordType_DataBound" AutoPostBack="True">
     </asp:DropDownList>                                                           
               
     

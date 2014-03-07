@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Project.PageModel
 {
-    public class WordTypeItem
+    public class PageWordType
     {
         public int WTypeId { get; set; }
         public int ColorId { get; set; }

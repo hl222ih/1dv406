@@ -32,26 +32,26 @@ namespace Project
 
         }
 
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlPageWordType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetBackgroundColorsToDropDownListItems();
+            SetBackgroundColorsToDdlPageWordType();
         }
 
-        public IEnumerable<WordTypeItem> GetWordTypeItemData()
+        public IEnumerable<PageWordType> GetPageWordTypeData()
         {
-            return Service.WordTypeItems;
+            return Service.PageWordTypes;
         }
 
-        protected void DropDownList1_DataBound(object sender, EventArgs e)
+        protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {
-            SetBackgroundColorsToDropDownListItems();
+            SetBackgroundColorsToDdlPageWordType();
         }
 
-        private void SetBackgroundColorsToDropDownListItems()
+        private void SetBackgroundColorsToDdlPageWordType()
         {
-            DropDownList1.BackColor = Service.GetColorById(int.Parse(DropDownList1.SelectedValue));
+            ddlPageWordType.BackColor = Service.GetColorById(int.Parse(ddlPageWordType.SelectedValue));
 
-            foreach (ListItem li in DropDownList1.Items)
+            foreach (ListItem li in ddlPageWordType.Items)
             {
                 li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
             }
