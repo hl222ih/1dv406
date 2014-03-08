@@ -8,6 +8,8 @@ using System.Web.UI.HtmlControls;
 using Project.Model;
 using Project.PageModel;
 using System.Web.DynamicData;
+using System.Web.Services;
+using System.Web.Script.Services;
 
 namespace Project
 {
@@ -51,8 +53,8 @@ namespace Project
                     ID = String.Format("imbUnit{0}", pi.Position),
                     ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
                     BackColor = pi.BackGroundColor,
-                    Height = 200, //testvärde
-                    Width = 300 //testvärde
+                    Height = 100, //testvärde
+                    Width = 150 //testvärde
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
@@ -81,32 +83,40 @@ namespace Project
         
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
-
+            //sätter bakgrundsfärg på ddlPageWordType:s listitems i enlighet med respektive ordtyp.
+            if (ddlPageWordType.Items.Count > 0)
+            {
+                foreach (ListItem li in ddlPageWordType.Items)
+                {
+                    li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
+                }
+            }
         }
 
-        protected void ddlPageWordType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetBackgroundColorsToDdlPageWordType();
-        }
+        //protected void ddlPageWordType_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    SetBackgroundColorsToDdlPageWordType();
+        //}
 
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
             return Service.PageWordTypes;
         }
 
-        protected void ddlPageWordType_DataBound(object sender, EventArgs e)
-        {
-            SetBackgroundColorsToDdlPageWordType();
-        }
+        //protected void ddlPageWordType_DataBound(object sender, EventArgs e)
+        //{
+        //    SetBackgroundColorsToDdlPageWordType();
+        //}
 
-        private void SetBackgroundColorsToDdlPageWordType()
-        {
-            ddlPageWordType.BackColor = Service.GetColorById(int.Parse(ddlPageWordType.SelectedValue));
+        //private void SetBackgroundColorsToDdlPageWordType()
+        //{
+        //   // ddlPageWordType.BackColor = Service.GetColorById(int.Parse(ddlPageWordType.SelectedValue));
 
-            foreach (ListItem li in ddlPageWordType.Items)
-            {
-                li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
-            }
-        }
+        //    foreach (ListItem li in ddlPageWordType.Items)
+        //    {
+        //        li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
+        //    }
+        //}
+
     }
 }

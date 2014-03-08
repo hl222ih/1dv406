@@ -37,11 +37,9 @@
         </Scripts>
     </asp:ScriptManager>
     <header>
+        <asp:Image ID="imgLogo" runat="server" AlternateText="logo" ImageUrl="~/Images/BlissKom.png" />
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title">
-                    <a runat="server" href="~/">your logo here</a>
-                </p>
             </div>
             <div class="float-right">
                 <section id="login">

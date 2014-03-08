@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-              
+    <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px">
     <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
         Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.
         DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
@@ -10,7 +10,7 @@
         DataValueField="WTypeId" ItemType="Project.PageModel.PageWordType"
         DataTextField="WType" OnSelectedIndexChanged="ddlPageWordType_SelectedIndexChanged" 
         SelectMethod="GetPageWordTypeData" 
-        OnDataBound="ddlPageWordType_DataBound" AutoPostBack="True">
+        OnDataBound="ddlPageWordType_DataBound" AutoPostBack="False">
     </asp:DropDownList>                                                           
               
     
@@ -21,7 +21,7 @@
             <asp:ImageButton ID="myButton" runat="server" /> <!-- ImageUrl='<%# "~/Images/Blissymbols/" + Item.FileName %>' />
             <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
         </ItemTemplate>
-    </asp:Repeater>           --%>
+    </asp:Repeater>       
     <asp:ListView ID="ListView1" runat="server">
         <ItemTemplate>
 
@@ -29,16 +29,18 @@
     </asp:ListView>
     
     <div runat="server" id="divControl" class="item">...</div>
-
     <%-- Platshållare för items, alltså bilderna på "kartan".--%>
+    <asp:Panel ID="pnlInnerTablet" runat="server">
     <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
-    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
-    <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg" Height="200" Width="300" />
-    <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="200" Width="300" />
-    <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg" Height="200" Width="300" />
-    <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg" Height="200" Width="300" />
-    <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg" Height="200" Width="300" />
-    <section class="featured">
+    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="100" Width="150" />
+    <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg" Height="100" Width="150" />
+    <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="100" Width="150" />
+    <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg" Height="100" Width="150" />
+    <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg" Height="100" Width="150" />
+    <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg" Height="100" Width="150" />
+    </asp:Panel>
+        
+        <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
@@ -52,6 +54,7 @@
             </p>
         </div>
     </section>
+    </asp:Panel>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h3>We suggest the following:</h3>
