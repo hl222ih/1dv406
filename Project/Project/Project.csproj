@@ -328,7 +328,12 @@
     <Compile Include="Model\Meaning.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\WordType.cs" />
+    <Compile Include="PageModel\PageChildWordItem.cs" />
     <Compile Include="PageModel\PageItem.cs" />
+    <Compile Include="PageModel\PageItemsUnit.cs" />
+    <Compile Include="PageModel\PageParentCategoryItem.cs" />
+    <Compile Include="PageModel\PageParentWordItem.cs" />
+    <Compile Include="PageModel\PageItemType.cs" />
     <Compile Include="PageModel\PageWordType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
