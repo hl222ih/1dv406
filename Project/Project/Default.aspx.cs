@@ -37,9 +37,15 @@ namespace Project
             SetBackgroundColorsToDdlPageWordType();
         }
 
+        private IEnumerable<PageWordType> pageWordTypes;
+
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
-            return Service.PageWordTypes;
+            if (Session["PageWordTypes"] == null)
+            {
+                Session["PageWordTypes"] = Service.PageWordTypes;
+            }
+            return Session["PageWordTypes"] as IEnumerable<PageWordType>;
         }
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
