@@ -12,6 +12,7 @@ namespace Project.Model
     {
         private CommunicationDAL communicationDAL;
         private IEnumerable<PageWordType> pageWordTypes;
+        private PagePage currentPage;
 
         private CommunicationDAL CommunicationDAL
         {
