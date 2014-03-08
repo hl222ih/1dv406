@@ -14,6 +14,11 @@ namespace Project.Model
         private IEnumerable<PageWordType> pageWordTypes;
         private PagePage currentPage;
 
+        private PagePage CurrentPage
+        {
+            get { return currentPage ?? (currentPage = new PagePage()); }
+        }
+
         private CommunicationDAL CommunicationDAL
         {
             get { return communicationDAL ?? (communicationDAL = new CommunicationDAL()); }
@@ -70,5 +75,14 @@ namespace Project.Model
         }
         //public void AddMeaning(string word, WordType wordType, string comment = "")
 
+        public string GetCssTemplateName()
+        {
+            return CurrentPage.CssTemplateName;
+        }
+
+        public IEnumerable<PageItemsUnit> GetPageItemsUnits()
+        {
+            return CurrentPage.PageItemsUnits.AsEnumerable();
+        }
     }
 }

@@ -27,11 +27,58 @@ namespace Project
             }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
-
+            RenderImages();
         }
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void RenderImages()
+        {
+            var CssTemplateName = Service.GetCssTemplateName();
+            var pageItemsUnits = Service.GetPageItemsUnits();
+            var counter = 0;
+
+            foreach (var piu in pageItemsUnits)
+            {
+                counter++;
+                var pi = piu.GetPageParentItem();
+                ImageButton imb = new ImageButton()
+                {//    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
+                    ID = String.Format("imbUnit{0}", pi.Position),
+                    ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
+                    BackColor = pi.BackGroundColor,
+                    Height = 200, //testvärde
+                    Width = 300 //testvärde
+                };
+
+                if (pi.PageItemType == PageItemType.ParentWordItem)
+                {
+                    //speciella egenskaper för pwi
+                    imb.Click += new ImageClickEventHandler(imbWordItem_Click);
+                }
+                else if (pi.PageItemType == PageItemType.ParentCategoryItem)
+                {
+                    //speciella egenskaper för pci
+                    imb.Click += new ImageClickEventHandler(imbParentItem_Click);
+                }
+
+
+
+                phItems.Controls.Add(imb);
+            }
+        }
+
+        protected void imbWordItem_Click(object sender, ImageClickEventArgs e)
+        {
+        }
+        protected void imbParentItem_Click(object sender, ImageClickEventArgs e)
+        {
+        }
+        
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
 

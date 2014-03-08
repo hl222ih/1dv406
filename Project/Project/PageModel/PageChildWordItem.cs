@@ -7,10 +7,6 @@ namespace Project.PageModel
 {
     public class PageChildWordItem : PageItem
     {
-        public override PageItemType GetPageItemType()
-        {
-            return PageItemType.ChildWordItem;
-        }
-
+        public override PageItemType PageItemType { get { return PageItemType.ChildWordItem; } }
     }
 }

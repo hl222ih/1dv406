@@ -11,8 +11,13 @@ namespace Project.PageModel
     //går att navigera mellan dem i en viss ordning.
     public class PageItemsUnit
     {
-        IEnumerable<PageItem> pageItems;
+        public IList<PageItem> PageItems { get; set; }
 
-
+        public PageItem GetPageParentItem()
+        {
+            return PageItems.First(pi =>
+                pi.PageItemType == PageItemType.ParentCategoryItem ||
+                pi.PageItemType == PageItemType.ParentWordItem);
+        }
     }
 }

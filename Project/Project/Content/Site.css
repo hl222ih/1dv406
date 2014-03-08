@@ -754,4 +754,14 @@ tr.pager td {
     background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.3), rgba(0,0,0,0.1)); /* Safari och iOS */
     background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
 }
+
+.item.page-default {
+    background-color: blue;
+    color: red;
+    border-radius: 10px;
+    border: 5px solid green;
+}
+
+
+
     

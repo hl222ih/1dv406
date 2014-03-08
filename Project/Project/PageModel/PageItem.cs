@@ -12,18 +12,18 @@ namespace Project.PageModel
     //Kärnan i ett PageItem-objekt är dess Meaning.
     abstract public class PageItem
     {
-        private Color pageItemBackGroundColor;
+        private Color backGroundColor;
 
         public int PageItemId { get; set; } //motsvarar DB-tabellen Meaning:s MeaningId.
         public string MeaningWord { get; set; }
         public string MeaningComment { get; set; }
-        public Color PageItemBackGroundColor
+        public Color BackGroundColor
         {
             get
             {
-                if (pageItemBackGroundColor != Color.Empty)
+                if (backGroundColor != Color.Empty)
                 {
-                    return pageItemBackGroundColor;
+                    return backGroundColor;
                 }
                 else
                 {
@@ -32,12 +32,12 @@ namespace Project.PageModel
             }
             set //eg. bara intressant för blissymboler.
             {
-                pageItemBackGroundColor = value;
+                backGroundColor = value;
             } 
         }
         public int ImageId { get; set; }
         public int Position { get; set; }
         public string ImageComment { get; set; }
-        abstract public PageItemType GetPageItemType();
+        abstract public PageItemType PageItemType { get; }
     }
 }

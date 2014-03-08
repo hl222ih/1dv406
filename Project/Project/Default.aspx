@@ -29,7 +29,9 @@
     </asp:ListView>
     
     <div runat="server" id="divControl" class="item">...</div>
-    
+
+    <%-- Platshållare för items, alltså bilderna på "kartan".--%>
+    <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
     <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
     <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg" Height="200" Width="300" />
     <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="200" Width="300" />
