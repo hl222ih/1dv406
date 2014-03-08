@@ -15,11 +15,16 @@ namespace Project
     {
         //protected HtmlGenericControl divControl;
 
-        private Service service;
-
         private Service Service
         {
-            get { return service ?? (service = new Service()); }
+            get
+            {
+                if (Session["Service"] == null)
+                {
+                    Session["Service"] = new Service();
+                }
+                return Session["Service"] as Service;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -37,15 +42,9 @@ namespace Project
             SetBackgroundColorsToDdlPageWordType();
         }
 
-        private IEnumerable<PageWordType> pageWordTypes;
-
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
-            if (Session["PageWordTypes"] == null)
-            {
-                Session["PageWordTypes"] = Service.PageWordTypes;
-            }
-            return Session["PageWordTypes"] as IEnumerable<PageWordType>;
+            return Service.PageWordTypes;
         }
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)

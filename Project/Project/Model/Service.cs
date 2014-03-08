@@ -21,7 +21,7 @@ namespace Project.Model
         public IEnumerable<PageWordType> PageWordTypes
         {
             get 
-            { 
+            {
                 if (pageWordTypes == null)
                 {
                     //hårdkodade värden från databasens Color-tabell.
