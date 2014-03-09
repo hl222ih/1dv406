@@ -17,8 +17,8 @@
     <form runat="server">
     <asp:ScriptManager runat="server">
         <Scripts>
-            <%--Framework Scripts--%>
-            
+           
+             <%--Framework Scripts--%>
             <asp:ScriptReference Name="MsAjaxBundle" />
             <asp:ScriptReference Name="jquery" />
             <asp:ScriptReference Name="jquery.ui.combined" />

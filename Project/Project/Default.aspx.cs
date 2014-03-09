@@ -56,8 +56,7 @@ namespace Project
                     ID = String.Format("imbUnit{0}", pi.Position),
                     ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
                     BackColor = pi.BackGroundColor,
-                    Height = 100, //testvärde
-                    Width = 150 //testvärde
+                    CssClass = "item"
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)

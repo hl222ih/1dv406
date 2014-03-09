@@ -40,10 +40,10 @@
                 </asp:UpdatePanel>
 
             <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg"/>
-            <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="100" Width="150" />
-            <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg" Height="100" Width="150" />
-            <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg" Height="100" Width="150" />
-            <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg" Height="100" Width="150" />
+            <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg"/>
+            <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg"/>
+            <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg"/>
+            <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg"/>
         </asp:Panel>
         
     </asp:Panel>
