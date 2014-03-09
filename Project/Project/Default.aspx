@@ -1,4 +1,4 @@
-﻿<%@ Page Title="BlissKom" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" %>
+﻿<%@ Page Title="BlissKom" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" ViewStateMode="Disabled" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
 
@@ -32,11 +32,14 @@
     <div runat="server" id="divControl" class="item">...</div>
     <%-- Platshållare för items, alltså bilderna på "kartan".--%>
         <asp:Panel ID="pnlInnerTablet" runat="server">
-            <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
+                <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
-                        <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="100" Width="150" OnClick="ImageButton1_Click" />
+                        <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" OnClick="ImageButton1_Click" />
                     </ContentTemplate>
+                    <Triggers>
+                        
+                    </Triggers>
                 </asp:UpdatePanel>
 
             <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg"/>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
+//using System.Web.UI.HtmlControls;
 using Project.Model;
 using Project.PageModel;
 using System.Web.DynamicData;
@@ -31,9 +31,11 @@ namespace Project
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            //rendera bara ItemsUnits när det behövs
+            if (Session["refreshItemsUnits"] == null || (string)Session["refreshItemsUnits"] == "true")
             {
                 RenderImages();
+                ViewState["refreshItemsUnits"] = "false";
             }
         }
 
@@ -51,36 +53,51 @@ namespace Project
             {
                 counter++;
                 var pi = piu.GetPageParentItem();
+
+                UpdatePanel upnl = new UpdatePanel();
+
                 ImageButton imb = new ImageButton()
-                {//    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
+                {
                     ID = String.Format("imbUnit{0}", pi.Position),
                     ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
                     BackColor = pi.BackGroundColor,
                     CssClass = "item"
+                    
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
                     //speciella egenskaper för pwi
-                    imb.Click += new ImageClickEventHandler(imbWordItem_Click);
+                    imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentWordItem_Click);
                 }
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
                     //speciella egenskaper för pci
-                    imb.Click += new ImageClickEventHandler(imbParentItem_Click);
+                    imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentCategoryItem_Click);
                 }
 
-
-
-                phItems.Controls.Add(imb);
+                //upnl.ContentTemplateContainer.Controls.Add(imb);
+                upnl.ContentTemplateContainer.Controls.Add(imb);
+                phItems.Controls.Add(upnl);
             }
         }
 
-        protected void imbWordItem_Click(object sender, ImageClickEventArgs e)
+        protected void imbParentWordItem_Click(object sender, ImageClickEventArgs e)
         {
+            ((ImageButton)sender).BackColor = Service.GetColorById(2);
         }
-        protected void imbParentItem_Click(object sender, ImageClickEventArgs e)
+        protected void imbParentCategoryItem_Click(object sender, ImageClickEventArgs e)
         {
+            var imb = ((ImageButton)sender);
+            if (imb.CssClass == "item")
+            {
+                imb.CssClass = "itemFull";
+            }
+            else
+            {
+                imb.CssClass = "item";
+            }
+            
         }
         
         protected void Page_LoadComplete(object sender, EventArgs e)

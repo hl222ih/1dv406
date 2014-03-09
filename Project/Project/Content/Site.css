@@ -150,8 +150,25 @@ header {
     top: 5%;
 }*/
 
+#Content_pnlInnerTablet > div {
+    width: 15%;
+    height: 15%;
+}
+
+#Content_pnlInnerTablet > div > .item {
+    width: 100%;
+    height: 100%;
+}
 
 #Content_pnlInnerTablet > .item {
     width: 15%;
     height: 15%;
+}
+
+.itemFull {
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    left: 5%;
+    top: 5%;
 }
