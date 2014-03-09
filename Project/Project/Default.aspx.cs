@@ -33,7 +33,6 @@ namespace Project
         {
             if (!IsPostBack)
             {
-            
                 RenderImages();
             }
         }
@@ -87,14 +86,7 @@ namespace Project
         
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
-            //sätter bakgrundsfärg på ddlPageWordType:s listitems i enlighet med respektive ordtyp.
-            if (ddlPageWordType.Items.Count > 0)
-            {
-                foreach (ListItem li in ddlPageWordType.Items)
-                {
-                    li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
-                }
-            }
+            SetBackgroundColorsToDdlPageWordType();
         }
 
         //protected void ddlPageWordType_SelectedIndexChanged(object sender, EventArgs e)
@@ -112,20 +104,23 @@ namespace Project
             ImageButton1.BackColor = Service.GetColorById(4);
         }
 
-        //protected void ddlPageWordType_DataBound(object sender, EventArgs e)
-        //{
-        //    SetBackgroundColorsToDdlPageWordType();
-        //}
+        protected void ddlPageWordType_DataBound(object sender, EventArgs e)
+        {
+            SetBackgroundColorsToDdlPageWordType();
+        }
 
-        //private void SetBackgroundColorsToDdlPageWordType()
-        //{
-        //   // ddlPageWordType.BackColor = Service.GetColorById(int.Parse(ddlPageWordType.SelectedValue));
+        //sätter bakgrundsfärg på ddlPageWordType:s listitems i enlighet med respektive ordtyp.
+        private void SetBackgroundColorsToDdlPageWordType()
+        {
+            if (ddlPageWordType.Items.Count > 0)
+            {
+                foreach (ListItem li in ddlPageWordType.Items)
+                {
+                    li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
+                }
+            }
 
-        //    foreach (ListItem li in ddlPageWordType.Items)
-        //    {
-        //        li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
-        //    }
-        //}
+        }
 
     }
 }

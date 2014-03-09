@@ -13,15 +13,6 @@ namespace Project {
     public partial class _Default {
         
         /// <summary>
-        /// pnlTablet control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlTablet;
-        
-        /// <summary>
         /// ddlPageWordType control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPageWordType;
+        
+        /// <summary>
+        /// pnlTablet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTablet;
         
         /// <summary>
         /// pnlInnerTablet control.
