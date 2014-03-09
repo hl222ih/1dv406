@@ -8,9 +8,8 @@
         DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
     <asp:DropDownList ID="ddlPageWordType" runat="server"      
         DataValueField="WTypeId" ItemType="Project.PageModel.PageWordType"
-        DataTextField="WType" OnSelectedIndexChanged="ddlPageWordType_SelectedIndexChanged" 
-        SelectMethod="GetPageWordTypeData" 
-        OnDataBound="ddlPageWordType_DataBound" AutoPostBack="False">
+        DataTextField="WType"
+        SelectMethod="GetPageWordTypeData">
     </asp:DropDownList>                                                           
               
     
@@ -32,7 +31,12 @@
     <%-- Platshållare för items, alltså bilderna på "kartan".--%>
     <asp:Panel ID="pnlInnerTablet" runat="server">
     <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
-    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="100" Width="150" />
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="100" Width="150" OnClick="ImageButton1_Click" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
     <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg" Height="100" Width="150" />
     <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg" Height="100" Width="150" />
     <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg" Height="100" Width="150" />

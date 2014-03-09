@@ -31,7 +31,11 @@ namespace Project
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            RenderImages();
+            if (!IsPostBack)
+            {
+            
+                RenderImages();
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -101,6 +105,11 @@ namespace Project
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
             return Service.PageWordTypes;
+        }
+
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            ImageButton1.BackColor = Service.GetColorById(4);
         }
 
         //protected void ddlPageWordType_DataBound(object sender, EventArgs e)
