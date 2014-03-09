@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//using System.Web.UI.HtmlControls;
+using System.Web.UI.HtmlControls;
 using Project.Model;
 using Project.PageModel;
 using System.Web.DynamicData;
@@ -61,7 +61,7 @@ namespace Project
                     ID = String.Format("imbUnit{0}", pi.Position),
                     ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
                     BackColor = pi.BackGroundColor,
-                    CssClass = "item"
+                    CssClass = String.Format("item {0}", CssTemplateName)
                     
                 };
 
@@ -76,8 +76,7 @@ namespace Project
                     imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentCategoryItem_Click);
                 }
 
-                //upnl.ContentTemplateContainer.Controls.Add(imb);
-                upnl.ContentTemplateContainer.Controls.Add(imb);
+                upnl.ContentTemplateContainer.Controls.Add(imb);                
                 phItems.Controls.Add(upnl);
             }
         }
@@ -89,13 +88,13 @@ namespace Project
         protected void imbParentCategoryItem_Click(object sender, ImageClickEventArgs e)
         {
             var imb = ((ImageButton)sender);
-            if (imb.CssClass == "item")
+            if (imb.CssClass.Substring(0,5) == "item ")
             {
-                imb.CssClass = "itemFull";
+                imb.CssClass = imb.CssClass.Replace("item ", "itemFull ");
             }
             else
             {
-                imb.CssClass = "item";
+                imb.CssClass = imb.CssClass.Replace("itemFull ", "item ");
             }
             
         }
@@ -105,20 +104,15 @@ namespace Project
             SetBackgroundColorsToDdlPageWordType();
         }
 
-        //protected void ddlPageWordType_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    SetBackgroundColorsToDdlPageWordType();
-        //}
-
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
             return Service.PageWordTypes;
         }
 
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            ImageButton1.BackColor = Service.GetColorById(4);
-        }
+        //protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        //{
+        //    ImageButton1.BackColor = Service.GetColorById(4);
+        //}
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {

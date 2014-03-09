@@ -25,25 +25,199 @@ namespace Project.PageModel
             PageItemsUnits = new List<PageItemsUnit>();
             PageItemsUnits.Add(new PageItemsUnit
             {
-                PageItems =  new List<PageItem>{
+                PageItems = new List<PageItem>{
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
                         ImageId = 1,
                         MeaningWord = "test",
                         PageItemId = 1,
-                        Position = 1,
-                    },
-                    new PageParentCategoryItem { 
-                        ImageComment = "",
-                        MeaningComment = "",
-                        ImageId = 1,
-                        MeaningWord = "test",
-                        PageItemId = 1,
-                        Position = 1,
+                        Position = 1
                     }
                 }
             });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 2,
+                        MeaningWord = "test",
+                        PageItemId = 2,
+                        Position = 2
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 3,
+                        MeaningWord = "test",
+                        PageItemId = 3,
+                        Position = 3
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 4,
+                        MeaningWord = "test",
+                        PageItemId = 4,
+                        Position = 4
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 5,
+                        MeaningWord = "test",
+                        PageItemId = 5,
+                        Position = 5
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 1,
+                        MeaningWord = "test",
+                        PageItemId = 1,
+                        Position = 6
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 2,
+                        MeaningWord = "test",
+                        PageItemId = 2,
+                        Position = 7
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 3,
+                        MeaningWord = "test",
+                        PageItemId = 3,
+                        Position = 8
+                    }
+                }
+            });
+            PageItemsUnits.Add(new PageItemsUnit
+            {
+                PageItems = new List<PageItem>{
+                    new PageParentCategoryItem { 
+                        ImageComment = "",
+                        MeaningComment = "",
+                        ImageId = 4,
+                        MeaningWord = "test",
+                        PageItemId = 4,
+                        Position = 9
+                    }
+                }
+            });
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
+            //PageItemsUnits.Add(new PageItemsUnit
+            //{
+            //    PageItems = new List<PageItem>{
+            //        new PageParentCategoryItem { 
+            //            ImageComment = "",
+            //            MeaningComment = "",
+            //            ImageId = 1,
+            //            MeaningWord = "test",
+            //            PageItemId = 1,
+            //            Position = 1
+            //        }
+            //    }
+            //});
         }
     }
 }
