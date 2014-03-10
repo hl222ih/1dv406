@@ -13,6 +13,18 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+    <script> <%--tillfälligt--%>
+         function dim() {
+             var pnl = document.getElementById("Content_pnlInnerTablet");
+             var dimmer = document.createElement("div");
+             dimmer.id = "dimmer";
+             pnl.appendChild(dimmer);
+         }
+         function undim() {
+             var dimmer = document.getElementById("dimmer");
+             if (dimmer) dimmer.parentElement.removeChild(dimmer);
+         }
+    </script>
 </head>
 <body>
     <form runat="server">

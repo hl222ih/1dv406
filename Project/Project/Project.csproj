@@ -329,6 +329,7 @@
     <Compile Include="Model\Meaning.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\WordType.cs" />
+    <Compile Include="PageModel\PageImageType.cs" />
     <Compile Include="PageModel\PagePage.cs" />
     <Compile Include="PageModel\PageCategory.cs" />
     <Compile Include="PageModel\PageChildWordItem.cs" />

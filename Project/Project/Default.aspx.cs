@@ -59,21 +59,22 @@ namespace Project
                 ImageButton imb = new ImageButton()
                 {
                     ID = String.Format("imbUnit{0}", pi.Position),
-                    ImageUrl = "~/Images/Blissymbols/hus.svg", //testvärde
+                    ImageUrl = String.Format("~/Images/Blissymbols/{0}", pi.ImageFileName),
                     BackColor = pi.BackGroundColor,
                     CssClass = String.Format("item {0}", CssTemplateName)
-                    
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
                     //speciella egenskaper för pwi
                     imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentWordItem_Click);
+                    imb.OnClientClick = "dim()";
                 }
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
                     //speciella egenskaper för pci
                     imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentCategoryItem_Click);
+                    imb.OnClientClick = "dim()";
                 }
 
                 upnl.ContentTemplateContainer.Controls.Add(imb);                
@@ -91,10 +92,12 @@ namespace Project
             if (imb.CssClass.Substring(0,5) == "item ")
             {
                 imb.CssClass = imb.CssClass.Replace("item ", "itemFull ");
+                imb.OnClientClick = "undim()";
             }
             else
             {
                 imb.CssClass = imb.CssClass.Replace("itemFull ", "item ");
+                imb.OnClientClick = "dim()";
             }
             
         }

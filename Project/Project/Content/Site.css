@@ -163,6 +163,7 @@ header {
 
     #Content_pnlInnerTablet > div > .item {
         position: absolute;
+        background-color: none;
     }
 
 /*behövs inte sen*/
@@ -171,12 +172,24 @@ header {
     height: 18%;
 }
 
+#dimmer {
+    background:black;
+    opacity:0.7;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100% !important;
+    height:100% !important;
+    z-index:1; 
+}
+
 .itemFull {
     position: absolute !important;
     height: 90% !important;
     width: 90% !important;
     left: 5% !important;
     top: 5% !important;
+    z-index: 2 !important;
 }
 
 /*START: page-default template*/

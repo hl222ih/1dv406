@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Project.Model;
+using System.Drawing;
 
 namespace Project.PageModel
 {
@@ -29,10 +31,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 1,
+                        ImageFileName = "punkt.svg",
                         MeaningWord = "test",
                         PageItemId = 1,
-                        Position = 1
+                        Position = 1,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#fde885")
                     }
                 }
             });
@@ -42,10 +46,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 2,
+                        ImageFileName = "utanfor.svg",
                         MeaningWord = "test",
                         PageItemId = 2,
-                        Position = 2
+                        Position = 2,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#f9c7af")
                     }
                 }
             });
@@ -55,10 +61,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 3,
+                        ImageFileName = "toalett.svg",
                         MeaningWord = "test",
                         PageItemId = 3,
-                        Position = 3
+                        Position = 3,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#dce8b9")
                     }
                 }
             });
@@ -68,10 +76,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 4,
+                        ImageFileName = "spegel.svg",
                         MeaningWord = "test",
                         PageItemId = 4,
-                        Position = 4
+                        Position = 4,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#d6ecf7")
                     }
                 }
             });
@@ -81,10 +91,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 5,
+                        ImageFileName = "sjukhus.svg",
                         MeaningWord = "test",
                         PageItemId = 5,
-                        Position = 5
+                        Position = 5,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#dad5d2")
                     }
                 }
             });
@@ -94,10 +106,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 1,
+                        ImageFileName = "God.svg",
                         MeaningWord = "test",
                         PageItemId = 1,
-                        Position = 6
+                        Position = 6,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#ffffff")
                     }
                 }
             });
@@ -107,10 +121,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 2,
+                        ImageFileName = "hjarta.svg",
                         MeaningWord = "test",
                         PageItemId = 2,
-                        Position = 7
+                        Position = 7,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#fde885")
                     }
                 }
             });
@@ -120,10 +136,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 3,
+                        ImageFileName = "hus.svg",
                         MeaningWord = "test",
                         PageItemId = 3,
-                        Position = 8
+                        Position = 8,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#f9c7af")
                     }
                 }
             });
@@ -133,10 +151,12 @@ namespace Project.PageModel
                     new PageParentCategoryItem { 
                         ImageComment = "",
                         MeaningComment = "",
-                        ImageId = 4,
+                        ImageFileName = "sjo.svg",
                         MeaningWord = "test",
                         PageItemId = 4,
-                        Position = 9
+                        Position = 9,
+                        PageImageType = PageImageType.Blissymbol,
+                        BackGroundColor = ColorTranslator.FromHtml("#dce8b9")
                     }
                 }
             });
@@ -146,7 +166,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1
@@ -159,7 +179,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1
@@ -172,7 +192,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1
@@ -185,7 +205,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1
@@ -198,7 +218,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1
@@ -211,7 +231,7 @@ namespace Project.PageModel
             //        new PageParentCategoryItem { 
             //            ImageComment = "",
             //            MeaningComment = "",
-            //            ImageId = 1,
+            //            ImageFileName = 1,
             //            MeaningWord = "test",
             //            PageItemId = 1,
             //            Position = 1

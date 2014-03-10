@@ -27,7 +27,7 @@ namespace Project.PageModel
                 }
                 else
                 {
-                    return Color.Transparent;
+                    return Color.White;
                 }
             }
             set //eg. bara intressant för blissymboler.
@@ -35,9 +35,10 @@ namespace Project.PageModel
                 backGroundColor = value;
             } 
         }
-        public int ImageId { get; set; }
+        public string ImageFileName { get; set; }
         public int Position { get; set; }
         public string ImageComment { get; set; }
         abstract public PageItemType PageItemType { get; }
+        public PageImageType PageImageType { get; set; }
     }
 }
