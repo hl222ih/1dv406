@@ -1,0 +1,12 @@
+﻿<svg version="1.1"
+     baseProfile="full"
+     width="157" height="256"
+     xmlns="http://www.w3.org/2000/svg">
+/* house */
+<path d="M 8 203 l 0 -50 50 -50 50 50 0 50 z"
+stroke="black" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 136.5 203 c 42 -50 -42 -50 0 -100"
+stroke="black" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M 136.5 203 l 0 -100"
+stroke="black" fill="none" stroke-width="6" stroke-linecap="round"/>
+</svg>
