@@ -84,7 +84,7 @@ namespace Project
 
         protected void imbParentWordItem_Click(object sender, ImageClickEventArgs e)
         {
-            ((ImageButton)sender).BackColor = Service.GetColorById(2);
+            //((ImageButton)sender).BackColor = Service.GetColorById(2);
         }
         protected void imbParentCategoryItem_Click(object sender, ImageClickEventArgs e)
         {
@@ -129,7 +129,7 @@ namespace Project
             {
                 foreach (ListItem li in ddlPageWordType.Items)
                 {
-                    li.Attributes.CssStyle.Add("background-color", Service.GetColorHexCodeById(int.Parse(li.Value)));
+                    li.Attributes.CssStyle.Add("background-color", Service.GetColorRGBCodeOfPageWordType(int.Parse(li.Value)));
                 }
             }
 

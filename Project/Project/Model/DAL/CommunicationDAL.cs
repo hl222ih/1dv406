@@ -4,21 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using Project.PageModel;
 
 namespace Project.Model.DAL
 {
     public class CommunicationDAL : DALBase
     {
 
-        public IEnumerable<WordType> SelectAllWordTypes()
+        public IEnumerable<PageWordType> SelectAllPageWordTypes()
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    var wordTypes = new List<WordType>();
+                    var pageWordTypes = new List<PageWordType>();
 
-                    var cmd = new SqlCommand("appSchema.usp_SelectAllWordTypes", conn);
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllPageWordTypes", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -28,19 +29,21 @@ namespace Project.Model.DAL
                         var wTypeIdIndex = reader.GetOrdinal("WTypeId");
                         var colorIdIndex = reader.GetOrdinal("ColorId");
                         var wTypeIndex = reader.GetOrdinal("WType");
+                        var colorRGBCodeIndex = reader.GetOrdinal("ColorRGBCode");
 
                         while (reader.Read())
                         {
-                            wordTypes.Add(new WordType
+                            pageWordTypes.Add(new PageWordType
                             {
-                                WTypeId = reader.GetByte(wTypeIdIndex),
-                                ColorId = reader.GetByte(colorIdIndex),
-                                WType = reader.GetString(wTypeIndex)
+                                WTypeId = (int)reader.GetByte(wTypeIdIndex),
+                                ColorId = (int)reader.GetByte(colorIdIndex),
+                                WType = reader.GetString(wTypeIndex),
+                                ColorRGBCode = reader.GetString(colorRGBCodeIndex)
                             });
                         }
                     }
 
-                    return wordTypes;
+                    return pageWordTypes;
 
                 }
                 catch

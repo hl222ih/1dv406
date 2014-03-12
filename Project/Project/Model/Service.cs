@@ -35,11 +35,12 @@ namespace Project.Model
                         { 1, "#fde885" }, { 2, "#f9c7af" }, { 3, "#dce8b9" },
                         { 4, "#d6ecf7" }, { 5, "#dad5d2" }, { 6, "#ffffff" } };
 
-                    pageWordTypes = GetWordTypes().Select(wt => new PageWordType {
-                        WType = wt.WType,
-                        WTypeId = wt.WTypeId,
-                        ColorId = wt.ColorId,
-                        ColorHexCode = colors[wt.ColorId]
+                    pageWordTypes = GetPageWordTypes().Select(pwt => new PageWordType
+                    {
+                        WType = pwt.WType,
+                        WTypeId = pwt.WTypeId,
+                        ColorId = pwt.ColorId,
+                        ColorRGBCode = pwt.ColorRGBCode
                     });
                 }
 
@@ -48,16 +49,30 @@ namespace Project.Model
         }
 
 
-        public Color GetColorById(int colorId)
+        //public Color GetColorById(int wordTypeId)
+        //{
+        //    return ColorTranslator.FromHtml(GetColorHexCodeById(wordTypeId));
+        //}
+
+        //public string GetColorHexCodeById(int wTypeId)
+        //{
+        //    return PageWordTypes.First(pwt => pwt.ColorId == colorId).ColorRGBCode;
+        //}
+
+        public string GetColorRGBCodeOfPageWordType(int wTypeId)
         {
-            return ColorTranslator.FromHtml(GetColorHexCodeById(colorId));
+            return GetPageWordType(wTypeId).ColorRGBCode;
         }
 
-        public string GetColorHexCodeById(int colorId)
+        public Color GetColorOfPageWordType(int wTypeId)
         {
-            return PageWordTypes.First(pwt => pwt.ColorId == colorId).ColorHexCode;
+            return GetPageWordType(wTypeId).Color;
         }
 
+        private PageWordType GetPageWordType(int wTypeId)
+        {
+            return PageWordTypes.First(pwt => pwt.WTypeId == wTypeId);
+        }
 
         public Service()
             : base()
@@ -69,9 +84,9 @@ namespace Project.Model
         {
         }
 
-        private IEnumerable<WordType> GetWordTypes()
+        private IEnumerable<PageWordType> GetPageWordTypes()
         {
-            return CommunicationDAL.SelectAllWordTypes();
+            return CommunicationDAL.SelectAllPageWordTypes();
         }
         //public void AddMeaning(string word, WordType wordType, string comment = "")
 
