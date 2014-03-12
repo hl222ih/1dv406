@@ -17,7 +17,14 @@ namespace Project.PageModel
         {
             get
             {
-                return colorRGBCode;
+                if (colorRGBCode != String.Empty)
+                {
+                    return colorRGBCode;
+                }
+                else
+                {
+                    return "#ffffff"; //vit färg som standard
+                }
             }
             set
             {
@@ -26,10 +33,7 @@ namespace Project.PageModel
                 {
                     colorRGBCode = value;
                 }
-                else
-                {
-                    colorRGBCode = "#FFFFFF"; //vit färg som standard
-                }
+                //om fel färgkod skickas in sätts inget värde
             }
         }
         public string WType { get; set; }

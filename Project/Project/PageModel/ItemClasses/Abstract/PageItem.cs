@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace Project.PageModel
 {
@@ -12,33 +13,58 @@ namespace Project.PageModel
     //Kärnan i ett PageItem-objekt är dess Meaning.
     abstract public class PageItem
     {
-        private Color backGroundColor;
+        private string backGroundRGBColor;
 
-        public int PageItemId { get; set; } //motsvarar DB-tabellen Meaning:s MeaningId.
+        public int MeaningId { get; set; }
         public string MeaningWord { get; set; }
         public string MeaningComment { get; set; }
+        public string ImageFileName { get; set; }
+        public int Position { get; set; }
+        public string ImageComment { get; set; }
+        abstract public PageItemType PageItemType { get; set; }
+        public PageImageType PageImageType { get; set; }
+        public string CssTemplateName { get; set; }
         public Color BackGroundColor
         {
             get
             {
-                if (backGroundColor != Color.Empty)
+                if (backGroundRGBColor != String.Empty)
                 {
-                    return backGroundColor;
+                    return ColorTranslator.FromHtml(backGroundRGBColor);
                 }
                 else
                 {
-                    return Color.White;
+                    return Color.White; //vit färg som standard
                 }
             }
             set //eg. bara intressant för blissymboler.
             {
-                backGroundColor = value;
-            } 
+                backGroundRGBColor = String.Format("#{0}{1}{2}", value.R, value.G, value.B);
+            }
         }
-        public string ImageFileName { get; set; }
-        public int Position { get; set; }
-        public string ImageComment { get; set; }
-        abstract public PageItemType PageItemType { get; }
-        public PageImageType PageImageType { get; set; }
+        public string BackGroundRGBColor
+        {
+            get
+            {
+                if (backGroundRGBColor != String.Empty)
+                {
+                    return backGroundRGBColor;
+                }
+                else
+                {
+                    return "#ffffff"; //vit färg som standard
+                }
+            }
+            set
+            {
+                var re = new Regex(@"^\#[a-f0-9]{6}$", RegexOptions.IgnoreCase);
+                if (re.IsMatch(value))
+                {
+                    backGroundRGBColor = value;
+                }
+                //Om fel färgkod skickas in sätts ingen färg
+            }
+
+        }
     }
 }

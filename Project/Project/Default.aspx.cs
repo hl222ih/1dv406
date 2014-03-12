@@ -45,8 +45,8 @@ namespace Project
 
         protected void RenderImages()
         {
-            var CssTemplateName = Service.GetCssTemplateName();
-            var pageItemsUnits = Service.GetPageItemsUnits();
+            var CssTemplateName = Service.GetCurrentCssTemplateName();
+            var pageItemsUnits = Service.GetCurrentPageItemsUnits();
             var counter = 0;
 
             foreach (var piu in pageItemsUnits)

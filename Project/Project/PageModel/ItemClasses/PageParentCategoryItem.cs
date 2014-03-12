@@ -7,7 +7,17 @@ namespace Project.PageModel
 {
     public class PageParentCategoryItem : PageItem
     {
-        public Uri LinkToPage { get; set; }
-        public override PageItemType PageItemType { get { return PageItemType.ParentCategoryItem; } }
+        public string LinkToCategory { get; set; }
+        public override PageItemType PageItemType 
+        {
+            get 
+            { 
+                return PageItemType.ParentCategoryItem; 
+            } 
+            set 
+            { 
+                //inget set 
+            } 
+        }
     }
 }

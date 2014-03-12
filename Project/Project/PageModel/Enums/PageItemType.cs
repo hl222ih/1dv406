@@ -8,7 +8,8 @@ namespace Project.PageModel
     public enum PageItemType
     {
         ParentWordItem,
-        ChildWordItem,
+        ChildLeftWordItem,
+        ChildRightWordItem,
         ParentCategoryItem
     }
 }

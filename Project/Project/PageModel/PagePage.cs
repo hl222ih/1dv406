@@ -33,7 +33,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "punkt.svg",
                         MeaningWord = "test",
-                        PageItemId = 1,
+                        MeaningId = 1,
                         Position = 1,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#fde885")
@@ -48,7 +48,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "utanfor.svg",
                         MeaningWord = "test",
-                        PageItemId = 2,
+                        MeaningId = 2,
                         Position = 2,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#f9c7af")
@@ -63,7 +63,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "toalett.svg",
                         MeaningWord = "test",
-                        PageItemId = 3,
+                        MeaningId = 3,
                         Position = 3,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#dce8b9")
@@ -78,7 +78,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "spegel.svg",
                         MeaningWord = "test",
-                        PageItemId = 4,
+                        MeaningId = 4,
                         Position = 4,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#d6ecf7")
@@ -93,7 +93,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "sjukhus.svg",
                         MeaningWord = "test",
-                        PageItemId = 5,
+                        MeaningId = 5,
                         Position = 5,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#dad5d2")
@@ -108,7 +108,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "God.svg",
                         MeaningWord = "test",
-                        PageItemId = 1,
+                        MeaningId = 1,
                         Position = 6,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#ffffff")
@@ -123,7 +123,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "hjarta.svg",
                         MeaningWord = "test",
-                        PageItemId = 2,
+                        MeaningId = 2,
                         Position = 7,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#fde885")
@@ -138,7 +138,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "hus.svg",
                         MeaningWord = "test",
-                        PageItemId = 3,
+                        MeaningId = 3,
                         Position = 8,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#f9c7af")
@@ -153,7 +153,7 @@ namespace Project.PageModel
                         MeaningComment = "",
                         ImageFileName = "sjo.svg",
                         MeaningWord = "test",
-                        PageItemId = 4,
+                        MeaningId = 4,
                         Position = 9,
                         PageImageType = PageImageType.Blissymbol,
                         BackGroundColor = ColorTranslator.FromHtml("#dce8b9")

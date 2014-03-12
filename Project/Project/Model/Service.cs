@@ -12,12 +12,19 @@ namespace Project.Model
     {
         private CommunicationDAL communicationDAL;
         private IEnumerable<PageWordType> pageWordTypes;
-        private PagePage currentPage;
+        private PageCategory currentPageCategory;
 
-        private PagePage CurrentPage
+        private PageCategory CurrentPageCategory
         {
-            get { return currentPage ?? (currentPage = new PagePage()); }
+            get { return currentPageCategory ?? (currentPageCategory = CommunicationDAL.SelectPartialCategory(1,1)); }
+            set { currentPageCategory = value; }
         }
+        //private PagePage currentPage;
+
+        //private PagePage CurrentPage
+        //{
+        //    get { return currentPage ?? (currentPage = new PagePage()); }
+        //}
 
         private CommunicationDAL CommunicationDAL
         {
@@ -30,11 +37,6 @@ namespace Project.Model
             {
                 if (pageWordTypes == null)
                 {
-                    //hårdkodade värden från databasens Color-tabell.
-                    var colors = new Dictionary<int, string>() { 
-                        { 1, "#fde885" }, { 2, "#f9c7af" }, { 3, "#dce8b9" },
-                        { 4, "#d6ecf7" }, { 5, "#dad5d2" }, { 6, "#ffffff" } };
-
                     pageWordTypes = GetPageWordTypes().Select(pwt => new PageWordType
                     {
                         WType = pwt.WType,
@@ -90,14 +92,19 @@ namespace Project.Model
         }
         //public void AddMeaning(string word, WordType wordType, string comment = "")
 
-        public string GetCssTemplateName()
+        public string GetCurrentCssTemplateName()
         {
-            return CurrentPage.CssTemplateName;
+            return CurrentPageCategory.GetCurrentCssTemplateName();
         }
 
-        public IEnumerable<PageItemsUnit> GetPageItemsUnits()
+        public IEnumerable<PageItemsUnit> GetCurrentPageItemsUnits()
         {
-            return CurrentPage.PageItemsUnits.AsEnumerable();
+            return CurrentPageCategory.GetCurrentPageItemsUnits();
+        }
+
+        public void RefreshCurrentPageCategory(int categoryId, int pageNumber = 1)
+        {
+            CurrentPageCategory = CommunicationDAL.SelectPartialCategory(categoryId, pageNumber);
         }
     }
 }

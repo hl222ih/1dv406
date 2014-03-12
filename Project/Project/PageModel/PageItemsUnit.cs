@@ -11,7 +11,7 @@ namespace Project.PageModel
     //går att navigera mellan dem i en viss ordning.
     public class PageItemsUnit
     {
-        public IList<PageItem> PageItems { get; set; }
+        public List<PageItem> PageItems { get; set; }
 
         public PageItem GetPageParentItem()
         {
