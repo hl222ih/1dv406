@@ -59,7 +59,7 @@ namespace Project
                 ImageButton imb = new ImageButton()
                 {
                     ID = String.Format("imbUnit{0}", pi.Position),
-                    ImageUrl = String.Format("~/Images/Blissymbols/{0}", pi.ImageFileName),
+                    ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName),
                     BackColor = pi.BackGroundColor,
                     CssClass = String.Format("item {0}", CssTemplateName)
                 };
@@ -84,7 +84,17 @@ namespace Project
 
         protected void imbParentWordItem_Click(object sender, ImageClickEventArgs e)
         {
-            //((ImageButton)sender).BackColor = Service.GetColorById(2);
+            var imb = ((ImageButton)sender);
+            if (imb.CssClass.Substring(0, 5) == "item ")
+            {
+                imb.CssClass = imb.CssClass.Replace("item ", "itemFull ");
+                imb.OnClientClick = "undim()";
+            }
+            else
+            {
+                imb.CssClass = imb.CssClass.Replace("itemFull ", "item ");
+                imb.OnClientClick = "dim()";
+            }
         }
         protected void imbParentCategoryItem_Click(object sender, ImageClickEventArgs e)
         {

@@ -7,7 +7,7 @@ namespace Project.PageModel
 {
     public class PageParentCategoryItem : PageItem
     {
-        public string LinkToCategory { get; set; }
+        public int LinkToCategoryId { get; set; }
         public override PageItemType PageItemType 
         {
             get 

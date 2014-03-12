@@ -178,14 +178,15 @@ namespace Project.Model.DAL
                         var pageImageTypeIndex = reader.GetOrdinal("PageImageType");
                         var imageCommentIndex = reader.GetOrdinal("ImageComment");
                         var imageFileNameIndex = reader.GetOrdinal("ImageFileName");
-                        var catRefIndex = reader.GetOrdinal("CatRef");
+                        var catNameIndex = reader.GetOrdinal("CatName");
                         var catRefIdIndex = reader.GetOrdinal("CatRefId");
                         var cssTemplateNameIndex = reader.GetOrdinal("CssTemplateName");
 
                         while (reader.Read())
                         {
                             var pageItemType = reader.GetString(pageItemTypeIndex);
-                            var catRefId = reader.GetInt16(catRefIdIndex);
+                            var catRefId = reader.IsDBNull(catRefIdIndex) ? 
+                                null : (int?)reader.GetInt16(catRefIdIndex);
                             PageItem pageItem;
 
                             if (pageItemType.Equals("Parent"))
@@ -200,7 +201,7 @@ namespace Project.Model.DAL
                                 {
                                     pageItem = new PageParentCategoryItem()
                                     {
-                                        LinkToCategory = reader.GetString(catRefIndex)
+                                        LinkToCategoryId = (int)catRefId
                                     };
                                 }
                             }
