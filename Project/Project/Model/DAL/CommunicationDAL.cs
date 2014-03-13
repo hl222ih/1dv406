@@ -143,17 +143,12 @@ namespace Project.Model.DAL
         }
 
 
-        public PageCategory SelectPartialCategory(int categoryId, int pageNumber)
+        public IEnumerable<PageItem> SelectPageItemsOfPage(int categoryId, int pageNumber)
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    PageCategory pageCategory = new PageCategory
-                    {
-                        CatId = categoryId,
-                        CurrentPageNumber = pageNumber
-                    };
                     var pageItems = new List<PageItem>();
 
                     var cmd = new SqlCommand("appSchema.usp_SelectFullPage", conn);
@@ -180,7 +175,7 @@ namespace Project.Model.DAL
                         var imageFileNameIndex = reader.GetOrdinal("ImageFileName");
                         var catNameIndex = reader.GetOrdinal("CatName");
                         var catRefIdIndex = reader.GetOrdinal("CatRefId");
-                        var cssTemplateNameIndex = reader.GetOrdinal("CssTemplateName");
+                        var cssTemplateNameIndex = reader.GetOrdinal("cssTemplateName");
 
                         while (reader.Read())
                         {
@@ -252,14 +247,7 @@ namespace Project.Model.DAL
 
                     }
 
-                    pageCategory.CurrentPage.PageItemsUnits = pageItems
-                        .GroupBy(pi => pi.MeaningId)
-                        .Select(group => new PageItemsUnit
-                            {
-                                PageItems = group.ToList()
-                            }).ToList();
-
-                    return pageCategory;
+                    return pageItems;
                 }
                 catch
                 {

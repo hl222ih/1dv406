@@ -45,7 +45,7 @@ namespace Project
 
         protected void RenderImages()
         {
-            var CssTemplateName = Service.GetCurrentCssTemplateName();
+            var cssTemplateName = Service.GetCurrentCssTemplateName();
             var pageItemsUnits = Service.GetCurrentPageItemsUnits();
             var counter = 0;
 
@@ -61,7 +61,7 @@ namespace Project
                     ID = String.Format("imbUnit{0}", pi.Position),
                     ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName),
                     BackColor = pi.BackGroundColor,
-                    CssClass = String.Format("item {0}", CssTemplateName)
+                    CssClass = String.Format("item {0}", cssTemplateName)
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)

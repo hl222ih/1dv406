@@ -16,15 +16,9 @@ namespace Project.Model
 
         private PageCategory CurrentPageCategory
         {
-            get { return currentPageCategory ?? (currentPageCategory = CommunicationDAL.SelectPartialCategory(1,1)); }
+            get { return currentPageCategory ?? (currentPageCategory = GetPageCategory(1, 1)); }
             set { currentPageCategory = value; }
         }
-        //private PagePage currentPage;
-
-        //private PagePage CurrentPage
-        //{
-        //    get { return currentPage ?? (currentPage = new PagePage()); }
-        //}
 
         private CommunicationDAL CommunicationDAL
         {
@@ -102,9 +96,38 @@ namespace Project.Model
             return CurrentPageCategory.GetCurrentPageItemsUnits();
         }
 
-        public void RefreshCurrentPageCategory(int categoryId, int pageNumber = 1)
+        private PageCategory GetPageCategory(int categoryId, int pageNumber = 1)
         {
-            CurrentPageCategory = CommunicationDAL.SelectPartialCategory(categoryId, pageNumber);
+            var pageCategory = new PageCategory
+            {
+                CatId = categoryId,
+                CurrentPageNumber = pageNumber,
+            };
+
+            var pageItems = CommunicationDAL.SelectPageItemsOfPage(categoryId, pageNumber);
+    
+            pageCategory.CurrentPage.PageItemsUnits = pageItems
+                .GroupBy(pi => pi.MeaningId)
+                .Select(group => new PageItemsUnit
+                {
+                    PageItems = group.ToList()
+                }).ToList();
+
+            //test
+            //pageCategory.CurrentPage.UnitsPerPage = 2;
+            pageCategory.CurrentPage.CssTemplateName = "page-five-eight";
+            //slut test
+
+            return pageCategory;
+        }
+        public void UpdatePageCategory(int categoryId, int pageNumber)
+        {
+            currentPageCategory = GetPageCategory(categoryId, pageNumber);
+        }
+
+        public IEnumerable<PageItem> GetPageItems(int categoryId, int pageNumbers)
+        {
+            return CommunicationDAL.SelectPageItemsOfPage(categoryId, pageNumbers);
         }
     }
 }

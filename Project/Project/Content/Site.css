@@ -192,6 +192,101 @@ header {
     z-index: 2 !important;
 }
 
+/*START: page-five-eight template*/
+#Content_imbUnit1.page-five-eight {
+    top: 1%;
+    left: 1%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit2.page-five-eight {
+    top: 1%;
+    left: 19%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit3.page-five-eight {
+    top: 1%;
+    left: 41.5%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit4.page-five-eight {
+    top: 1%;
+    left: 64%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit5.page-five-eight {
+    top: 1%;
+    left: 82%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit6.page-five-eight {
+    top: 55%;
+    left: 1%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit7.page-five-eight {
+    top: 55%;
+    left: 24%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit8.page-five-eight {
+    top: 55%;
+    left: 55%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit9.page-five-eight {
+    top: 55%;
+    left: 78%;
+    width: 21%;
+    height: 21%;
+}
+#Content_imbUnit10.page-five-eight {
+    top: 78%;
+    left: 1%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit11.page-five-eight {
+    top: 78%;
+    left: 24%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit12.page-five-eight {
+    top: 78%;
+    left: 55%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit13.page-five-eight {
+    top: 78%;
+    left: 78%;
+    width: 21%;
+    height: 21%;
+}
+
+
+/*END: page-default template*/
+
+
 /*START: page-default template*/
 #Content_imbUnit1.page-default {
     top: 1%;
