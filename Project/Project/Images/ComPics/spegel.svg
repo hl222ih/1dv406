@@ -1,8 +1,0 @@
-﻿<svg version="1.1"
-     baseProfile="full"
-     width="66" height="256"
-     xmlns="http://www.w3.org/2000/svg">
-/* mirror */
-<path d="M 8 203 l 0 -25 m 0 25 l 25 0 m -25 0 l 50 -50 -50 -50 m 50 0 l 0 100"
-stroke="black" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
