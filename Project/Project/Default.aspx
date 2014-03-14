@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="BlissKom" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Project._Default" ViewStateMode="Disabled" %>
 
+<%-- attributions
+    New Moon http://findicons.com/icon/229953/emblem_ok    ok.png  (GNU/GPL)
+    New Moon http://findicons.com/icon/229887/gnome_status   info.png (GNU/GPL)
+    Gnome Icon Artists http://findicons.com/icon/67135/gnome_go_home   info.png (GNU/GPL)
+    Asher http://findicons.com/icon/64629/stop  close.png   (Creative Commons ShareAlike)
+    capital18 (Jugal Paryani) http://findicons.com/icon/13745/forward  right.png (freeware)
+    capital18 (Jugal Paryani) http://findicons.com/icon/13715/back  left.png (freeware) --%>
+
+
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
 
     <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
@@ -14,38 +23,16 @@
 
     <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px">
 
-  <%--  <asp:Repeater ID="rptItems" runat="server"
-        ItemType=""
-        >
-        <ItemTemplate>
-            <asp:ImageButton ID="myButton" runat="server" /> <!-- ImageUrl='<%# "~/Images/Blissymbols/" + Item.FileName %>' />
-            <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" Height="200" Width="300" />
-        </ItemTemplate>
-    </asp:Repeater>       
-    <asp:ListView ID="ListView1" runat="server">
-        <ItemTemplate>
-
-        </ItemTemplate>
-    </asp:ListView>
-    
-    <div runat="server" id="divControl" class="item">...</div>
-    <%-- Platshållare för items, alltså bilderna på "kartan".--%>
         <asp:Panel ID="pnlInnerTablet" runat="server">
-                <asp:PlaceHolder ID="phItems" runat="server"></asp:PlaceHolder>
-                <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                    <ContentTemplate>
-                        <asp:ImageButton ID="ImageButton1" runat="server" CssClass="item" BackColor="#fde885" ImageUrl="~/Images/Blissymbols/God.svg" OnClick="ImageButton1_Click" />
-                    </ContentTemplate> 
-                </asp:UpdatePanel>       --%>
-                 <%--
-            <asp:ImageButton ID="ImageButton2" runat="server" CssClass="item" BackColor="#f9c7af" ImageUrl="~/Images/Blissymbols/hjarta.svg"/>
-            <asp:ImageButton ID="ImageButton3" runat="server" CssClass="item" BackColor="#dce8b9" ImageUrl="~/Images/Blissymbols/hus.svg"/>
-            <asp:ImageButton ID="ImageButton4" runat="server" CssClass="item" BackColor="#d6ecf7" ImageUrl="~/Images/Blissymbols/sjo.svg"/>
-            <asp:ImageButton ID="ImageButton5" runat="server" CssClass="item" BackColor="#dad5d2" ImageUrl="~/Images/Blissymbols/sjukhus.svg"/>
-            <asp:ImageButton ID="ImageButton6" runat="server" CssClass="item" BackColor="#ffffff" ImageUrl="~/Images/Blissymbols/spegel.svg"/>
-        
-                    --%>
-
+            <%-- Navigeringsknappar --%>
+            <asp:ImageButton ID="imbOK" runat="server" ImageUrl="~/Images/ok.png" CssClass="navImbs" />
+            <asp:ImageButton ID="imbCancel" runat="server" ImageUrl="~/Images/close.png" CssClass="navImbs" />
+            <asp:ImageButton ID="imbLeft" runat="server" ImageUrl="~/Images/left.png" CssClass="navImbs" />
+            <asp:ImageButton ID="imbRight" runat="server" ImageUrl="~/Images/right.png" CssClass="navImbs" />
+            <asp:ImageButton ID="imbHome" runat="server" ImageUrl="~/Images/home.png" CssClass="navImbs" />
+            <asp:ImageButton ID="imbInfo" runat="server" ImageUrl="~/Images/info.png" CssClass="navImbs" />
+            <%-- Platshållare för items, alltså bilderna på "kartan".--%>
+            <asp:PlaceHolder ID="phItems" runat="server" />
         </asp:Panel>
         
     </asp:Panel>

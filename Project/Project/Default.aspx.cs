@@ -44,13 +44,14 @@ namespace Project
         {
         }
 
-        protected void Page_Close(object sender, EventArgs e)
-        {
-            var hmm = "";
-        }
         protected void RenderImages()
         {
-            //phItems.Controls.Clear();
+
+            var ok = new ImageButton();
+            var cancel = new ImageButton();
+            var nextLeft = new ImageButton();
+            var nextRight = new ImageButton();
+            var home = new ImageButton();
 
             var cssTemplateName = Service.GetCurrentCssTemplateName();
             var pageItemsUnits = Service.GetCurrentPageItemsUnits();
@@ -60,8 +61,6 @@ namespace Project
             {
                 counter++;
                 var pi = piu.GetPageParentItem();
-
-                UpdatePanel upnl = new UpdatePanel();
 
                 var lb = new LinkButton()
                 {
@@ -90,21 +89,18 @@ namespace Project
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
                     lb.Click += new EventHandler(lbParentCategoryItem_Click);
-                    //lb.OnClientClick = "dim()";
                     lb.Attributes.Add("catId", ((PageParentCategoryItem)pi).LinkToCategoryId.ToString());
-                    //var pbt = new PostBackTrigger()
-                    //{
-                    //    ControlID = upnl.ID
-                    //};
-                    //upnl.Triggers.Add(pbt);
-                    //ScriptManager.GetCurrent(this).RegisterPostBackControl(lb);
-                    
                 }
 
+                UpdatePanel upnl = new UpdatePanel();
                 upnl.ContentTemplateContainer.Controls.Add(lb);
                 lb.Controls.Add(lbl);
                 lb.Controls.Add(img);
                 phItems.Controls.Add(upnl);
+
+
+
+
             }
         }
 

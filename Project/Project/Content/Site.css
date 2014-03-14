@@ -218,6 +218,42 @@ header {
     z-index: 3 !important;
 }
 
+.navImbs {
+    position: absolute;
+    z-index: 5;
+    height: 15%;
+    width: 10%;
+}
+
+#Content_imbOK {
+    left: 65%;
+    top: 79%;
+}
+
+#Content_imbCancel {
+    left: 25%;
+    top: 79%;
+}
+
+#Content_imbLeft {
+    left: 5%;
+    top: 42.5%;
+}
+
+#Content_imbRight {
+    left: 85%;
+    top: 42.5%;
+}
+
+#Content_imbHome {
+    left: 45%;
+    top: 42.5%;
+}
+
+#Content_imbInfo {
+    left: 83.5%;
+    top: 79%;
+}
 
 /*START: page-five-eight template*/
 #Content_imbUnit1.page-five-eight {
