@@ -22,8 +22,8 @@ p {
 a {
     color: #333;
     outline: none;
-    padding-left: 3px;
-    padding-right: 3px;
+    /*padding-left: 3px;
+    padding-right: 3px;*/
     text-decoration: underline;
 }
 
@@ -106,9 +106,9 @@ header {
 
 #Content_pnlInnerTablet {
     position: relative;
-    height: 69.5%;
-    width: 71%;
-    margin: 8.5% 14.5%;
+    height: 70.5%;
+    width: 71.8%;
+    margin: 8.4% 14.1%;
     overflow: hidden;
 }
 
@@ -166,11 +166,37 @@ header {
         background-color: none;
     }
 
-/*behövs inte sen*/
-#Content_pnlInnerTablet > .item {
-    width: 18%;
-    height: 18%;
+#Content_pnlInnerTablet > div > .item > img, #Content_pnlInnerTablet > div > .itemFull > img {
+    width: 100%;
+    height: 100%;
+    z-index: 3;
 }
+
+#Content_pnlInnerTablet > div > .item > span, #Content_pnlInnerTablet > div > .itemFull > span {
+
+    display: block;
+    width: 100%;
+    position: absolute;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'DejaVu Sans Condensed', sans-serif;
+    line-height: 1;
+    font-weight: 100;
+    color: rgba(0, 0, 0, 0.6)
+
+}
+
+#Content_pnlInnerTablet > div > .item > span {
+    font-size: 0.8em;
+    text-align: left;
+    text-indent: 6%;
+    z-index: 2;
+}
+
+#Content_pnlInnerTablet > div > .itemFull > span {
+     font-size: 1.6em;
+     text-align: center;
+     top: 92%;
+     z-index: 4;
+ }
 
 #dimmer {
     background:black;
@@ -180,7 +206,7 @@ header {
     left:0;
     width:100% !important;
     height:100% !important;
-    z-index:1; 
+    z-index: 2 !important;
 }
 
 .itemFull {
@@ -189,8 +215,9 @@ header {
     width: 90% !important;
     left: 5% !important;
     top: 5% !important;
-    z-index: 2 !important;
+    z-index: 3 !important;
 }
+
 
 /*START: page-five-eight template*/
 #Content_imbUnit1.page-five-eight {

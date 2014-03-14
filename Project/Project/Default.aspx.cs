@@ -56,60 +56,69 @@ namespace Project
 
                 UpdatePanel upnl = new UpdatePanel();
 
-                ImageButton imb = new ImageButton()
+                var lb = new LinkButton()
                 {
                     ID = String.Format("imbUnit{0}", pi.Position),
+                    CssClass = String.Format("item {0}", cssTemplateName),
+                    BackColor = pi.BackGroundColor
+                };
+
+                var lbl = new Label()
+                {
+                    Text = pi.MeaningWord
+                };
+
+                var img = new Image()
+                {
                     ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName),
-                    BackColor = pi.BackGroundColor,
-                    CssClass = String.Format("item {0}", cssTemplateName)
                 };
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
                     //speciella egenskaper för pwi
-                    imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentWordItem_Click);
-                    imb.OnClientClick = "dim()";
+                    lb.Click += new EventHandler(lbParentWordItem_Click);
+                    lb.OnClientClick = "dim()";
                 }
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
-                    //speciella egenskaper för pci
-                    imb.Click += new System.Web.UI.ImageClickEventHandler(imbParentCategoryItem_Click);
-                    imb.OnClientClick = "dim()";
+                    lb.Click += new EventHandler(lbParentCategoryItem_Click);
+                    lb.OnClientClick = "dim()";
                 }
 
-                upnl.ContentTemplateContainer.Controls.Add(imb);                
+                upnl.ContentTemplateContainer.Controls.Add(lb);
+                lb.Controls.Add(lbl);
+                lb.Controls.Add(img);
                 phItems.Controls.Add(upnl);
             }
         }
 
-        protected void imbParentWordItem_Click(object sender, ImageClickEventArgs e)
+        protected void lbParentWordItem_Click(object sender, EventArgs e)
         {
-            var imb = ((ImageButton)sender);
-            if (imb.CssClass.Substring(0, 5) == "item ")
+            var lb = ((LinkButton)sender);
+            if (lb.CssClass.Substring(0, 5) == "item ")
             {
-                imb.CssClass = imb.CssClass.Replace("item ", "itemFull ");
-                imb.OnClientClick = "undim()";
+                lb.CssClass = lb.CssClass.Replace("item ", "itemFull ");
+                lb.OnClientClick = "undim()";
             }
             else
             {
-                imb.CssClass = imb.CssClass.Replace("itemFull ", "item ");
-                imb.OnClientClick = "dim()";
+                lb.CssClass = lb.CssClass.Replace("itemFull ", "item ");
+                lb.OnClientClick = "dim()";
             }
         }
-        protected void imbParentCategoryItem_Click(object sender, ImageClickEventArgs e)
+        protected void lbParentCategoryItem_Click(object sender, EventArgs e)
         {
-            var imb = ((ImageButton)sender);
-            if (imb.CssClass.Substring(0,5) == "item ")
+            var lb = ((LinkButton)sender);
+            if (lb.CssClass.Substring(0, 5) == "item ")
             {
-                imb.CssClass = imb.CssClass.Replace("item ", "itemFull ");
-                imb.OnClientClick = "undim()";
+                lb.CssClass = lb.CssClass.Replace("item ", "itemFull ");
+                lb.OnClientClick = "undim()";
             }
             else
             {
-                imb.CssClass = imb.CssClass.Replace("itemFull ", "item ");
-                imb.OnClientClick = "dim()";
+                lb.CssClass = lb.CssClass.Replace("itemFull ", "item ");
+                lb.OnClientClick = "dim()";
             }
-            
         }
         
         protected void Page_LoadComplete(object sender, EventArgs e)

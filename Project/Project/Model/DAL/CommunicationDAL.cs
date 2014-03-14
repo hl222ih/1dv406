@@ -243,10 +243,7 @@ namespace Project.Model.DAL
                             
                             pageItems.Add(pageItem);
                         }
-
-
                     }
-
                     return pageItems;
                 }
                 catch
