@@ -120,7 +120,7 @@ namespace Project.Model
 
             return pageCategory;
         }
-        public void UpdatePageCategory(int categoryId, int pageNumber)
+        public void UpdatePageCategory(int categoryId, int pageNumber = 1)
         {
             currentPageCategory = GetPageCategory(categoryId, pageNumber);
         }

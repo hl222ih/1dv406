@@ -13,8 +13,7 @@
     </asp:DropDownList>                                                           
 
     <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px">
-              
-    
+
   <%--  <asp:Repeater ID="rptItems" runat="server"
         ItemType=""
         >

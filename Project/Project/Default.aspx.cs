@@ -32,10 +32,11 @@ namespace Project
         protected void Page_Init(object sender, EventArgs e)
         {
             //rendera bara ItemsUnits när det behövs
+            var test = Session["refreshItemsUnits"] != null ? Session["refreshItemsUnits"].ToString() : "null";
             if (Session["refreshItemsUnits"] == null || (string)Session["refreshItemsUnits"] == "true")
             {
                 RenderImages();
-                ViewState["refreshItemsUnits"] = "false";
+                //Session["refreshItemsUnits"] = "false";
             }
         }
 
@@ -43,8 +44,14 @@ namespace Project
         {
         }
 
+        protected void Page_Close(object sender, EventArgs e)
+        {
+            var hmm = "";
+        }
         protected void RenderImages()
         {
+            //phItems.Controls.Clear();
+
             var cssTemplateName = Service.GetCurrentCssTemplateName();
             var pageItemsUnits = Service.GetCurrentPageItemsUnits();
             var counter = 0;
@@ -61,6 +68,7 @@ namespace Project
                     ID = String.Format("imbUnit{0}", pi.Position),
                     CssClass = String.Format("item {0}", cssTemplateName),
                     BackColor = pi.BackGroundColor
+                    //CausesValidation = false
                 };
 
                 var lbl = new Label()
@@ -82,7 +90,15 @@ namespace Project
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
                     lb.Click += new EventHandler(lbParentCategoryItem_Click);
-                    lb.OnClientClick = "dim()";
+                    //lb.OnClientClick = "dim()";
+                    lb.Attributes.Add("catId", ((PageParentCategoryItem)pi).LinkToCategoryId.ToString());
+                    //var pbt = new PostBackTrigger()
+                    //{
+                    //    ControlID = upnl.ID
+                    //};
+                    //upnl.Triggers.Add(pbt);
+                    //ScriptManager.GetCurrent(this).RegisterPostBackControl(lb);
+                    
                 }
 
                 upnl.ContentTemplateContainer.Controls.Add(lb);
@@ -109,16 +125,11 @@ namespace Project
         protected void lbParentCategoryItem_Click(object sender, EventArgs e)
         {
             var lb = ((LinkButton)sender);
-            if (lb.CssClass.Substring(0, 5) == "item ")
-            {
-                lb.CssClass = lb.CssClass.Replace("item ", "itemFull ");
-                lb.OnClientClick = "undim()";
-            }
-            else
-            {
-                lb.CssClass = lb.CssClass.Replace("itemFull ", "item ");
-                lb.OnClientClick = "dim()";
-            }
+            var test = lb.Attributes["catId"];
+            Service.UpdatePageCategory(Convert.ToInt32(lb.Attributes["catId"]));
+            //trigga omladdning av sidan för att den nya sidan ska visas.
+            Response.Redirect(Request.Url.AbsoluteUri, false);
+
         }
         
         protected void Page_LoadComplete(object sender, EventArgs e)
