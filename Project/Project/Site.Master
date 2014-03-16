@@ -14,15 +14,146 @@
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
     <script> <%--tillfälligt--%>
-         function dim() {
+         function dim(pos) {
              var pnl = document.getElementById("Content_pnlInnerTablet");
              var dimmer = document.createElement("div");
              dimmer.id = "dimmer";
              pnl.appendChild(dimmer);
+             var item = document.getElementById("Content_imbUnit" + pos);
+             item.className = item.className.replace("item", "itemFull");
          }
          function undim() {
              var dimmer = document.getElementById("dimmer");
              if (dimmer) dimmer.parentElement.removeChild(dimmer);
+             var itemFull = document.getElementsByClassName("itemFull")[0];
+             itemFull.className = itemFull.className.replace("itemFull", "item");
+         }
+         function toggleNavButtons(ok, cancel, left, right, info) {
+             var imgOK = document.getElementById("Content_imbOK");
+             var imgCancel = document.getElementById("Content_imbCancel");
+             var imgLeft = document.getElementById("Content_imbLeft");
+             var imgRight = document.getElementById("Content_imbRight");
+             var imgInfo = document.getElementById("Content_imbInfo");
+             ok ? imgOK.style.display = "block" : imgOK.style.display = "none";
+             cancel ? imgCancel.style.display = "block" : imgCancel.style.display = "none";
+             left ? imgLeft.style.display = "block" : imgLeft.style.display = "none";
+             right ? imgRight.style.display = "block" : imgRight.style.display = "none";
+             info ? imgInfo.style.display = "block" : imgInfo.style.display = "none";
+         }
+         function showLeftImage() {
+             var currentLink = document.getElementsByClassName("itemFull")[0];
+
+             if (currentLink.querySelector("[type = 'ParentWordItem']").style.display === "") {
+                 var currentImage = currentLink.querySelector("[type = 'ParentWordItem']");
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 var newImage = currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '1']");
+                 if (!currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '2']")) {
+                     document.getElementById("Content_imbLeft").style.display = "none";
+                 }
+                 newImage.style.display = "";
+                 document.getElementById("Content_imbRight").style.display = "block";
+                 newImage.setAttribute("active", "true");
+             }
+             else if (currentLink.querySelector("[type = 'ChildLeftWordItem'][active = 'true']")) {
+
+                 var currentImage = currentLink.querySelector("[type = 'ChildLeftWordItem'][active = 'true']");
+
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 var newImage = currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '" + (parseInt(currentImage.getAttribute("pos")) + 1).toString() + "']");
+
+                 if (!currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) + 1).toString() + "']")) {
+                     document.getElementById("Content_imbLeft").style.display = "none";
+                 }
+                 if (!currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) - 1).toString() + "']")) {
+                     document.getElementById("Content_imbRight").style.display = "none";
+                 } else {
+                     document.getElementById("Content_imbRight").style.display = "block";
+                 }
+                 newImage.style.display = "";
+                 newImage.setAttribute("active", "true");
+             } else if (currentLink.querySelector("[type = 'ChildRightWordItem'][active = 'true']")) {
+                 var currentImage = currentLink.querySelector("[type = 'ChildRightWordItem'][active = 'true']");
+
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 if (currentImage.getAttribute("pos") === "1") {
+                     var newImage = currentLink.querySelector("[type = 'ParentWordItem']");
+
+                     if (!currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '1']")) {
+                         document.getElementById("Content_imbLeft").style.display = "none";
+                     }
+                     document.getElementById("Content_imbRight").style.display = "block";
+                 } else {
+                     var newImage = currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(currentImage.getAttribute("pos")) - 1).toString() + "']");
+
+                     if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) - 1).toString() + "']")) {
+                         document.getElementById("Content_imbRight").style.display = "none";
+                     }
+                     if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) + 1).toString() + "']")) {
+                         document.getElementById("Content_imbLeft").style.display = "none";
+                     } else {
+                         document.getElementById("Content_imbLeft").style.display = "block";
+                     }
+                 }
+                 newImage.style.display = "";
+                 newImage.setAttribute("active", "true");
+             }
+         }
+         function showRightImage() {
+             var currentLink = document.getElementsByClassName("itemFull")[0];
+
+             if (currentLink.querySelector("[type = 'ParentWordItem']").style.display === "") {
+                 var currentImage = currentLink.querySelector("[type = 'ParentWordItem']");
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 var newImage = currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '1']");
+                 if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '2']")) {
+                     document.getElementById("Content_imbRight").style.display = "none";
+                 }
+                 newImage.style.display = "";
+                 document.getElementById("Content_imbLeft").style.display = "block";
+                 newImage.setAttribute("active", "true");
+             }
+             else if (currentLink.querySelector("[type = 'ChildRightWordItem'][active = 'true']")) {
+
+                 var currentImage = currentLink.querySelector("[type = 'ChildRightWordItem'][active = 'true']");
+
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 var newImage = currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(currentImage.getAttribute("pos")) + 1).toString() + "']");
+
+                 if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) + 1).toString() + "']")) {
+                     document.getElementById("Content_imbRight").style.display = "none";
+                 }
+                 if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '" + (parseInt(newImage.getAttribute("pos")) - 1).toString() + "']")) {
+                     document.getElementById("Content_imbLeft").style.display = "none";
+                 } else {
+                     document.getElementById("Content_imbLeft").style.display = "block";
+                 }
+                 newImage.style.display = "";
+                 newImage.setAttribute("active", "true");
+             } else if (currentLink.querySelector("[type = 'ChildLeftWordItem'][active = 'true']")) {
+                 var currentImage = currentLink.querySelector("[type = 'ChildLeftWordItem'][active = 'true']");
+
+                 currentImage.style.display = "none";
+                 currentImage.setAttribute("active", "false");
+                 if (currentImage.getAttribute("pos") === "1") {
+                     var newImage = currentLink.querySelector("[type = 'ParentWordItem']");
+
+                     if (!currentLink.querySelector("[type = 'ChildRightWordItem'][pos = '1']")) {
+                         document.getElementById("Content_imbRight").style.display = "none";
+                     }
+                     document.getElementById("Content_imbLeft").style.display = "block";
+                 } else {
+                     var newImage = currentLink.querySelector("[type = 'ChildLeftWordItem'][pos = '" + (parseInt(currentImage.getAttribute("pos")) - 1).toString() + "']");
+
+                     document.getElementById("Content_imbLeft").style.display = "block";
+                 }
+                 newImage.style.display = "";
+                 newImage.setAttribute("active", "true");
+             }
          }
     </script>
 </head>

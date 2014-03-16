@@ -226,12 +226,12 @@ header {
 }
 
 #Content_imbOK {
-    left: 65%;
+    left: 25%;
     top: 79%;
 }
 
 #Content_imbCancel {
-    left: 25%;
+    left: 65%;
     top: 79%;
 }
 
@@ -248,6 +248,7 @@ header {
 #Content_imbHome {
     left: 45%;
     top: 42.5%;
+    z-index: 2;
 }
 
 #Content_imbInfo {

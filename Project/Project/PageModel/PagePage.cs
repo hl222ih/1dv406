@@ -12,19 +12,17 @@ namespace Project.PageModel
     public class PagePage
     {
         public IList<PageItemsUnit> PageItemsUnits { get; set; }
-        //public string CategoryName { get; set; }
         public int UnitsPerPage { get; set; }
         public string CssTemplateName { get; set; }
         public int PageNumber { get; set; }
 
         public PagePage()
         {
-            //lite testvärden
-            //CategoryName = "Huvudmeny";
-            UnitsPerPage = 10;
-            CssTemplateName = "page-default";
-            PageNumber = 1;
-            PageItemsUnits = new List<PageItemsUnit>();
+        }
+
+        public PageItemsUnit GetPageItemsUnit(int meaningId)
+        {
+            return PageItemsUnits.First(piu => piu.MeaningId == meaningId);
         }
 
     }

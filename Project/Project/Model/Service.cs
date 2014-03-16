@@ -10,6 +10,7 @@ namespace Project.Model
 {
     public class Service
     {
+        //public System.Web.UI.WebControls.Image CurrentImage { get; set; }
         private CommunicationDAL communicationDAL;
         private IEnumerable<PageWordType> pageWordTypes;
         private PageCategory currentPageCategory;
@@ -91,6 +92,28 @@ namespace Project.Model
             return CurrentPageCategory.GetCurrentCssTemplateName();
         }
 
+        public int GetCurrentCategoryId()
+        {
+            return CurrentPageCategory.CatId;
+        }
+
+        public int GetCurrentPageNumber()
+        {
+            return CurrentPageCategory.CurrentPageNumber;
+        }
+
+        public PageItem GetNextLeftPageItem(PageItemType pit, int position, int meaningId)
+        {
+            var piu = CurrentPageCategory.CurrentPage.GetPageItemsUnit(meaningId);
+            return piu.GetNextLeftPageItem(pit, position);
+        }
+
+        public PageItem GetNextRightPageItem(PageItemType pit, int position, int meaningId)
+        {
+            var piu = CurrentPageCategory.CurrentPage.GetPageItemsUnit(meaningId);
+            return piu.GetNextRightPageItem(pit, position);
+        }
+
         public IEnumerable<PageItemsUnit> GetCurrentPageItemsUnits()
         {
             return CurrentPageCategory.GetCurrentPageItemsUnits();
@@ -114,9 +137,7 @@ namespace Project.Model
                 }).ToList();
 
             //test
-            //pageCategory.CurrentPage.UnitsPerPage = 2;
             pageCategory.CurrentPage.CssTemplateName = "page-five-eight";
-
             //slut test
 
             return pageCategory;

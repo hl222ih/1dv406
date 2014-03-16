@@ -15,8 +15,6 @@ namespace Project
 {
     public partial class _Default : Page
     {
-        //protected HtmlGenericControl divControl;
-
         private Service Service
         {
             get
@@ -47,14 +45,31 @@ namespace Project
         protected void RenderImages()
         {
 
-            var ok = new ImageButton();
-            var cancel = new ImageButton();
-            var nextLeft = new ImageButton();
-            var nextRight = new ImageButton();
-            var home = new ImageButton();
+            imbHome.Click += new ImageClickEventHandler(imbHome_Click);
+            
+            imbOK.Click += new ImageClickEventHandler(imbOK_Click);
+
+            imbCancel.Click += new ImageClickEventHandler(imbCancel_Click);
+            
+            imbCancel.OnClientClick = "toggleNavButtons(false, false, false, false, false); undim(); return false;";
+
+            // imbLeft.Click += new ImageClickEventHandler(imbLeft_Click);
+            imbLeft.OnClientClick = "showLeftImage(); return false;";
+            imbRight.OnClientClick = "showRightImage(); return false;";
+            //osynliggör navigeringsknappar som inte används i aktuell vy.
+            imbOK.Style["display"] = "none";
+            imbCancel.Style["display"] = "none";
+            imbLeft.Style["display"] = "none";
+            imbRight.Style["display"] = "none";
+            imbInfo.Style["display"] = "none";
+            if (Service.GetCurrentCategoryId() == 1 && Service.GetCurrentPageNumber() == 1)
+            {
+                imbHome.Style["display"] = "none";
+            }
 
             var cssTemplateName = Service.GetCurrentCssTemplateName();
             var pageItemsUnits = Service.GetCurrentPageItemsUnits();
+            
             var counter = 0;
 
             foreach (var piu in pageItemsUnits)
@@ -66,9 +81,11 @@ namespace Project
                 {
                     ID = String.Format("imbUnit{0}", pi.Position),
                     CssClass = String.Format("item {0}", cssTemplateName),
-                    BackColor = pi.BackGroundColor
-                    //CausesValidation = false
+                    BackColor = pi.BackGroundColor,
+                    CausesValidation = false
                 };
+                lb.Attributes.Add("mId", pi.MeaningId.ToString());
+                
 
                 var lbl = new Label()
                 {
@@ -77,14 +94,22 @@ namespace Project
 
                 var img = new Image()
                 {
-                    ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName),
+                    ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName)
                 };
+                img.Attributes.Add("type", pi.PageItemType.ToString());
+                img.Attributes.Add("pos", pi.Position.ToString());
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
-                    //speciella egenskaper för pwi
-                    lb.Click += new EventHandler(lbParentWordItem_Click);
-                    lb.OnClientClick = "dim()";
+                    
+                    //lb.Click += new EventHandler(lbParentWordItem_Click);
+                    var nextLeft = Service.GetNextLeftPageItem(pi.PageItemType, pi.Position, pi.MeaningId);
+                    var hasNextLeft = (nextLeft != null);
+                    var nextRight = Service.GetNextRightPageItem(pi.PageItemType, pi.Position, pi.MeaningId);
+                    var hasNextRight = (nextRight != null);
+                    var info = String.Format("{0}\n{1}", pi.MeaningComment, pi.ImageComment);
+                    var hasInfo = (info != "\n");
+                    lb.OnClientClick = String.Format("dim({0}); toggleNavButtons({1}, {2}, {3}, {4}, {5}); return false;", pi.Position, "true", "true", hasNextLeft ? "true" : "false", hasNextRight ? "true" : "false", hasInfo ? "true" : "false");
                 }
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
@@ -100,23 +125,28 @@ namespace Project
 
 
 
+                var pcis = piu.GetPageChildItems();
 
+                foreach (var pci in pcis)
+                {
+
+                    var imgChild = new Image()
+                    {
+                        ImageUrl = String.Format("~/Images/ComPics/{0}", pci.ImageFileName)                 
+                    };
+
+                    imgChild.Style["display"] = "none";
+                    imgChild.Attributes.Add("type", pci.PageItemType.ToString());
+                    imgChild.Attributes.Add("pos", pci.Position.ToString());
+
+                    lb.Controls.Add(imgChild);
+                }
             }
         }
 
         protected void lbParentWordItem_Click(object sender, EventArgs e)
         {
             var lb = ((LinkButton)sender);
-            if (lb.CssClass.Substring(0, 5) == "item ")
-            {
-                lb.CssClass = lb.CssClass.Replace("item ", "itemFull ");
-                lb.OnClientClick = "undim()";
-            }
-            else
-            {
-                lb.CssClass = lb.CssClass.Replace("itemFull ", "item ");
-                lb.OnClientClick = "dim()";
-            }
         }
         protected void lbParentCategoryItem_Click(object sender, EventArgs e)
         {
@@ -125,9 +155,31 @@ namespace Project
             Service.UpdatePageCategory(Convert.ToInt32(lb.Attributes["catId"]));
             //trigga omladdning av sidan för att den nya sidan ska visas.
             Response.Redirect(Request.Url.AbsoluteUri, false);
+        }
+
+        protected void imbOK_Click(object sender, ImageClickEventArgs e)
+        {
+            Service.UpdatePageCategory(1, 1);
+            Response.Redirect(Request.Url.AbsoluteUri, false);
+        }
+
+        protected void imbHome_Click(object sender, ImageClickEventArgs e)
+        {
+            Service.UpdatePageCategory(1, 1);
+            Response.Redirect(Request.Url.AbsoluteUri, false);
+        }
+
+        protected void imbCancel_Click(object sender, ImageClickEventArgs e)
+        {
+            //if (lb.CssClass.Substring(0, 5) == "item ")
+            
+        }
+
+        protected void imbLeft_Click(object sender, ImageClickEventArgs e)
+        {
 
         }
-        
+
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
             SetBackgroundColorsToDdlPageWordType();
@@ -137,11 +189,6 @@ namespace Project
         {
             return Service.PageWordTypes;
         }
-
-        //protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        //{
-        //    ImageButton1.BackColor = Service.GetColorById(4);
-        //}
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {
@@ -160,6 +207,5 @@ namespace Project
             }
 
         }
-
     }
 }
