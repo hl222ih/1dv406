@@ -33,6 +33,7 @@
             <asp:ImageButton ID="imbInfo" runat="server" ImageUrl="~/Images/info.png" CssClass="navImbs" CausesValidation="False" OnClientClick="return false;" />
             <%-- Platshållare för items, alltså bilderna på "kartan".--%>
             <asp:PlaceHolder ID="phItems" runat="server" />
+            <%-- Formulär för kommunikation med databasen --%>
         </asp:Panel>
         
     </asp:Panel>

@@ -22,7 +22,24 @@ namespace Project.PageModel
 
         public IEnumerable<PageItemsUnit> GetCurrentPageItemsUnits()
         {
-            return CurrentPage.PageItemsUnits.AsEnumerable();
+            //Hårdkodad specialhämtning, har inte hunnit skapa en generisk metod för att hämta
+            //rätt element baserat på sida för vald kategori. Kategorin med kategoriId är
+            //den kategorin som innehåller fler element än vad som får plats på en sida
+            //med nuvarande test-data.
+            if (CatId != 4)
+            {
+                return CurrentPage.PageItemsUnits.AsEnumerable();
+            }
+            else if (CurrentPageNumber == 1)
+            {
+                return CurrentPage.PageItemsUnits.ToList().GetRange(0, 11).AsEnumerable();
+            }
+            else if (CurrentPageNumber == 2)
+            {
+                return CurrentPage.PageItemsUnits.ToList().GetRange(12, 12).AsEnumerable();
+            }
+            return null;
+        
         }
 
         public PageCategory()

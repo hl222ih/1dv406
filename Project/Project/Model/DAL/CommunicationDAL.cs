@@ -142,6 +142,44 @@ namespace Project.Model.DAL
             }
         }
 
+        public string SelectPageInfo(int categoryId, int pageNumber)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    string cssTemplate = String.Empty;
+                    //int numberOfPositions = 0;
+
+                    var cmd = new SqlCommand("appSchema.usp_SelectPageInfo", conn);
+                    cmd.Parameters.Add("@CatId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters.Add("@CatPageNum", SqlDbType.TinyInt, 1);
+                    cmd.Parameters["@CatId"].Value = (Int16)categoryId;
+                    cmd.Parameters["@CatPageNum"].Value = (byte)pageNumber;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var cssTemplateNameIndex = reader.GetOrdinal("CssTemplateName");
+                        //var numberOfPositionsIndex = reader.GetOrdinal("NumberOfPositions");
+
+                        if (reader.Read())
+                        {
+                            cssTemplate = reader.GetString(cssTemplateNameIndex);
+                            //numberOfPositions = (int)reader.GetByte(numberOfPositionsIndex);
+                        }
+                    }
+
+                    return cssTemplate;
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
 
         public IEnumerable<PageItem> SelectPageItemsOfPage(int categoryId, int pageNumber)
         {
@@ -153,9 +191,9 @@ namespace Project.Model.DAL
 
                     var cmd = new SqlCommand("appSchema.usp_SelectFullPage", conn);
                     cmd.Parameters.Add("@CatId", SqlDbType.SmallInt, 2);
-                    cmd.Parameters.Add("@CatPageNum", SqlDbType.TinyInt, 1);
+                    //cmd.Parameters.Add("@CatPageNum", SqlDbType.TinyInt, 1);
                     cmd.Parameters["@CatId"].Value = (Int16)categoryId;
-                    cmd.Parameters["@CatPageNum"].Value = (byte)pageNumber;
+                    //cmd.Parameters["@CatPageNum"].Value = (byte)pageNumber;
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -175,7 +213,7 @@ namespace Project.Model.DAL
                         var imageFileNameIndex = reader.GetOrdinal("ImageFileName");
                         var catNameIndex = reader.GetOrdinal("CatName");
                         var catRefIdIndex = reader.GetOrdinal("CatRefId");
-                        var cssTemplateNameIndex = reader.GetOrdinal("cssTemplateName");
+                        //var cssTemplateNameIndex = reader.GetOrdinal("cssTemplateName");
 
                         while (reader.Read())
                         {
@@ -239,7 +277,7 @@ namespace Project.Model.DAL
                             }
                             pageItem.ImageComment = reader.GetString(imageCommentIndex);
                             pageItem.ImageFileName = reader.GetString(imageFileNameIndex);
-                            pageItem.CssTemplateName = reader.GetString(cssTemplateNameIndex);
+                            //pageItem.CssTemplateName = reader.GetString(cssTemplateNameIndex);
                             
                             pageItems.Add(pageItem);
                         }

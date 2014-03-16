@@ -136,10 +136,11 @@ namespace Project.Model
                     PageItems = group.ToList()
                 }).ToList();
 
-            //test
-            pageCategory.CurrentPage.CssTemplateName = "page-five-eight";
-            //slut test
 
+
+            pageCategory.CurrentPage.CssTemplateName = String.Format("page-{0}", CommunicationDAL.SelectPageInfo(categoryId, pageNumber));
+            pageCategory.CurrentPage.PageNumber = pageNumber;
+            
             return pageCategory;
         }
         public void UpdatePageCategory(int categoryId, int pageNumber = 1)
