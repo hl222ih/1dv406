@@ -371,6 +371,41 @@ namespace Project.Model.DAL
             }  
         }
 
+        public Dictionary<int, string> GetAllFileNames()
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllFileNames", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    var fileNames = new Dictionary<int, string>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var imageIdIndex = reader.GetOrdinal("ImageId");
+                        var fileNameIndex = reader.GetOrdinal("FileName");
+
+                        while (reader.Read())
+                        {
+                            fileNames.Add(
+                                (int)reader.GetInt16(imageIdIndex),
+                                reader.GetString(fileNameIndex)
+                            );
+                        }
+                        return fileNames;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
+
         public void UpdateMeaning(Meaning meaning)
         {
             using (var conn = CreateConnection())

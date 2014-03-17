@@ -184,5 +184,10 @@ namespace Project.Model
         {
             BlissKomDAL.DeleteMeaning(meaningId);
         }
+
+        public Dictionary<int, string> GetAllFileNames()
+        {
+            return BlissKomDAL.GetAllFileNames();
+        }
     }
 }

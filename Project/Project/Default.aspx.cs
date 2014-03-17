@@ -54,6 +54,16 @@ namespace Project
 
         }
 
+        protected override void OnUnload(EventArgs e)
+        {
+            base.OnUnload(e);
+
+            if (lstItem.SelectedIndex > -1)
+            {
+                Session["lstItemValue"] = lstItem.SelectedItem.Text;
+            }
+        }
+
         protected void RenderImages()
         {
 
@@ -113,8 +123,6 @@ namespace Project
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
-                    
-                    //lb.Click += new EventHandler(lbParentWordItem_Click);
                     var nextLeft = Service.GetNextLeftPageItem(pi.PageItemType, pi.Position, pi.MeaningId);
                     var hasNextLeft = (nextLeft != null);
                     var nextRight = Service.GetNextRightPageItem(pi.PageItemType, pi.Position, pi.MeaningId);
@@ -202,6 +210,26 @@ namespace Project
             return Service.GetMeanings();
         }
 
+        public Dictionary<int, string> GetImageFileNameDataOfPage()
+        {
+            lstItem.Items.Clear();
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                return Service.GetPageItemFileNames(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+            }
+            return null;
+        }
+
+        public Dictionary<int, string> GetImageFileNameData()
+        {
+            lstFileName.Items.Clear();
+            if (lstItem.SelectedIndex > -1)
+            {
+                return Service.GetAllFileNames();
+            }
+            return null;
+        }
+
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {
             SetBackgroundColorsToDdlPageWordType();
@@ -228,12 +256,12 @@ namespace Project
             txtWordComment.Text = meaning.Comment;
             ddlPageWordType.ClearSelection();
             ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
-            lstItem.Items.Clear();
-            Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-            foreach (var pifn in pageItemFileNames)
-            {
-                lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
-            }
+            //lstItem.Items.Clear();
+            //Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+            //foreach (var pifn in pageItemFileNames)
+            //{
+            //    lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
+            //}
         }
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
@@ -291,7 +319,17 @@ namespace Project
 
         protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //PageItem pageItem = Service.GetPageItem(Convert.ToInt32(lstItem.SelectedItem.Value));
+
+            if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
+            {
+                txtFileName.Text = lstItem.SelectedItem.Text;
+
+                if (lstFileName.Items.Count > 1)
+                {
+                    lstFileName.ClearSelection();
+                    lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
+                }
+            }
         }
 
         protected void btnUpdateItem_Click(object sender, EventArgs e)
@@ -310,6 +348,25 @@ namespace Project
         }
 
         protected void btnResetItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lstFileName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtFileName.Text = lstFileName.SelectedItem.Text;
+        }
+
+        protected void lstFileName_DataBound(object sender, EventArgs e)
+        {
+            if (lstItem.SelectedIndex > -1)
+            {
+                lstFileName.ClearSelection();
+                lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
+            }
+        }
+
+        protected void lstFileName_Unload(object sender, EventArgs e)
         {
 
         }

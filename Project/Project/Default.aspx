@@ -38,7 +38,8 @@
                 <asp:Label ID="lblWordType" runat="server" Text="Ordtyp"></asp:Label>                                 
                 <asp:ListBox ID="lstMeaning" runat="server"
                     DataValueField="MeaningId" ItemType="Project.Model.Meaning"
-                    DataTextField="Word" SelectMethod="GetMeaningData" AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
+                    DataTextField="Word" SelectMethod="GetMeaningData" 
+                    AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
                 </asp:ListBox>
                         <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
                         <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
@@ -46,8 +47,9 @@
                         <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
                 <asp:Label ID="lblItem" runat="server" Text="Vald betydelses bildfiler"></asp:Label>                                 
                 <asp:ListBox ID="lstItem" runat="server"
-                    DataValueField="MeaningId" ItemType="Project.PageModel.PageItem"
-                    DataTextField="ImageFileName" AutoPostBack="True" OnSelectedIndexChanged="lstItem_SelectedIndexChanged" >
+                    DataValueField="Key" DataTextField="Value" AutoPostBack="True" 
+                    OnSelectedIndexChanged="lstItem_SelectedIndexChanged" SelectMethod="GetImageFileNameDataOfPage" >
+                    <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
                 <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" />
                 <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
@@ -65,8 +67,13 @@
                 <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
                 <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" />
                 <asp:Label ID="lblFileName" runat="server" Text="Filnamn"></asp:Label>
-                <asp:TextBox ID="txtFileName" runat="server"></asp:TextBox>
-                <asp:ListBox ID="lstFileName" runat="server"></asp:ListBox>
+                <asp:TextBox ID="txtFileName" runat="server" Enabled="False"></asp:TextBox>
+                <asp:ListBox ID="lstFileName" runat="server"
+                    DataValueField="Key" DataTextField="Value" AutoPostBack="True"
+                    SelectMethod="GetImageFileNameData" OnDataBound="lstFileName_DataBound" 
+                    OnSelectedIndexChanged="lstFileName_SelectedIndexChanged" OnUnload="lstFileName_Unload">
+                    <asp:ListItem Value="" Text="" Enabled="false" />
+                </asp:ListBox>
                 
 
 
