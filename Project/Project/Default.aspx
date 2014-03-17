@@ -11,7 +11,7 @@
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
 
-    <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px">
+    <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px" ViewStateMode="Disabled">
 
         <asp:Panel ID="pnlInnerTablet" runat="server">
             <%-- Navigeringsknappar --%>
@@ -44,7 +44,7 @@
                         <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
                         <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
                         <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
-                <asp:Label ID="lblItem" runat="server" Text="Bildfil"></asp:Label>                                 
+                <asp:Label ID="lblItem" runat="server" Text="Vald betydelses bildfiler"></asp:Label>                                 
                 <asp:ListBox ID="lstItem" runat="server"
                     DataValueField="MeaningId" ItemType="Project.PageModel.PageItem"
                     DataTextField="ImageFileName" AutoPostBack="True" OnSelectedIndexChanged="lstItem_SelectedIndexChanged" >
@@ -53,6 +53,22 @@
                 <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
                 <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" />
                 <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />
+                <asp:Panel ID="pnlHorizontalRule" runat="server"></asp:Panel>
+                <%-- OK! Lite roligt med dropdownlistor som går utanför "surfplatteskärmen"! Men... Det får vara så. --%>
+                <asp:DropDownList ID="ddlPosition" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList>
+                <asp:CheckBox ID="chkIsCategory" runat="server"/>
+                <asp:Label ID="lblIsCategory" runat="server" Text="Är en kategorilänk"></asp:Label>
+                <asp:DropDownList ID="ddlCategoryLink" runat="server" Enabled="False"></asp:DropDownList>
+                <asp:Button ID="btnUpdateItem" runat="server" Text="Uppdatera" OnClick="btnUpdateItem_Click" />
+                <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" />
+                <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
+                <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" />
+                <asp:Label ID="lblFileName" runat="server" Text="Filnamn"></asp:Label>
+                <asp:TextBox ID="txtFileName" runat="server"></asp:TextBox>
+                <asp:ListBox ID="lstFileName" runat="server"></asp:ListBox>
+                
+
 
             </asp:Panel>
         </asp:Panel>

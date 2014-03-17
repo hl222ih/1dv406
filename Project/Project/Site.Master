@@ -13,7 +13,13 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-    <script> <%--tillfälligt--%>
+    <script>        <%--tillfälligt--%>
+        function enableControl(id) {
+            document.getElementById(id).disabled = false;
+        }
+        function disableControl(id) {
+            document.getElementById(id).disabled = true;
+        }
          function dim(pos) {
              var pnl = document.getElementById("Content_pnlInnerTablet");
              var dimmer = document.createElement("div");

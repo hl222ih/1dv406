@@ -42,6 +42,18 @@ namespace Project
         {
         }
 
+        protected void Page_LoadComplete(object sender, EventArgs e)
+        {
+            SetBackgroundColorsToDdlPageWordType();
+            if (lstMeaning.Enabled == false)
+            {
+                ClientScriptManager csm = Page.ClientScript;
+                csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_lstMeaning')", true);
+                csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_ddlCategoryLink')", true);
+            }
+
+        }
+
         protected void RenderImages()
         {
 
@@ -180,11 +192,6 @@ namespace Project
 
         }
 
-        protected void Page_LoadComplete(object sender, EventArgs e)
-        {
-            SetBackgroundColorsToDdlPageWordType();
-        }
-
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
             return Service.PageWordTypes;
@@ -216,6 +223,7 @@ namespace Project
         protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
         {
             var meaning = Service.GetMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+            btnUpdateItem.Text = "Uppdatera";
             txtWord.Text = meaning.Word;
             txtWordComment.Text = meaning.Comment;
             ddlPageWordType.ClearSelection();
@@ -226,11 +234,6 @@ namespace Project
             {
                 lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
             }
-        }
-
-        protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //PageItem pageItem = Service.GetPageItem(Convert.ToInt32(lstItem.SelectedItem.Value));
         }
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
@@ -254,11 +257,11 @@ namespace Project
         protected void btnAddNewMeaning_Click(object sender, EventArgs e)
         {
             lstMeaning.ClearSelection();
-            //lstMeaning.Enabled = false;
+            lstMeaning.Enabled = false;
             ddlPageWordType.SelectedIndex = 0;
             txtWord.Text = String.Empty;
             txtWordComment.Text = String.Empty;
-
+            lstItem.Items.Clear();
             btnUpdateMeaning.Text = "Spara";
         }
 
@@ -284,6 +287,31 @@ namespace Project
                 txtWordComment.Text = String.Empty;
                 ddlPageWordType.SelectedIndex = 0;
             }
+        }
+
+        protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //PageItem pageItem = Service.GetPageItem(Convert.ToInt32(lstItem.SelectedItem.Value));
+        }
+
+        protected void btnUpdateItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnAddNewItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnDeleteItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnResetItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

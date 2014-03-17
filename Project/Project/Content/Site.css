@@ -90,6 +90,7 @@ footer {
     z-index: 10 !important;
 }
 
+
 #Content_lblMeaning {
     position: absolute;
     left: 4%;
@@ -98,79 +99,132 @@ footer {
 
 #Content_lblWordType {
     position: absolute;
-    left: 28%;
+    left: 41%;
     top: 4%;
 }
 
 #Content_lstMeaning {
     position: absolute;
-    top: 10%;
+    top: 9%;
     left: 4%;
-    height: 38%;
-    width: 22%;
+    height: 30%;
+    width: 32%;
 }
 
 #Content_lstItem {
     position: absolute;
-    top: 10%;
-    left: 56%;
-    height: 18%;
-    width: 35%;
+    top: 55%;
+    left: 4%;
+    height: 14%;
+    width: 32%;
 }
 
 #Content_lblItem {
     position: absolute;
-    left: 56%;
-    top: 4%;
+    left: 4%;
+    top: 50%;
 }
 
 #Content_lblWord {
     position: absolute;
-    left: 28%;
-    top: 20%;
+    left: 41%;
+    top: 16%;
 }
 
 #Content_txtWord {
     position: absolute;
-    left: 28%;
-    top: 26%;
+    left: 41%;
+    top: 21%;
 }
 
 #Content_lblWordComment {
     position: absolute;
-    left: 28%;
-    top: 36%;
+    left: 41%;
+    top: 28%;
 }
 
 #Content_txtWordComment {
     position: absolute;
-    left: 28%;
-    top: 42%;
+    left: 41%;
+    top: 33%;
 }
 
 #Content_btnUpdateMeaning {
     position: absolute;
-    top: 32%;
-    left: 56%;
+    top: 9%;
+    left: 76%;
     width: 15%;
 }
 #Content_btnAddNewMeaning {
     position: absolute;
-    top: 32%;
+    top: 25%;
     left: 76%;
     width: 15%;
 }
 #Content_btnDeleteMeaning {
     position: absolute;
-    top: 42%;
+    top: 33%;
     left: 76%;
     width: 15%;
 }
 #Content_btnResetMeaning {
     position: absolute;
-    top: 42%;
-    left: 56%;
+    top: 17%;
+    left: 76%;
     width: 15%;
+}
+
+#Content_pnlHorizontalRule {
+    position: absolute;
+    display: block;
+    top: 44%;
+    width: 100%;
+    border-bottom : 2px inset #c7d1d6;
+}
+
+#Content_btnUpdateItem {
+    position: absolute;
+    top: 50%;
+    left: 76%;
+    width: 15%;
+}
+#Content_btnAddNewItem {
+    position: absolute;
+    top: 66%;
+    left: 76%;
+    width: 15%;
+}
+#Content_btnDeleteItem {
+    position: absolute;
+    top: 74%;
+    left: 76%;
+    width: 15%;
+}
+#Content_btnResetItem {
+    position: absolute;
+    top: 58%;
+    left: 76%;
+    width: 15%;
+}
+
+#Content_lblFileName {
+    position: absolute;
+    left: 41%;
+    top: 50%;
+}
+
+#Content_txtFileName {
+    position: absolute;
+    left: 41%;
+    top: 55%;
+}
+
+#Content_lstFileName {
+    position: absolute;
+    left: 41%;
+    top: 63%;
+    width: 30%;
+    height: 32%;
 }
 
 header {
@@ -211,10 +265,51 @@ header {
     overflow: hidden;
 }
 
-.item, #Content_ddlPageWordType {
+#Content_ddlPageWordType {
     position: absolute;
-    left: 28%;
-    top: 10%;
+    left: 41%;
+    top: 9%;
+}
+
+#Content_ddlPosition {
+    position: absolute;
+    left: 4%;
+    top: 71%;
+    width: 20%;
+}
+
+#Content_ddlCategory {
+    position: absolute;
+    left: 4%;
+    top: 78%;
+    width: 20%;
+}
+
+#Content_chkIsCategory {
+    position: absolute;
+    left: 4%;
+    top: 85%;
+}
+
+#Content_lblIsCategory {
+    position: absolute;
+    left: 7%;
+    top: 85%;
+}
+
+#Content_ddlCategoryLink {
+    position: absolute;
+    left: 4%;
+    top: 90%;
+    width: 20%;
+}
+
+#Content_ddlCategoryLink:disabled {
+    background-color: rgba(151, 228, 222, 0.5);
+}
+
+.item, #Content_ddlPageWordType, #Content_ddlCategory, #Content_ddlPosition, #Content_ddlCategoryLink {
+    position: absolute;
     color: #000;
     border-radius: 0.3em;
     /*background-color: #CCC;*/
