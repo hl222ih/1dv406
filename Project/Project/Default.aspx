@@ -44,11 +44,16 @@
                         <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
                         <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
                         <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
+                <asp:Label ID="lblItem" runat="server" Text="Bildfil"></asp:Label>                                 
                 <asp:ListBox ID="lstItem" runat="server"
                     DataValueField="MeaningId" ItemType="Project.PageModel.PageItem"
                     DataTextField="ImageFileName" AutoPostBack="True" OnSelectedIndexChanged="lstItem_SelectedIndexChanged" >
-
                 </asp:ListBox>
+                <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" />
+                <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
+                <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" />
+                <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />
+
             </asp:Panel>
         </asp:Panel>
     </asp:Panel>

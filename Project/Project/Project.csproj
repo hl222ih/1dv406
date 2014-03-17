@@ -420,7 +420,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Model\DAL\CommunicationDAL.cs" />
+    <Compile Include="Model\DAL\BlissKomDAL.cs" />
     <Compile Include="Model\DAL\DALBase.cs" />
     <Compile Include="Model\DisplayItemInfo.cs" />
     <Compile Include="Model\ModelClasses\Item.cs" />

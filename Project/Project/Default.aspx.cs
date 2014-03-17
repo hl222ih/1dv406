@@ -220,19 +220,70 @@ namespace Project
             txtWordComment.Text = meaning.Comment;
             ddlPageWordType.ClearSelection();
             ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
-            Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt32(lstMeaning.SelectedItem.Value));
+            lstItem.Items.Clear();
+            Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt16(lstMeaning.SelectedItem.Value));
             foreach (var pifn in pageItemFileNames)
             {
-                var a = pifn.Key;
-                var b = pifn.Value;
                 lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
             }
-
         }
 
         protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             //PageItem pageItem = Service.GetPageItem(Convert.ToInt32(lstItem.SelectedItem.Value));
+        }
+
+        protected void btnUpdateMeaning_Click(object sender, EventArgs e)
+        {
+            var word = txtWord.Text;
+            var comment = txtWordComment.Text;
+            var meaning = new Meaning()
+            {
+                Word = txtWord.Text,
+                Comment = txtWordComment.Text,
+                WTypeId = Convert.ToByte(ddlPageWordType.SelectedItem.Value)
+            };
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                meaning.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
+            }
+            Service.SaveOrUpdateMeaning(meaning);
+            //bekräfta och gör postback
+        }
+
+        protected void btnAddNewMeaning_Click(object sender, EventArgs e)
+        {
+            lstMeaning.ClearSelection();
+            //lstMeaning.Enabled = false;
+            ddlPageWordType.SelectedIndex = 0;
+            txtWord.Text = String.Empty;
+            txtWordComment.Text = String.Empty;
+
+            btnUpdateMeaning.Text = "Spara";
+        }
+
+        protected void btnDeleteMeaning_Click(object sender, EventArgs e)
+        {
+            if (lstMeaning.SelectedIndex >= 0)
+            {
+                //varna användaren först
+                Service.DeleteMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                //bekräfta och gör postback
+            }
+        }
+
+        protected void btnResetMeaning_Click(object sender, EventArgs e)
+        {
+            if (lstMeaning.SelectedIndex >= 0)
+            {
+                lstMeaning_SelectedIndexChanged(sender, e);
+            }
+            else
+            {
+                txtWord.Text = String.Empty;
+                txtWordComment.Text = String.Empty;
+                ddlPageWordType.SelectedIndex = 0;
+            }
         }
     }
 }

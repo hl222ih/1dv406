@@ -13,7 +13,7 @@ namespace Project.Model.DAL
 
         static DALBase()
         {
-            connectionString = WebConfigurationManager.ConnectionStrings["CommunicationConnectionString"].ConnectionString;
+            connectionString = WebConfigurationManager.ConnectionStrings["BlissKomConnectionString"].ConnectionString;
         }
 
         protected SqlConnection CreateConnection()

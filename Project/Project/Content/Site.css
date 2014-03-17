@@ -101,12 +101,27 @@ footer {
     left: 28%;
     top: 4%;
 }
+
 #Content_lstMeaning {
     position: absolute;
     top: 10%;
     left: 4%;
     height: 38%;
     width: 22%;
+}
+
+#Content_lstItem {
+    position: absolute;
+    top: 10%;
+    left: 56%;
+    height: 18%;
+    width: 35%;
+}
+
+#Content_lblItem {
+    position: absolute;
+    left: 56%;
+    top: 4%;
 }
 
 #Content_lblWord {
@@ -131,6 +146,31 @@ footer {
     position: absolute;
     left: 28%;
     top: 42%;
+}
+
+#Content_btnUpdateMeaning {
+    position: absolute;
+    top: 32%;
+    left: 56%;
+    width: 15%;
+}
+#Content_btnAddNewMeaning {
+    position: absolute;
+    top: 32%;
+    left: 76%;
+    width: 15%;
+}
+#Content_btnDeleteMeaning {
+    position: absolute;
+    top: 42%;
+    left: 76%;
+    width: 15%;
+}
+#Content_btnResetMeaning {
+    position: absolute;
+    top: 42%;
+    left: 56%;
+    width: 15%;
 }
 
 header {

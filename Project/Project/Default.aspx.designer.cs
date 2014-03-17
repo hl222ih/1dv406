@@ -175,6 +175,15 @@ namespace Project {
         protected global::System.Web.UI.WebControls.TextBox txtWordComment;
         
         /// <summary>
+        /// lblItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblItem;
+        
+        /// <summary>
         /// lstItem control.
         /// </summary>
         /// <remarks>
@@ -182,5 +191,41 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lstItem;
+        
+        /// <summary>
+        /// btnUpdateMeaning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdateMeaning;
+        
+        /// <summary>
+        /// btnAddNewMeaning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddNewMeaning;
+        
+        /// <summary>
+        /// btnDeleteMeaning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteMeaning;
+        
+        /// <summary>
+        /// btnResetMeaning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnResetMeaning;
     }
 }

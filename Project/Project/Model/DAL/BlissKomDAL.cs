@@ -8,7 +8,7 @@ using Project.PageModel;
 
 namespace Project.Model.DAL
 {
-    public class CommunicationDAL : DALBase
+    public class BlissKomDAL : DALBase
     {
 
         public IEnumerable<PageWordType> SelectAllPageWordTypes()
@@ -333,5 +333,115 @@ namespace Project.Model.DAL
             }
         }
 
+
+        public Dictionary<int, string> GetPageItemFileNames(Int16 meaningId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectFileNamesOfPageItems", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = meaningId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    var fileNames = new Dictionary<int, string>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var itemIdIndex = reader.GetOrdinal("ItemId");
+                        var fileNameIndex = reader.GetOrdinal("FileName");
+
+                        while (reader.Read())
+                        {
+                            fileNames.Add(
+                                (int)reader.GetInt16(itemIdIndex),
+                                reader.GetString(fileNameIndex)
+                            );
+                        }
+                        return fileNames;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }  
+        }
+
+        public void UpdateMeaning(Meaning meaning)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_UpdateMeaning", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = meaning.MeaningId;
+                    cmd.Parameters.Add("@WTypeId", SqlDbType.TinyInt, 1);
+                    cmd.Parameters["@WTypeId"].Value = meaning.WTypeId;
+                    cmd.Parameters.Add("@Word", SqlDbType.VarChar, 30);
+                    cmd.Parameters["@Word"].Value = meaning.Word;
+                    cmd.Parameters.Add("@Comment", SqlDbType.VarChar, 100);
+                    cmd.Parameters["@Comment"].Value = meaning.Comment;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att uppdatera informationen i databasen.");
+                }
+            }  
+        }
+
+        public void InsertMeaning(Meaning meaning)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_InsertMeaning", conn);
+                    cmd.Parameters.Add("@WTypeId", SqlDbType.TinyInt, 1);
+                    cmd.Parameters["@WTypeId"].Value = meaning.WTypeId;
+                    cmd.Parameters.Add("@Word", SqlDbType.VarChar, 30);
+                    cmd.Parameters["@Word"].Value = meaning.Word;
+                    cmd.Parameters.Add("@Comment", SqlDbType.VarChar, 100);
+                    cmd.Parameters["@Comment"].Value = meaning.Comment;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att lägga till informationen i databasen.");
+                }
+            }
+        }
+
+        public void DeleteMeaning(Int16 meaningId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_DeleteMeaning", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = meaningId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att radera från databasen.");
+                }
+            }
+        }
     }
 }

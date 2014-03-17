@@ -11,7 +11,7 @@ namespace Project.Model
     public class Service
     {
         //public System.Web.UI.WebControls.Image CurrentImage { get; set; }
-        private CommunicationDAL communicationDAL;
+        private BlissKomDAL communicationDAL;
         private IEnumerable<PageWordType> pageWordTypes;
         private PageCategory currentPageCategory;
 
@@ -21,9 +21,9 @@ namespace Project.Model
             set { currentPageCategory = value; }
         }
 
-        private CommunicationDAL CommunicationDAL
+        private BlissKomDAL BlissKomDAL
         {
-            get { return communicationDAL ?? (communicationDAL = new CommunicationDAL()); }
+            get { return communicationDAL ?? (communicationDAL = new BlissKomDAL()); }
         }
 
         public IEnumerable<PageWordType> PageWordTypes
@@ -83,7 +83,7 @@ namespace Project.Model
 
         private IEnumerable<PageWordType> GetPageWordTypes()
         {
-            return CommunicationDAL.SelectAllPageWordTypes();
+            return BlissKomDAL.SelectAllPageWordTypes();
         }
         //public void AddMeaning(string word, WordType wordType, string comment = "")
 
@@ -127,7 +127,7 @@ namespace Project.Model
                 CurrentPageNumber = pageNumber,
             };
 
-            var pageItems = CommunicationDAL.SelectPageItemsOfPage(categoryId, pageNumber);
+            var pageItems = BlissKomDAL.SelectPageItemsOfPage(categoryId, pageNumber);
     
             pageCategory.CurrentPage.PageItemsUnits = pageItems
                 .GroupBy(pi => pi.MeaningId)
@@ -138,7 +138,7 @@ namespace Project.Model
 
 
 
-            pageCategory.CurrentPage.CssTemplateName = String.Format("page-{0}", CommunicationDAL.SelectPageInfo(categoryId, pageNumber));
+            pageCategory.CurrentPage.CssTemplateName = String.Format("page-{0}", BlissKomDAL.SelectPageInfo(categoryId, pageNumber));
             pageCategory.CurrentPage.PageNumber = pageNumber;
             
             return pageCategory;
@@ -150,27 +150,39 @@ namespace Project.Model
 
         public IEnumerable<PageItem> GetPageItems(int categoryId, int pageNumbers)
         {
-            return CommunicationDAL.SelectPageItemsOfPage(categoryId, pageNumbers);
+            return BlissKomDAL.SelectPageItemsOfPage(categoryId, pageNumbers);
         }
 
         public IEnumerable<Meaning> GetMeanings()
         {
-            return CommunicationDAL.SelectAllMeanings();
+            return BlissKomDAL.SelectAllMeanings();
         }
 
         public Meaning GetMeaning(Int16 meaningId)
         {
-            return CommunicationDAL.SelectMeaning(meaningId);
+            return BlissKomDAL.SelectMeaning(meaningId);
         }
 
-        //public PageItem GetPageItem(int pageItemId)
-        //{
-        //    return CurrentPageCategory.CurrentPage.Get
-        //}
-
-        public Dictionary<int, string> GetPageItemFileNames(int meaningId)
+        public Dictionary<int, string> GetPageItemFileNames(Int16 meaningId)
         {
-            return CurrentPageCategory.GetPageItemFileNames(meaningId);
+            return BlissKomDAL.GetPageItemFileNames(meaningId);
+        }
+
+        public void SaveOrUpdateMeaning(Meaning meaning)
+        {
+            if (meaning.MeaningId > 0)
+            {
+                BlissKomDAL.UpdateMeaning(meaning);
+            }
+            else
+            {
+                BlissKomDAL.InsertMeaning(meaning);
+            }
+        }
+
+        public void DeleteMeaning(Int16 meaningId)
+        {
+            BlissKomDAL.DeleteMeaning(meaningId);
         }
     }
 }
