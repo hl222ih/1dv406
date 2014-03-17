@@ -81,5 +81,10 @@ namespace Project.PageModel
 
             return null;
         }
+
+        public PageItem GetPageItem(int pageItemId)
+        {
+            return PageItems.First(pi => pi.PageItemId == pageItemId);
+        }
     }
 }

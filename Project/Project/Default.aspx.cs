@@ -190,6 +190,11 @@ namespace Project
             return Service.PageWordTypes;
         }
 
+        public IEnumerable<Meaning> GetMeaningData()
+        {
+            return Service.GetMeanings();
+        }
+
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {
             SetBackgroundColorsToDdlPageWordType();
@@ -206,6 +211,28 @@ namespace Project
                 }
             }
 
+        }
+
+        protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var meaning = Service.GetMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+            txtWord.Text = meaning.Word;
+            txtWordComment.Text = meaning.Comment;
+            ddlPageWordType.ClearSelection();
+            ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
+            Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt32(lstMeaning.SelectedItem.Value));
+            foreach (var pifn in pageItemFileNames)
+            {
+                var a = pifn.Key;
+                var b = pifn.Value;
+                lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
+            }
+
+        }
+
+        protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //PageItem pageItem = Service.GetPageItem(Convert.ToInt32(lstItem.SelectedItem.Value));
         }
     }
 }

@@ -213,6 +213,7 @@ namespace Project.Model.DAL
                         var imageFileNameIndex = reader.GetOrdinal("ImageFileName");
                         var catNameIndex = reader.GetOrdinal("CatName");
                         var catRefIdIndex = reader.GetOrdinal("CatRefId");
+                        var pageItemIdIndex = reader.GetOrdinal("ItemId");
                         //var cssTemplateNameIndex = reader.GetOrdinal("cssTemplateName");
 
                         while (reader.Read())
@@ -278,6 +279,7 @@ namespace Project.Model.DAL
                             pageItem.ImageComment = reader.GetString(imageCommentIndex);
                             pageItem.ImageFileName = reader.GetString(imageFileNameIndex);
                             //pageItem.CssTemplateName = reader.GetString(cssTemplateNameIndex);
+                            pageItem.PageItemId = (int)reader.GetInt16(pageItemIdIndex);
                             
                             pageItems.Add(pageItem);
                         }
@@ -290,5 +292,46 @@ namespace Project.Model.DAL
                 }
             }
         }
+
+        public Meaning SelectMeaning(Int16 meaningId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectMeaning", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = meaningId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var meaningIdIndex = reader.GetOrdinal("MeaningId");
+                        var wTypeIdIndex = reader.GetOrdinal("WTypeId");
+                        var wordIndex = reader.GetOrdinal("Word");
+                        var commentIndex = reader.GetOrdinal("Comment");
+
+                        if (reader.Read())
+                        {
+                            return new Meaning()
+                            {
+                                MeaningId = reader.GetInt16(meaningIdIndex),
+                                WTypeId = reader.GetByte(wTypeIdIndex),
+                                Word = reader.GetString(wordIndex),
+                                Comment = reader.GetString(commentIndex)
+                            };
+                        }
+                    }
+                    return null;
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
+
     }
 }

@@ -75,6 +75,64 @@ h5, h6 {
 
 /* Egen CSS */
 
+footer {
+    position: absolute;
+    height: 5%;
+    top: 95%;
+}
+#Content_pnlForm {
+    top: 0 !important;
+    position: absolute !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #3bc1bc;
+    z-index: 10 !important;
+}
+
+#Content_lblMeaning {
+    position: absolute;
+    left: 4%;
+    top: 4%;
+}
+
+#Content_lblWordType {
+    position: absolute;
+    left: 28%;
+    top: 4%;
+}
+#Content_lstMeaning {
+    position: absolute;
+    top: 10%;
+    left: 4%;
+    height: 38%;
+    width: 22%;
+}
+
+#Content_lblWord {
+    position: absolute;
+    left: 28%;
+    top: 20%;
+}
+
+#Content_txtWord {
+    position: absolute;
+    left: 28%;
+    top: 26%;
+}
+
+#Content_lblWordComment {
+    position: absolute;
+    left: 28%;
+    top: 36%;
+}
+
+#Content_txtWordComment {
+    position: absolute;
+    left: 28%;
+    top: 42%;
+}
+
 header {
     display: inline-block;
 }
@@ -101,7 +159,8 @@ header {
     background-size: cover;
     margin-left: 320px;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+    padding-bottom: 8px;
 }
 
 #Content_pnlInnerTablet {
@@ -114,6 +173,8 @@ header {
 
 .item, #Content_ddlPageWordType {
     position: absolute;
+    left: 28%;
+    top: 10%;
     color: #000;
     border-radius: 0.3em;
     /*background-color: #CCC;*/

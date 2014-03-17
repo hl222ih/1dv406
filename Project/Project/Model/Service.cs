@@ -152,5 +152,25 @@ namespace Project.Model
         {
             return CommunicationDAL.SelectPageItemsOfPage(categoryId, pageNumbers);
         }
+
+        public IEnumerable<Meaning> GetMeanings()
+        {
+            return CommunicationDAL.SelectAllMeanings();
+        }
+
+        public Meaning GetMeaning(Int16 meaningId)
+        {
+            return CommunicationDAL.SelectMeaning(meaningId);
+        }
+
+        //public PageItem GetPageItem(int pageItemId)
+        //{
+        //    return CurrentPageCategory.CurrentPage.Get
+        //}
+
+        public Dictionary<int, string> GetPageItemFileNames(int meaningId)
+        {
+            return CurrentPageCategory.GetPageItemFileNames(meaningId);
+        }
     }
 }

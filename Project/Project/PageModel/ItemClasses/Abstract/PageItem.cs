@@ -15,6 +15,7 @@ namespace Project.PageModel
     {
         private string backGroundRGBColor;
 
+        public int PageItemId { get; set; }
         public int MeaningId { get; set; }
         public string MeaningWord { get; set; }
         public string MeaningComment { get; set; }

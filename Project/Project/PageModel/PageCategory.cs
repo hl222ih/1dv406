@@ -47,5 +47,13 @@ namespace Project.PageModel
             CurrentPageNumber = 1;
         }
 
+        public Dictionary<int, string> GetPageItemFileNames(int meaningId)
+        {
+            return CurrentPage.PageItemsUnits
+                .First(piu => piu.MeaningId == meaningId)
+                .PageItems
+                .ToDictionary(pi => pi.PageItemId, pi => pi.ImageFileName);
+        }
+
     }
 }

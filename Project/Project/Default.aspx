@@ -11,16 +11,6 @@
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
 
-    <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
-        Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.
-        DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
-        DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
-    <asp:DropDownList ID="ddlPageWordType" runat="server"      
-        DataValueField="WTypeId" ItemType="Project.PageModel.PageWordType"
-        DataTextField="WType" OnDataBound="ddlPageWordType_DataBound"
-        SelectMethod="GetPageWordTypeData">
-    </asp:DropDownList>                                                           
-
     <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px">
 
         <asp:Panel ID="pnlInnerTablet" runat="server">
@@ -34,7 +24,32 @@
             <%-- Platshållare för items, alltså bilderna på "kartan".--%>
             <asp:PlaceHolder ID="phItems" runat="server" />
             <%-- Formulär för kommunikation med databasen --%>
+            <asp:Panel ID="pnlForm" runat="server">
+                <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
+                Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.
+                DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
+                DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
+                <asp:Label ID="lblMeaning" runat="server" Text="Betydelse"></asp:Label>
+                <asp:DropDownList ID="ddlPageWordType" runat="server"      
+                    DataValueField="WTypeId" ItemType="Project.PageModel.PageWordType"
+                    DataTextField="WType" OnDataBound="ddlPageWordType_DataBound"
+                    SelectMethod="GetPageWordTypeData">
+                </asp:DropDownList>
+                <asp:Label ID="lblWordType" runat="server" Text="Ordtyp"></asp:Label>                                 
+                <asp:ListBox ID="lstMeaning" runat="server"
+                    DataValueField="MeaningId" ItemType="Project.Model.Meaning"
+                    DataTextField="Word" SelectMethod="GetMeaningData" AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
+                </asp:ListBox>
+                        <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
+                        <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
+                        <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
+                        <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
+                <asp:ListBox ID="lstItem" runat="server"
+                    DataValueField="MeaningId" ItemType="Project.PageModel.PageItem"
+                    DataTextField="ImageFileName" AutoPostBack="True" OnSelectedIndexChanged="lstItem_SelectedIndexChanged" >
+
+                </asp:ListBox>
+            </asp:Panel>
         </asp:Panel>
-        
     </asp:Panel>
 </asp:Content>
