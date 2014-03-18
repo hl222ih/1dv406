@@ -87,7 +87,7 @@ footer {
     width: 100% !important;
     height: 100% !important;
     background-color: #3bc1bc;
-    z-index: 10 !important;
+    z-index: -10 !important;
 }
 
 
@@ -308,7 +308,7 @@ header {
     background-color: rgba(151, 228, 222, 0.5);
 }
 
-.item, #Content_ddlPageWordType, #Content_ddlCategory, #Content_ddlPosition, #Content_ddlCategoryLink {
+.item, .itemFull, #Content_ddlPageWordType, #Content_ddlCategory, #Content_ddlPosition, #Content_ddlCategoryLink {
     position: absolute;
     color: #000;
     border-radius: 0.3em;
@@ -330,24 +330,13 @@ header {
         background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.2), rgba(0,0,0,0.1)); /* Safari och iOS */
         background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
     }
-    /*
-    .item.page-default {
-        background-color: blue;
-        color: red;
-        border-radius: 10px;
-        border: 5px solid green;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }*/
-/*
-#Content_ImageButton2 {
-    position: absolute;
-    height: 90%;
-    width: 90%;
-    left: 5%;
-    top: 5%;
-}*/
+    /*ram runt kategori-bilder*/
+    .item[CatId] {
+        border: 3px inset #E0A82F !important;
+        -moz-box-sizing: border-box  !important;
+        -webkit-box-sizing: border-box  !important;
+        box-sizing: border-box  !important;
+    }
 
 /*update panel of itemsunit*/
 #Content_pnlInnerTablet > div {
@@ -629,7 +618,7 @@ header {
 }
 /*END: page-four-eight template*/
 
-/*START: page-four-eight template*/
+/*START: page-eight-four template*/
 #Content_imbUnit1.page-eight-four {
     top: 1%;
     left: 1%;
@@ -714,69 +703,312 @@ header {
 }
 /*END: page-eight-four template*/
 
-/*START: page-default template*/
-#Content_imbUnit1.page-default {
+/*START: page-ten-four template*/
+#Content_imbUnit1.page-ten-four {
     top: 1%;
     left: 1%;
-    width: 18%;
-    height: 18%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit2.page-default {
+#Content_imbUnit2.page-ten-four {
     top: 1%;
-    left: 21%;
-    width: 18%;
-    height: 18%;
+    left: 19%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit3.page-default {
+#Content_imbUnit3.page-ten-four {
     top: 1%;
-    left: 41%;
-    width: 18%;
-    height: 18%;
+    left: 41.5%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit4.page-default {
+#Content_imbUnit4.page-ten-four {
     top: 1%;
-    left: 61%;
-    width: 18%;
-    height: 18%;
+    left: 64%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit5.page-default {
+#Content_imbUnit5.page-ten-four {
     top: 1%;
-    left: 81%;
-    width: 18%;
-    height: 18%;
+    left: 82%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit6.page-default {
-    top: 21%;
+#Content_imbUnit6.page-ten-four {
+    top: 19%;
     left: 1%;
-    width: 23%;
-    height: 23%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit7.page-default {
-    top: 21%;
-    left: 26%;
-    width: 23%;
-    height: 23%;
+#Content_imbUnit7.page-ten-four {
+    top: 19%;
+    left: 19%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit8.page-default {
-    top: 21%;
-    left: 51%;
-    width: 23%;
-    height: 23%;
+#Content_imbUnit8.page-ten-four {
+    top: 19%;
+    left: 41.5%;
+    width: 17%;
+    height: 17%;
 }
 
-#Content_imbUnit9.page-default {
-    top: 21%;
-    left: 76%;
-    width: 23%;
-    height: 23%;
+#Content_imbUnit9.page-ten-four {
+    top: 19%;
+    left: 64%;
+    width: 17%;
+    height: 17%;
 }
 
+#Content_imbUnit10.page-ten-four {
+    top: 19%;
+    left: 82%;
+    width: 17%;
+    height: 17%;
+}
 
-/*END: page-default template*/
+#Content_imbUnit11.page-ten-four {
+    top: 78%;
+    left: 1%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit12.page-ten-four {
+    top: 78%;
+    left: 24%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit13.page-ten-four {
+    top: 78%;
+    left: 55%;
+    width: 21%;
+    height: 21%;
+}
+
+#Content_imbUnit14.page-ten-four {
+    top: 78%;
+    left: 78%;
+    width: 21%;
+    height: 21%;
+}
+
+/*END: page-ten-four template*/
+
+/*START: page-five-five template*/
+#Content_imbUnit1.page-five-five {
+    top: 1%;
+    left: 1%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit2.page-five-five {
+    top: 1%;
+    left: 19%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit3.page-five-five {
+    top: 1%;
+    left: 41.5%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit4.page-five-five {
+    top: 1%;
+    left: 64%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit5.page-five-five {
+    top: 1%;
+    left: 82%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit6.page-five-five {
+    top: 82%;
+    left: 1%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit7.page-five-five {
+    top: 82%;
+    left: 19%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit8.page-five-five {
+    top: 82%;
+    left: 41.5%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit9.page-five-five {
+    top: 82%;
+    left: 64%;
+    width: 17%;
+    height: 17%;
+}
+
+#Content_imbUnit10.page-five-five {
+    top: 82%;
+    left: 82%;
+    width: 17%;
+    height: 17%;
+}
+
+/*END: page-five-five template*/
+
+/*START: page-twelve-seven template*/
+#Content_imbUnit1.page-twelve-seven {
+    top: 1%;
+    left: 1%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit2.page-twelve-seven {
+    top: 1%;
+    left: 17%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit3.page-twelve-seven {
+    top: 1%;
+    left: 34.5%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit4.page-twelve-seven {
+    top: 1%;
+    left: 50.5%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit5.page-twelve-seven {
+    top: 1%;
+    left: 68%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit6.page-twelve-seven {
+    top: 1%;
+    left: 84%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit7.page-twelve-seven {
+    top: 17%;
+    left: 1%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit8.page-twelve-seven {
+    top: 17%;
+    left: 17%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit9.page-twelve-seven {
+    top: 17%;
+    left: 34.5%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit10.page-twelve-seven {
+    top: 17%;
+    left: 50.5%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit11.page-twelve-seven {
+    top: 17%;
+    left: 68%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit12.page-twelve-seven {
+    top: 17%;
+    left: 84%;
+    width: 15%;
+    height: 15%;
+}
+
+#Content_imbUnit13.page-twelve-seven {
+    top: 86%;
+    left: 1%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit14.page-twelve-seven {
+    top: 86%;
+    left: 15%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit15.page-twelve-seven {
+    top: 86%;
+    left: 29.5%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit16.page-twelve-seven {
+    top: 86%;
+    left: 43.5%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit17.page-twelve-seven {
+    top: 86%;
+    left: 57.5%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit18.page-twelve-seven {
+    top: 86%;
+    left: 72%;
+    width: 13%;
+    height: 13%;
+}
+
+#Content_imbUnit19.page-twelve-seven {
+    top: 86%;
+    left: 86%;
+    width: 13%;
+    height: 13%;
+}
+
+/*END: page-seven-twelve template*/

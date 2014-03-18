@@ -204,5 +204,10 @@ namespace Project.Model
         {
             return BlissKomDAL.SelectAllPositions();
         }
+
+        public int GetPositionOfItem(Int16 itemId)
+        {
+            return BlissKomDAL.SelectPositionIdOfItem(itemId);
+        }
     }
 }

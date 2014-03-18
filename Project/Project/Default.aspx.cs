@@ -74,12 +74,9 @@ namespace Project
             imbHome.Click += new ImageClickEventHandler(imbHome_Click);
             
             imbOK.Click += new ImageClickEventHandler(imbOK_Click);
-
-            imbCancel.Click += new ImageClickEventHandler(imbCancel_Click);
             
             imbCancel.OnClientClick = "toggleNavButtons(false, false, false, false, false); undim(); return false;";
 
-            // imbLeft.Click += new ImageClickEventHandler(imbLeft_Click);
             imbLeft.OnClientClick = "showLeftImage(); return false;";
             imbRight.OnClientClick = "showRightImage(); return false;";
             //osynliggör navigeringsknappar som inte används i aktuell vy.
@@ -147,13 +144,10 @@ namespace Project
                 lb.Controls.Add(img);
                 phItems.Controls.Add(upnl);
 
-
-
                 var pcis = piu.GetPageChildItems();
 
                 foreach (var pci in pcis)
                 {
-
                     var imgChild = new Image()
                     {
                         ImageUrl = String.Format("~/Images/ComPics/{0}", pci.ImageFileName)                 
@@ -191,17 +185,6 @@ namespace Project
         {
             Service.UpdatePageCategory(1, 1);
             Response.Redirect(Request.Url.AbsoluteUri, false);
-        }
-
-        protected void imbCancel_Click(object sender, ImageClickEventArgs e)
-        {
-            //if (lb.CssClass.Substring(0, 5) == "item ")
-            
-        }
-
-        protected void imbLeft_Click(object sender, ImageClickEventArgs e)
-        {
-
         }
 
         public IEnumerable<PageWordType> GetPageWordTypeData()
@@ -259,6 +242,15 @@ namespace Project
             txtWordComment.Text = meaning.Comment;
             ddlPageWordType.ClearSelection();
             ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
+            var catInfo = Service.GetCatInfoOfMeaning(meaning.MeaningId);
+            if (catInfo.Value != null)
+            {
+                chkIsCategory.Checked = true;
+            }
+            else
+            {
+                chkIsCategory.Checked = false;
+            }
         }
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
@@ -326,6 +318,13 @@ namespace Project
                     lstFileName.ClearSelection();
                     lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
                 }
+
+                if (ddlPosition.Items.Count > 0)
+                {
+                    var posInfo = Service.GetPositionOfItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                    ddlPosition.ClearSelection();
+                    ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
+                }
             }
         }
 
@@ -389,13 +388,13 @@ namespace Project
                 {
                     var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
                     //Value innehåller CatRefId
-                    if (catInfo.Value != null)
-                    {
-                        chkIsCategory.Checked = true;
-                    }
+                    //if (catInfo.Value != null)
+                    //{
+                    //    chkIsCategory.Checked = true;
+                    //}
                     if (catInfo.Key != 0)
                     {
-                        chkIsCategory.Checked = false;
+                        //chkIsCategory.Checked = false;
                         //Key innehåller CatId
                         if (ddlCategory.Items.Count > 0)
                         {
@@ -410,11 +409,14 @@ namespace Project
         {
             if (lstMeaning.SelectedIndex > -1)
             {
-                var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
                 if (ddlCategoryLink.Items.Count > 0)
                 {
-                    //Key innehåller CatId
-                    ddlCategoryLink.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
+                    var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                    if (catInfo.Value != null)
+                    {
+                        //Value innehåller CatRefId
+                        ddlCategoryLink.Items.FindByValue(catInfo.Value.ToString()).Selected = true;
+                    }
                 }
             }
         }
@@ -427,6 +429,16 @@ namespace Project
                 return positions;
             }
             return null;
+        }
+
+        protected void ddlPosition_DataBound(object sender, EventArgs e)
+        {
+            if (lstItem.SelectedIndex > -1)
+            {
+                var posInfo = Service.GetPositionOfItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                ddlPosition.ClearSelection();
+                ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
+            }
         }
     }
 }

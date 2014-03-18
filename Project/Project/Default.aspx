@@ -58,7 +58,7 @@
                 <asp:Panel ID="pnlHorizontalRule" runat="server"></asp:Panel>
                 <%-- OK! Lite roligt med dropdownlistor som går utanför "surfplatteskärmen"! Men... Det får vara så. --%>
                 <asp:DropDownList ID="ddlPosition" runat="server"
-                    DataValueField="Key" DataTextField="Value" SelectMethod="GetPositionData">
+                    DataValueField="Key" DataTextField="Value" SelectMethod="GetPositionData" OnDataBound="ddlPosition_DataBound">
                 </asp:DropDownList>
                 <asp:DropDownList ID="ddlCategory" runat="server"
                     DataValueField="Key" DataTextField="Value" SelectMethod="GetCategoryData" OnDataBound="ddlCategory_DataBound">

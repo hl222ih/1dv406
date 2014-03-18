@@ -599,5 +599,36 @@ namespace Project.Model.DAL
                 }
             }
         }
+
+        public int SelectPositionIdOfItem(Int16 itemId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectPosIdByItemId", conn);
+                    cmd.Parameters.Add("@ItemId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@ItemId"].Value = itemId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var posIdIndex = reader.GetOrdinal("PosId");
+
+                        if (reader.Read())
+                        {
+                            return (int)reader.GetByte(posIdIndex);
+                        }
+                        return 0;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
     }
 }
