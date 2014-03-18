@@ -334,7 +334,7 @@ namespace Project.Model.DAL
         }
 
 
-        public Dictionary<int, string> GetPageItemFileNames(Int16 meaningId)
+        public Dictionary<int, string> SelectPageItemFileNames(Int16 meaningId)
         {
             using (var conn = CreateConnection())
             {
@@ -371,7 +371,7 @@ namespace Project.Model.DAL
             }  
         }
 
-        public Dictionary<int, string> GetAllFileNames()
+        public Dictionary<int, string> SelectAllFileNames()
         {
             using (var conn = CreateConnection())
             {
@@ -475,6 +475,127 @@ namespace Project.Model.DAL
                 catch
                 {
                     throw new ApplicationException("Misslyckades med att radera från databasen.");
+                }
+            }
+        }
+
+        public Dictionary<int, string> SelectAllCategories()
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllCategories", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    var categories = new Dictionary<int, string>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var catIdIndex = reader.GetOrdinal("CatId");
+                        var catNameIndex = reader.GetOrdinal("CatName");
+
+                        while (reader.Read())
+                        {
+                            categories.Add(
+                                (int)reader.GetInt16(catIdIndex),
+                                reader.GetString(catNameIndex)
+                            );
+                        }
+                        return categories;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
+
+        public KeyValuePair<int, int?> SelectCatInfoOfMeaning(Int16 meaningId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectCatInfoOfMeaning", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = meaningId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    int catId = 0;
+                    int? catRefId = null;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var catIdIndex = reader.GetOrdinal("CatId");
+                        var catRefIdIndex = reader.GetOrdinal("CatRefId");
+
+                        while (reader.Read())
+                        {
+                            catId = (int)reader.GetInt16(catIdIndex);
+                            if (catRefId == null)
+                            {
+                                catRefId = reader.IsDBNull(catRefIdIndex) ?
+                                        null : (int?)reader.GetInt16(catRefIdIndex);
+                            }
+                        }
+                        //Key = CatId, samma för alla sökresultat
+                        //Value = CatRefId, finns för ett eller noll av sökresultaten
+                        if (catId > 0)
+                        {
+                            return new KeyValuePair<int, int?>(
+                                        catId,
+                                        catRefId);
+                        }
+                        else
+                        {
+                            return new KeyValuePair<int, int?>();
+                        }
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
+                }
+            }
+        }
+
+        public Dictionary<int, string> SelectAllPositions()
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllPositions", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    var positions = new Dictionary<int, string>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var posIdIndex = reader.GetOrdinal("PosId");
+                        var positionIndex = reader.GetOrdinal("Position");
+
+                        while (reader.Read())
+                        {
+                            positions.Add(
+                                (int)reader.GetByte(posIdIndex),
+                                reader.GetString(positionIndex)
+                            );
+                        }
+                        return positions;
+                    }
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att hämta information från databasen.");
                 }
             }
         }

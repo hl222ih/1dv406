@@ -45,11 +45,15 @@ namespace Project
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
             SetBackgroundColorsToDdlPageWordType();
+            ClientScriptManager csm = Page.ClientScript;
+
             if (lstMeaning.Enabled == false)
             {
-                ClientScriptManager csm = Page.ClientScript;
                 csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_lstMeaning')", true);
-                csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_ddlCategoryLink')", true);
+            }
+            if (chkIsCategory.Checked)
+            {
+                csm.RegisterStartupScript(this.GetType(), "DisableControl", "enableControl('Content_ddlCategoryLink')", true);
             }
 
         }
@@ -207,7 +211,7 @@ namespace Project
 
         public IEnumerable<Meaning> GetMeaningData()
         {
-            return Service.GetMeanings();
+            return Service.GetMeanings().OrderBy(m => m.Word);
         }
 
         public Dictionary<int, string> GetImageFileNameDataOfPage()
@@ -245,7 +249,6 @@ namespace Project
                     li.Attributes.CssStyle.Add("background-color", Service.GetColorRGBCodeOfPageWordType(int.Parse(li.Value)));
                 }
             }
-
         }
 
         protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
@@ -256,12 +259,6 @@ namespace Project
             txtWordComment.Text = meaning.Comment;
             ddlPageWordType.ClearSelection();
             ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
-            //lstItem.Items.Clear();
-            //Dictionary<int, string> pageItemFileNames = Service.GetPageItemFileNames(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-            //foreach (var pifn in pageItemFileNames)
-            //{
-            //    lstItem.Items.Add(new ListItem(pifn.Value, pifn.Key.ToString()));
-            //}
         }
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
@@ -366,9 +363,70 @@ namespace Project
             }
         }
 
-        protected void lstFileName_Unload(object sender, EventArgs e)
+        public Dictionary<int, string> GetCategoryData()
         {
+            if (lstItem.SelectedIndex > -1)
+            {
+                return Service.GetAllCategories();
+            }
+            return null;
+        }
 
+        public Dictionary<int, string> IsCategoryGetCategoryData()
+        {
+            if (chkIsCategory.Checked)
+            {
+                return GetCategoryData();
+            }
+            return null;
+        }
+
+        protected void ddlCategory_DataBound(object sender, EventArgs e)
+        {
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                if (lstItem.SelectedIndex > -1)
+                {
+                    var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                    //Value innehåller CatRefId
+                    if (catInfo.Value != null)
+                    {
+                        chkIsCategory.Checked = true;
+                    }
+                    if (catInfo.Key != 0)
+                    {
+                        chkIsCategory.Checked = false;
+                        //Key innehåller CatId
+                        if (ddlCategory.Items.Count > 0)
+                        {
+                            ddlCategory.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        protected void ddlCategoryLink_DataBound(object sender, EventArgs e)
+        {
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                if (ddlCategoryLink.Items.Count > 0)
+                {
+                    //Key innehåller CatId
+                    ddlCategoryLink.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
+                }
+            }
+        }
+
+        public Dictionary<int, string> GetPositionData()
+        {
+            if (lstItem.SelectedIndex > -1)
+            {
+                Dictionary<int, string> positions = Service.GetAllPositions();
+                return positions;
+            }
+            return null;
         }
     }
 }

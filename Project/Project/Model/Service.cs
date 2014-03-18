@@ -165,7 +165,7 @@ namespace Project.Model
 
         public Dictionary<int, string> GetPageItemFileNames(Int16 meaningId)
         {
-            return BlissKomDAL.GetPageItemFileNames(meaningId);
+            return BlissKomDAL.SelectPageItemFileNames(meaningId);
         }
 
         public void SaveOrUpdateMeaning(Meaning meaning)
@@ -187,7 +187,22 @@ namespace Project.Model
 
         public Dictionary<int, string> GetAllFileNames()
         {
-            return BlissKomDAL.GetAllFileNames();
+            return BlissKomDAL.SelectAllFileNames();
+        }
+
+        public Dictionary<int, string> GetAllCategories()
+        {
+            return BlissKomDAL.SelectAllCategories();
+        }
+
+        public KeyValuePair<int, int?> GetCatInfoOfMeaning(Int16 meaningId)
+        {
+            return BlissKomDAL.SelectCatInfoOfMeaning(meaningId);
+        }
+
+        public Dictionary<int, string> GetAllPositions()
+        {
+            return BlissKomDAL.SelectAllPositions();
         }
     }
 }

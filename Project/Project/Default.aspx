@@ -57,11 +57,17 @@
                 <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />
                 <asp:Panel ID="pnlHorizontalRule" runat="server"></asp:Panel>
                 <%-- OK! Lite roligt med dropdownlistor som går utanför "surfplatteskärmen"! Men... Det får vara så. --%>
-                <asp:DropDownList ID="ddlPosition" runat="server"></asp:DropDownList>
-                <asp:DropDownList ID="ddlCategory" runat="server"></asp:DropDownList>
-                <asp:CheckBox ID="chkIsCategory" runat="server"/>
+                <asp:DropDownList ID="ddlPosition" runat="server"
+                    DataValueField="Key" DataTextField="Value" SelectMethod="GetPositionData">
+                </asp:DropDownList>
+                <asp:DropDownList ID="ddlCategory" runat="server"
+                    DataValueField="Key" DataTextField="Value" SelectMethod="GetCategoryData" OnDataBound="ddlCategory_DataBound">
+                </asp:DropDownList>
+                <asp:CheckBox ID="chkIsCategory" runat="server" AutoPostBack="True" />
                 <asp:Label ID="lblIsCategory" runat="server" Text="Är en kategorilänk"></asp:Label>
-                <asp:DropDownList ID="ddlCategoryLink" runat="server" Enabled="False"></asp:DropDownList>
+                <asp:DropDownList ID="ddlCategoryLink" runat="server" Enabled="False"
+                    DataValueField="Key" DataTextField="Value" SelectMethod="IsCategoryGetCategoryData" OnDataBound="ddlCategoryLink_DataBound">
+                </asp:DropDownList>
                 <asp:Button ID="btnUpdateItem" runat="server" Text="Uppdatera" OnClick="btnUpdateItem_Click" />
                 <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" />
                 <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
@@ -71,7 +77,7 @@
                 <asp:ListBox ID="lstFileName" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True"
                     SelectMethod="GetImageFileNameData" OnDataBound="lstFileName_DataBound" 
-                    OnSelectedIndexChanged="lstFileName_SelectedIndexChanged" OnUnload="lstFileName_Unload">
+                    OnSelectedIndexChanged="lstFileName_SelectedIndexChanged">
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
                 
