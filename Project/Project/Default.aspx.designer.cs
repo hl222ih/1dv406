@@ -13,6 +13,15 @@ namespace Project {
     public partial class _Default {
         
         /// <summary>
+        /// ValidationSummary1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
+        
+        /// <summary>
         /// pnlTablet control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,24 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imbInfo;
+        
+        /// <summary>
+        /// imbSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imbSettings;
+        
+        /// <summary>
+        /// imbHome2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imbHome2;
         
         /// <summary>
         /// phItems control.
@@ -328,13 +355,13 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Label lblFileName;
         
         /// <summary>
-        /// txtFileName control.
+        /// imgImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFileName;
+        protected global::System.Web.UI.WebControls.Image imgImage;
         
         /// <summary>
         /// lstFileName control.

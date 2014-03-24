@@ -10,6 +10,7 @@ using Project.PageModel;
 using System.Web.DynamicData;
 using System.Web.Services;
 using System.Web.Script.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project
 {
@@ -27,33 +28,54 @@ namespace Project
             }
         }
 
+        private bool IsSettingsMode
+        {
+            get { return (Session["IsSettingsMode"] != null && Session["IsSettingsMode"].ToString() == "True"); }
+            set { Session["IsSettingsMode"] = value.ToString(); }
+        }
+
         protected void Page_Init(object sender, EventArgs e)
         {
-            //rendera bara ItemsUnits när det behövs
-            var test = Session["refreshItemsUnits"] != null ? Session["refreshItemsUnits"].ToString() : "null";
-            if (Session["refreshItemsUnits"] == null || (string)Session["refreshItemsUnits"] == "true")
+            if (IsSettingsMode)
             {
-                RenderImages();
-                //Session["refreshItemsUnits"] = "false";
+                pnlForm.Attributes.CssStyle["z-index"] = "10 !important";
+                imbHome2.Attributes.CssStyle["z-index"] = "11 !important";
             }
+            else
+            {
+                pnlForm.Attributes.CssStyle["z-index"] = "-10 !important";
+                imbHome2.Attributes.CssStyle["z-index"] = "-10 !important";
+            }
+
+            imbHome.Click += new ImageClickEventHandler(imbHome_Click);
+            imbHome2.Click += new ImageClickEventHandler(imbHome_Click);
+
+            imbOK.Click += new ImageClickEventHandler(imbOK_Click);
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ModelState.AddModelError("testKey", "testValue");
+            if (!IsSettingsMode)
+            {
+                RenderImages();
+            }
         }
 
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
+
             SetBackgroundColorsToDdlPageWordType();
             ClientScriptManager csm = Page.ClientScript;
 
-            if (lstMeaning.Enabled == false)
+            if (!lstMeaning.Enabled)
             {
                 csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_lstMeaning')", true);
             }
             if (chkIsCategory.Checked)
             {
-                csm.RegisterStartupScript(this.GetType(), "DisableControl", "enableControl('Content_ddlCategoryLink')", true);
+                csm.RegisterStartupScript(this.GetType(), "EnableControl", "enableControl('Content_ddlCategoryLink')", true);
             }
 
         }
@@ -71,10 +93,8 @@ namespace Project
         protected void RenderImages()
         {
 
-            imbHome.Click += new ImageClickEventHandler(imbHome_Click);
-            
-            imbOK.Click += new ImageClickEventHandler(imbOK_Click);
-            
+
+
             imbCancel.OnClientClick = "toggleNavButtons(false, false, false, false, false); undim(); return false;";
 
             imbLeft.OnClientClick = "showLeftImage(); return false;";
@@ -88,6 +108,10 @@ namespace Project
             if (Service.GetCurrentCategoryId() == 1 && Service.GetCurrentPageNumber() == 1)
             {
                 imbHome.Style["display"] = "none";
+            }
+            else
+            {
+                imbSettings.Style["display"] = "none";
             }
 
             var cssTemplateName = Service.GetCurrentCssTemplateName();
@@ -166,6 +190,7 @@ namespace Project
         {
             var lb = ((LinkButton)sender);
         }
+
         protected void lbParentCategoryItem_Click(object sender, EventArgs e)
         {
             var lb = ((LinkButton)sender);
@@ -184,6 +209,7 @@ namespace Project
         protected void imbHome_Click(object sender, ImageClickEventArgs e)
         {
             Service.UpdatePageCategory(1, 1);
+            IsSettingsMode = false;
             Response.Redirect(Request.Url.AbsoluteUri, false);
         }
 
@@ -255,8 +281,6 @@ namespace Project
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
         {
-            var word = txtWord.Text;
-            var comment = txtWordComment.Text;
             var meaning = new Meaning()
             {
                 Word = txtWord.Text,
@@ -267,7 +291,18 @@ namespace Project
             {
                 meaning.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
             }
-            Service.SaveOrUpdateMeaning(meaning);
+            ICollection<ValidationResult> validationResults;
+            if (!meaning.Validate(out validationResults))
+            {
+                foreach (var v in validationResults)
+                {
+                    ModelState.AddModelError("", v.ErrorMessage);
+                }
+            }
+            else
+            {
+                Service.SaveOrUpdateMeaning(meaning);
+            }
             //bekräfta och gör postback
         }
 
@@ -311,7 +346,7 @@ namespace Project
 
             if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
             {
-                txtFileName.Text = lstItem.SelectedItem.Text;
+                imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstItem.SelectedItem.Text);
 
                 if (lstFileName.Items.Count > 1)
                 {
@@ -330,16 +365,54 @@ namespace Project
 
         protected void btnUpdateItem_Click(object sender, EventArgs e)
         {
+            //Item item = new Item();
+
+            //if (lstItem.SelectedIndex > 0)
+            //{
+            //    item = Service.GetItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+            //}
+
+            var item = new Item()
+            {
+                MeaningId = 0,
+                PosId = 0,
+                ImageId = 0,
+                CatId = 0,
+                CatRefId = 0
+            };
+
+            // större än 0 eftersom den första listitem är tom.
+            if (lstItem.SelectedIndex > 0)
+            {
+                item.ItemId = Convert.ToInt16(lstItem.SelectedItem.Value);
+            }
+//            Service.SaveOrUpdateItem(item);
+
+            //bekräfta och gör postback
 
         }
 
         protected void btnAddNewItem_Click(object sender, EventArgs e)
         {
+            lstItem.ClearSelection();
+            lstItem.Enabled = false;
+
+            ddlPosition.SelectedIndex = 0;
+            chkIsCategory.Checked = false;
+            lstFileName.ClearSelection();
+
+            btnUpdateItem.Text = "Spara";
 
         }
 
         protected void btnDeleteItem_Click(object sender, EventArgs e)
         {
+            if (lstItem.SelectedIndex >= 1)
+            {
+                //varna användaren först
+                Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                //bekräfta och gör postback
+            }
 
         }
 
@@ -350,7 +423,7 @@ namespace Project
 
         protected void lstFileName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtFileName.Text = lstFileName.SelectedItem.Text;
+            imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstFileName.SelectedItem.Text);
         }
 
         protected void lstFileName_DataBound(object sender, EventArgs e)
@@ -439,6 +512,12 @@ namespace Project
                 ddlPosition.ClearSelection();
                 ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
             }
+        }
+
+        protected void imbSettings_Click(object sender, ImageClickEventArgs e)
+        {
+            IsSettingsMode = true;
+            Response.Redirect(Request.Url.AbsoluteUri, false);
         }
     }
 }

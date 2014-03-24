@@ -9,7 +9,7 @@ using Project.PageModel;
 namespace Project.Model.DAL
 {
     public class BlissKomDAL : DALBase
-    {
+    {        
 
         public IEnumerable<PageWordType> SelectAllPageWordTypes()
         {
@@ -19,7 +19,7 @@ namespace Project.Model.DAL
                 {
                     var pageWordTypes = new List<PageWordType>();
 
-                    var cmd = new SqlCommand("appSchema.usp_SelectAllPageWordTypes", conn);
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllWordTypesWithColorCode", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -333,14 +333,13 @@ namespace Project.Model.DAL
             }
         }
 
-
         public Dictionary<int, string> SelectPageItemFileNames(Int16 meaningId)
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema.usp_SelectFileNamesOfPageItems", conn);
+                    var cmd = new SqlCommand("appSchema.usp_SelectFileNamesOfPageItemsByMeaningId", conn);
                     cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
                     cmd.Parameters["@MeaningId"].Value = meaningId;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -377,7 +376,7 @@ namespace Project.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema.usp_SelectAllFileNames", conn);
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllImagesSpecial", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -464,7 +463,7 @@ namespace Project.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema.usp_DeleteMeaning", conn);
+                    var cmd = new SqlCommand("appSchema.usp_DeleteMeaningWithItems", conn);
                     cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
                     cmd.Parameters["@MeaningId"].Value = meaningId;
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -571,7 +570,7 @@ namespace Project.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema.usp_SelectAllPositions", conn);
+                    var cmd = new SqlCommand("appSchema.usp_SelectAllPositionsSpecial", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -630,5 +629,87 @@ namespace Project.Model.DAL
                 }
             }
         }
+
+        public void UpdateItem(Item item)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_UpdateItem", conn);
+                    cmd.Parameters.Add("@ItemId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@ItemId"].Value = item.ItemId;
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = item.MeaningId;
+                    cmd.Parameters.Add("@ImageId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@ImageId"].Value = item.ImageId;
+                    cmd.Parameters.Add("@CatId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@CatId"].Value = item.CatId;
+                    cmd.Parameters.Add("@CatRefId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@CatRefId"].Value = item.CatRefId;
+                    cmd.Parameters.Add("@PosId", SqlDbType.TinyInt, 1);
+                    cmd.Parameters["@PosId"].Value = item.PosId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att uppdatera informationen i databasen.");
+                }
+            }
+        }
+
+        public void InsertItem(Item item)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_InsertMeaning", conn);
+                    cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@MeaningId"].Value = item.MeaningId;
+                    cmd.Parameters.Add("@ImageId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@ImageId"].Value = item.ImageId;
+                    cmd.Parameters.Add("@CatId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@CatId"].Value = item.CatId;
+                    cmd.Parameters.Add("@CatRefId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@CatRefId"].Value = item.CatRefId;
+                    cmd.Parameters.Add("@PosId", SqlDbType.TinyInt, 1);
+                    cmd.Parameters["@PosId"].Value = item.PosId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att lägga till informationen i databasen.");
+                }
+            }
+        }
+
+        public void DeleteItem(Int16 itemId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_DeleteItem", conn);
+                    cmd.Parameters.Add("@ItemId", SqlDbType.SmallInt, 2);
+                    cmd.Parameters["@ItemId"].Value = itemId;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    throw new ApplicationException("Misslyckades med att radera från databasen.");
+                }
+            }
+        }
+
     }
 }

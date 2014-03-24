@@ -10,7 +10,6 @@ namespace Project.Model
 {
     public class Service
     {
-        //public System.Web.UI.WebControls.Image CurrentImage { get; set; }
         private BlissKomDAL communicationDAL;
         private IEnumerable<PageWordType> pageWordTypes;
         private PageCategory currentPageCategory;
@@ -45,17 +44,6 @@ namespace Project.Model
             }
         }
 
-
-        //public Color GetColorById(int wordTypeId)
-        //{
-        //    return ColorTranslator.FromHtml(GetColorHexCodeById(wordTypeId));
-        //}
-
-        //public string GetColorHexCodeById(int wTypeId)
-        //{
-        //    return PageWordTypes.First(pwt => pwt.ColorId == colorId).ColorRGBCode;
-        //}
-
         public string GetColorRGBCodeOfPageWordType(int wTypeId)
         {
             return GetPageWordType(wTypeId).ColorRGBCode;
@@ -85,7 +73,6 @@ namespace Project.Model
         {
             return BlissKomDAL.SelectAllPageWordTypes();
         }
-        //public void AddMeaning(string word, WordType wordType, string comment = "")
 
         public string GetCurrentCssTemplateName()
         {
@@ -128,15 +115,13 @@ namespace Project.Model
             };
 
             var pageItems = BlissKomDAL.SelectPageItemsOfPage(categoryId, pageNumber);
-    
+
             pageCategory.CurrentPage.PageItemsUnits = pageItems
                 .GroupBy(pi => pi.MeaningId)
                 .Select(group => new PageItemsUnit
                 {
                     PageItems = group.ToList()
                 }).ToList();
-
-
 
             pageCategory.CurrentPage.CssTemplateName = String.Format("page-{0}", BlissKomDAL.SelectPageInfo(categoryId, pageNumber));
             pageCategory.CurrentPage.PageNumber = pageNumber;
@@ -208,6 +193,23 @@ namespace Project.Model
         public int GetPositionOfItem(Int16 itemId)
         {
             return BlissKomDAL.SelectPositionIdOfItem(itemId);
+        }
+
+        public void SaveOrUpdateItem(Item item)
+        {
+            if (item.ItemId > 0)
+            {
+                BlissKomDAL.UpdateItem(item);
+            }
+            else
+            {
+                BlissKomDAL.InsertItem(item);
+            }
+        }
+
+        public void DeleteItem(Int16 itemId)
+        {
+            BlissKomDAL.DeleteItem(itemId);
         }
     }
 }

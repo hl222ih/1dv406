@@ -450,6 +450,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\right.png" />
+    <Content Include="Images\settings.png" />
     <Content Include="Images\tablet-PD.svg" />
     <Content Include="Model\Other classes in DB.txt" />
     <Content Include="packages.config" />
@@ -565,6 +566,7 @@
     <Compile Include="Model\ModelClasses\Meaning.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\ModelClasses\WordType.cs" />
+    <Compile Include="Model\ValidationExtensions.cs" />
     <Compile Include="PageModel\Enums\PageImageType.cs" />
     <Compile Include="PageModel\PagePage.cs" />
     <Compile Include="PageModel\PageCategory.cs" />

@@ -6,11 +6,12 @@
     Gnome Icon Artists http://findicons.com/icon/67135/gnome_go_home   info.png (GNU/GPL)
     Asher http://findicons.com/icon/64629/stop  close.png   (Creative Commons ShareAlike)
     capital18 (Jugal Paryani) http://findicons.com/icon/13745/forward  right.png (freeware)
-    capital18 (Jugal Paryani) http://findicons.com/icon/13715/back  left.png (freeware) --%>
+    capital18 (Jugal Paryani) http://findicons.com/icon/13715/back  left.png (freeware) 
+    Oxygen Team http://findicons.com/icon/238341/preferences_system settings.png (GNU/GPL) --%>
 
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
-
+     <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
     <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px" ViewStateMode="Disabled">
 
         <asp:Panel ID="pnlInnerTablet" runat="server">
@@ -21,13 +22,15 @@
             <asp:ImageButton ID="imbRight" runat="server" ImageUrl="~/Images/right.png" CssClass="navImbs" CausesValidation="False" OnClientClick="return false;" />
             <asp:ImageButton ID="imbHome" runat="server" ImageUrl="~/Images/home.png" CssClass="navImbs" CausesValidation="False" />
             <asp:ImageButton ID="imbInfo" runat="server" ImageUrl="~/Images/info.png" CssClass="navImbs" CausesValidation="False" OnClientClick="return false;" />
+            <asp:ImageButton ID="imbSettings" runat="server" ImageUrl="~/Images/settings.png" CssClass="navImbs" CausesValidation="false" OnClick="imbSettings_Click" />
+            <asp:ImageButton ID="imbHome2" runat="server" ImageUrl="~/Images/home.png" CssClass="navImbs" CausesValidation="False" OnClick="imbHome_Click" />
             <%-- Platshållare för items, alltså bilderna på "kartan".--%>
             <asp:PlaceHolder ID="phItems" runat="server" />
             <%-- Formulär för kommunikation med databasen --%>
             <asp:Panel ID="pnlForm" runat="server">
                 <%-- DropDownList för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
                 Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.
-                DropDownList toppfärg samma som vald ListItem. Färgerna laddas vid DataBound och vid PostBack.
+                Färgerna laddas vid DataBound och vid PostBack.
                 DropDownListans värden binds dock bara en gång, ViewStateMode behöver inte vara aktiverad. --%>
                 <asp:Label ID="lblMeaning" runat="server" Text="Betydelse"></asp:Label>
                 <asp:DropDownList ID="ddlPageWordType" runat="server"      
@@ -73,7 +76,8 @@
                 <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
                 <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" />
                 <asp:Label ID="lblFileName" runat="server" Text="Filnamn"></asp:Label>
-                <asp:TextBox ID="txtFileName" runat="server" Enabled="False"></asp:TextBox>
+                <%-- <asp:TextBox ID="txtFileName" runat="server" Enabled="False"></asp:TextBox> --%>
+                <asp:Image ID="imgImage" runat="server" />
                 <asp:ListBox ID="lstFileName" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True"
                     SelectMethod="GetImageFileNameData" OnDataBound="lstFileName_DataBound" 
