@@ -34,6 +34,14 @@ namespace Project
             set { Session["IsSettingsMode"] = value.ToString(); }
         }
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            //if (txtWord != null)
+            //{
+            //    var hello = txtWord.Text;
+            //}
+        }
+
         protected void Page_Init(object sender, EventArgs e)
         {
             if (IsSettingsMode)
@@ -49,14 +57,13 @@ namespace Project
 
             imbHome.Click += new ImageClickEventHandler(imbHome_Click);
             imbHome2.Click += new ImageClickEventHandler(imbHome_Click);
-
             imbOK.Click += new ImageClickEventHandler(imbOK_Click);
 
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ModelState.AddModelError("testKey", "testValue");
+            //ModelState.AddModelError("testKey", "testValue");
             if (!IsSettingsMode)
             {
                 RenderImages();
@@ -262,21 +269,33 @@ namespace Project
 
         protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var meaning = Service.GetMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-            btnUpdateItem.Text = "Uppdatera";
-            txtWord.Text = meaning.Word;
-            txtWordComment.Text = meaning.Comment;
-            ddlPageWordType.ClearSelection();
-            ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
-            var catInfo = Service.GetCatInfoOfMeaning(meaning.MeaningId);
-            if (catInfo.Value != null)
+            //uppdatera bara beroende kontroller om lstMeaning-Listboxen orsakar postback.
+            if (GetControlCausingPostBack().Equals(lstMeaning))
             {
-                chkIsCategory.Checked = true;
+                var meaning = Service.GetMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                btnUpdateItem.Text = "Uppdatera";
+                txtWord.Text = meaning.Word;
+                txtWordComment.Text = meaning.Comment;
+                ddlPageWordType.ClearSelection();
+                ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
+                var catInfo = Service.GetCatInfoOfMeaning(meaning.MeaningId);
+                if (catInfo.Value != null)
+                {
+                    chkIsCategory.Checked = true;
+                }
+                else
+                {
+                    chkIsCategory.Checked = false;
+                }
             }
-            else
-            {
-                chkIsCategory.Checked = false;
-            }
+        }
+
+        //Beroende på vilken kontroll som orsakar postback så behöver olika saker ske.
+        //Därför behöver jag veta vilken kontroll som orsakade postback.
+        private Control GetControlCausingPostBack()
+        {
+            //returnera kontrollen med det id som ges av __EVENTTARGET. Om det inte finns, returnera en "tom" kontroll.
+            return FindControl(Request.Params.Get("__EVENTTARGET")) ?? new Control();
         }
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)

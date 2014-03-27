@@ -14,7 +14,7 @@ namespace Project.Model
         public byte WTypeId { get; set; }
         [Required, StringLength(30)]
         public string Word { get; set; }
-        [Required, StringLength(100)]
+        [StringLength(100)]
         public string Comment { get; set; }
     }
 }

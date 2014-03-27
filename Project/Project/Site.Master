@@ -24,13 +24,19 @@
              var pnl = document.getElementById("Content_pnlInnerTablet");
              var dimmer = document.createElement("div");
              dimmer.id = "dimmer";
+             var unclickable = document.createElement("div");
+             unclickable.id = "unclickable";
              pnl.appendChild(dimmer);
+             pnl.appendChild(unclickable);
              var item = document.getElementById("Content_imbUnit" + pos);
              item.className = item.className.replace("item", "itemFull");
          }
          function undim() {
+             showCenterImage();
              var dimmer = document.getElementById("dimmer");
              if (dimmer) dimmer.parentElement.removeChild(dimmer);
+             var unclickable = document.getElementById("unclickable");
+             if (unclickable) unclickable.parentElement.removeChild(unclickable);
              var itemFull = document.getElementsByClassName("itemFull")[0];
              itemFull.className = itemFull.className.replace("itemFull", "item");
          }
@@ -45,6 +51,17 @@
              left ? imgLeft.style.display = "block" : imgLeft.style.display = "none";
              right ? imgRight.style.display = "block" : imgRight.style.display = "none";
              info ? imgInfo.style.display = "block" : imgInfo.style.display = "none";
+         }
+         function showCenterImage() {
+             var currentLink = document.getElementsByClassName("itemFull")[0];
+             var images = currentLink.querySelectorAll("[type]");
+             for (var i = 0; i < images.length; i++) {
+                 images[i].style.display = "none";
+                 images[i].setAttribute("active", "false");
+             }
+             var newImage = currentLink.querySelector("[type = 'ParentWordItem']");
+             newImage.style.display = "";
+             newImage.setAttribute("active", "true");
          }
          function showLeftImage() {
              var currentLink = document.getElementsByClassName("itemFull")[0];

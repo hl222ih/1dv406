@@ -75,8 +75,6 @@
                 <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" />
                 <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
                 <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" />
-                <asp:Label ID="lblFileName" runat="server" Text="Filnamn"></asp:Label>
-                <%-- <asp:TextBox ID="txtFileName" runat="server" Enabled="False"></asp:TextBox> --%>
                 <asp:Image ID="imgImage" runat="server" />
                 <asp:ListBox ID="lstFileName" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True"
@@ -84,9 +82,6 @@
                     OnSelectedIndexChanged="lstFileName_SelectedIndexChanged">
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
-                
-
-
             </asp:Panel>
         </asp:Panel>
     </asp:Panel>

@@ -98,6 +98,7 @@ footer {
 #Content_imbSettings {
     top: 45%;
     left: 45%;
+    z-index: 2;
 }
 #Content_lblMeaning {
     position: absolute;
@@ -399,6 +400,14 @@ header {
     z-index: 2 !important;
 }
 
+#unclickable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 3 !important;
+}
 .itemFull {
     position: absolute !important;
     height: 90% !important;
