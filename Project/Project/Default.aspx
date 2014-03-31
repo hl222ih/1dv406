@@ -11,10 +11,26 @@
 
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="Content">
-     <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
     <asp:Panel ID="pnlTablet" runat="server" BackImageUrl="~/Images/tablet-PD.svg" Height="600px" HorizontalAlign="Center" Width="900px" ViewStateMode="Disabled">
 
         <asp:Panel ID="pnlInnerTablet" runat="server">
+            <asp:Panel ID="pnlErrorBox" runat="server" CssClass="boxes">
+                <asp:Image ID="imgFailed" runat="server" ImageUrl="~/Images/failed.png" CssClass="boximages" />
+                <asp:ValidationSummary ID="vsErrors" runat="server" />
+                <asp:Button ID="btnOK" runat="server" Text="OK" CausesValidation="False"  
+                    OnClientClick="hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
+                    CssClass="okbutton" />
+            </asp:Panel>
+            <asp:Panel ID="pnlConfirmBox" runat="server" Visible="false" CssClass="boxes">
+                <asp:Image ID="imgWarning" runat="server" 
+                    ImageUrl="~/Images/warning.png" CssClass="boximages" />
+                    yy
+            </asp:Panel>
+            <asp:Panel ID="pnlSuccessBox" runat="server" Visible="false" CssClass="boxes">
+                <asp:Image ID="imgSuccess" runat="server"
+                    ImageUrl="~/Images/success.png" CssClass="boximages" />                
+                   zzz
+            </asp:Panel>
             <%-- Navigeringsknappar --%>
             <asp:ImageButton ID="imbOK" runat="server" ImageUrl="~/Images/ok.png" CssClass="navImbs" CausesValidation="False" />
             <asp:ImageButton ID="imbCancel" runat="server" ImageUrl="~/Images/close.png" CssClass="navImbs" CausesValidation="False" OnClientClick="return false;" />
@@ -44,17 +60,24 @@
                     DataTextField="Word" SelectMethod="GetMeaningData" 
                     AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
                 </asp:ListBox>
-                        <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
-                        <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
-                        <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
-                        <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvLstMeaning" runat="server" 
+                    ErrorMessage="En betydelse måste väljas."
+                    ControlToValidate="lstMeaning" Display="None"></asp:RequiredFieldValidator>
+                <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
+                <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvTxtWord" runat="server" 
+                     ErrorMessage="Fältet för 'Ord' får inte vara tomt."
+                     ControlToValidate="txtWord" Display="None"></asp:RequiredFieldValidator>                
+                <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
+                <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
                 <asp:Label ID="lblItem" runat="server" Text="Vald betydelses bildfiler"></asp:Label>                                 
                 <asp:ListBox ID="lstItem" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True" 
                     OnSelectedIndexChanged="lstItem_SelectedIndexChanged" SelectMethod="GetImageFileNameDataOfPage" >
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
-                <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" />
+                <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" 
+                    OnClientClick="removeDisplayNoneIfNotValid();"/>
                 <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
                 <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" />
                 <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />

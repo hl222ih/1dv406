@@ -16,6 +16,7 @@ namespace Project
 {
     public partial class _Default : Page
     {
+        //Egenskap som, om det finns, returnerar innehållet i en Sessionsvariabel innehåller hela Service-objektet, annars skapar det ett nytt Service-objekt som returneras.
         private Service Service
         {
             get
@@ -28,6 +29,7 @@ namespace Project
             }
         }
 
+        //Sessionsvariabel för om applikationen är i inställningsläge (eller i användningsläge)
         private bool IsSettingsMode
         {
             get { return (Session["IsSettingsMode"] != null && Session["IsSettingsMode"].ToString() == "True"); }
@@ -36,14 +38,12 @@ namespace Project
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            //if (txtWord != null)
-            //{
-            //    var hello = txtWord.Text;
-            //}
         }
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            //Om applikationen är i inställningsläge, visa inställningar i förgrunden,
+            //annars, lägg inställningar i bakgrunden
             if (IsSettingsMode)
             {
                 pnlForm.Attributes.CssStyle["z-index"] = "10 !important";
@@ -55,19 +55,33 @@ namespace Project
                 imbHome2.Attributes.CssStyle["z-index"] = "-10 !important";
             }
 
+            //registrera händelsehanterare för hemknapp från underkategorier
             imbHome.Click += new ImageClickEventHandler(imbHome_Click);
+            //registrera händelsehanterare för hemknapp från inställningar (återgång till användningsläge)
             imbHome2.Click += new ImageClickEventHandler(imbHome_Click);
+            //registrera händelsehanterare för OK-knapp (återgång till startsidan i användningsläge)
             imbOK.Click += new ImageClickEventHandler(imbOK_Click);
+
+
+            //I debug-syfte: Inaktivera client side validation genom att
+            //sätta värdet på disableClientScript till true.
+            var disableClientScript = false;
+
+            if (disableClientScript)
+            {
+                rfvLstMeaning.EnableClientScript = false;
+                rfvTxtWord.EnableClientScript = false;
+            }
 
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //ModelState.AddModelError("testKey", "testValue");
+            //Rendera bara bilder osv. om applikationen inte är i inställningsläge
             if (!IsSettingsMode)
             {
                 RenderImages();
-            }
+            }            
         }
 
         protected void Page_LoadComplete(object sender, EventArgs e)
@@ -76,42 +90,62 @@ namespace Project
             SetBackgroundColorsToDdlPageWordType();
             ClientScriptManager csm = Page.ClientScript;
 
+            //användarvänlighet, lstMeaning görs tydligare otillgänglig på klientsidan 
+            //(tillgänglig som default).
             if (!lstMeaning.Enabled)
             {
                 csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_lstMeaning')", true);
             }
+            //användarvänlighet, ddlCategoryLink för tydligare otillgänglig på klientsidan (default).
+            //här görs den tillgänglig igen om chkIsCategory är ikryssad.
             if (chkIsCategory.Checked)
             {
                 csm.RegisterStartupScript(this.GetType(), "EnableControl", "enableControl('Content_ddlCategoryLink')", true);
             }
 
+            else
+            {
+                //visar pnlErrorBox om ModelErrors existerar.
+                if (!ModelState.IsValid)
+                {
+                    pnlErrorBox.Style["display"] = "block";
+                }
+            }
+
         }
 
+        //metod som körs precis innan page cycle avslutas.
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
 
             if (lstItem.SelectedIndex > -1)
             {
+                //kanske borde köra på key istället?
                 Session["lstItemValue"] = lstItem.SelectedItem.Text;
             }
         }
 
         protected void RenderImages()
         {
-
-
-
             imbCancel.OnClientClick = "toggleNavButtons(false, false, false, false, false); undim(); return false;";
 
+            //lägg till händelsehanterare (javascript) för om användaren klickar på vänster-
+            //respektive högerknappen som visas vid förstorad bild (om det finns fler bilder
+            //som hör till samma ItemsUnit.
             imbLeft.OnClientClick = "showLeftImage(); return false;";
             imbRight.OnClientClick = "showRightImage(); return false;";
+
             //osynliggör navigeringsknappar som inte används i aktuell vy.
             imbOK.Style["display"] = "none";
             imbCancel.Style["display"] = "none";
             imbLeft.Style["display"] = "none";
             imbRight.Style["display"] = "none";
             imbInfo.Style["display"] = "none";
+
+            //osynliggör hem-knappen om startsidan är den som visas. 
+            //(Visa isåfall inställningsknappen istället.)
+            //annars, osynliggör inställningsknappen (och visa hem-knappen).
             if (Service.GetCurrentCategoryId() == 1 && Service.GetCurrentPageNumber() == 1)
             {
                 imbHome.Style["display"] = "none";
@@ -121,7 +155,10 @@ namespace Project
                 imbSettings.Style["display"] = "none";
             }
 
+            //hämta den mall som gäller för aktuell sida (hur bilderna ska visas - position/storlek osv.
+            //Site.css innehåller olika stilmallar för de olika css-mall-namnen.
             var cssTemplateName = Service.GetCurrentCssTemplateName();
+            //hämta de ItemsUnits, dvs de bilder och underbilder med info som hör till aktuell sida.
             var pageItemsUnits = Service.GetCurrentPageItemsUnits();
             
             var counter = 0;
@@ -140,18 +177,19 @@ namespace Project
                 };
                 lb.Attributes.Add("mId", pi.MeaningId.ToString());
                 
-
+                //skapa ett Label-objekt innehållande ordet för aktuellt PageItem
                 var lbl = new Label()
                 {
                     Text = pi.MeaningWord
                 };
 
+                //skapa ett Image-objekt innehållande bildlänken för aktuellt PageItem.
                 var img = new Image()
                 {
                     ImageUrl = String.Format("~/Images/ComPics/{0}", pi.ImageFileName)
                 };
-                img.Attributes.Add("type", pi.PageItemType.ToString());
-                img.Attributes.Add("pos", pi.Position.ToString());
+                img.Attributes.Add("data-type", pi.PageItemType.ToString());
+                img.Attributes.Add("data-pos", pi.Position.ToString());
 
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
@@ -185,8 +223,8 @@ namespace Project
                     };
 
                     imgChild.Style["display"] = "none";
-                    imgChild.Attributes.Add("type", pci.PageItemType.ToString());
-                    imgChild.Attributes.Add("pos", pci.Position.ToString());
+                    imgChild.Attributes.Add("data-type", pci.PageItemType.ToString());
+                    imgChild.Attributes.Add("data-pos", pci.Position.ToString());
 
                     lb.Controls.Add(imgChild);
                 }
@@ -300,29 +338,43 @@ namespace Project
 
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
         {
-            var meaning = new Meaning()
+            if (IsValid)
             {
-                Word = txtWord.Text,
-                Comment = txtWordComment.Text,
-                WTypeId = Convert.ToByte(ddlPageWordType.SelectedItem.Value)
-            };
-            if (lstMeaning.SelectedIndex > -1)
-            {
-                meaning.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
-            }
-            ICollection<ValidationResult> validationResults;
-            if (!meaning.Validate(out validationResults))
-            {
-                foreach (var v in validationResults)
+                var meaning = new Meaning()
                 {
-                    ModelState.AddModelError("", v.ErrorMessage);
+                    Word = txtWord.Text,
+                    Comment = txtWordComment.Text,
+                    WTypeId = Convert.ToByte(ddlPageWordType.SelectedItem.Value)
+                };
+                if (lstMeaning.SelectedIndex > -1)
+                {
+                    meaning.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
                 }
+                ICollection<ValidationResult> validationResults;
+                if (!meaning.Validate(out validationResults))
+                {
+                    foreach (var v in validationResults)
+                    {
+                        ModelState.AddModelError("", v.ErrorMessage);
+                    }
+                }
+                else
+                {
+                    Service.SaveOrUpdateMeaning(meaning);
+                }
+                //bekräfta och gör postback
             }
             else
+            //Visa inte ModelErrors om det finns PageErrors...
+            if (!IsValid)
             {
-                Service.SaveOrUpdateMeaning(meaning);
+                //behövs egentligen inte, men...
+                ModelState.Clear();
+                //default för pnlErrorBox är display: none, 
+                //så den måste visas om page innehåller Page-valideringsfel
+                pnlErrorBox.Style["display"] = "block";
             }
-            //bekräfta och gör postback
+
         }
 
         protected void btnAddNewMeaning_Click(object sender, EventArgs e)

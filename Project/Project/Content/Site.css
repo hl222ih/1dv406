@@ -73,6 +73,9 @@ h5, h6 {
 
 /* Egen CSS */
 
+ul {
+    list-style: none;
+}
 footer {
     position: absolute;
     height: 5%;
@@ -100,6 +103,7 @@ footer {
     left: 45%;
     z-index: 2;
 }
+
 #Content_lblMeaning {
     position: absolute;
     left: 4%;
@@ -164,18 +168,21 @@ footer {
     left: 76%;
     width: 15%;
 }
+
 #Content_btnAddNewMeaning {
     position: absolute;
     top: 25%;
     left: 76%;
     width: 15%;
 }
+
 #Content_btnDeleteMeaning {
     position: absolute;
     top: 33%;
     left: 76%;
     width: 15%;
 }
+
 #Content_btnResetMeaning {
     position: absolute;
     top: 17%;
@@ -188,7 +195,7 @@ footer {
     display: block;
     top: 44%;
     width: 100%;
-    border-bottom : 2px inset #c7d1d6;
+    border-bottom: 2px inset #c7d1d6;
 }
 
 #Content_btnUpdateItem {
@@ -197,18 +204,21 @@ footer {
     left: 76%;
     width: 15%;
 }
+
 #Content_btnAddNewItem {
     position: absolute;
     top: 66%;
     left: 76%;
     width: 15%;
 }
+
 #Content_btnDeleteItem {
     position: absolute;
     top: 74%;
     left: 76%;
     width: 15%;
 }
+
 #Content_btnResetItem {
     position: absolute;
     top: 58%;
@@ -310,9 +320,9 @@ header {
     width: 20%;
 }
 
-#Content_ddlCategoryLink:disabled {
-    background-color: rgba(151, 228, 222, 0.5);
-}
+    #Content_ddlCategoryLink:disabled {
+        background-color: rgba(151, 228, 222, 0.5);
+    }
 
 .item, .itemFull, #Content_ddlPageWordType, #Content_ddlCategory, #Content_ddlPosition, #Content_ddlCategoryLink {
     position: absolute;
@@ -339,13 +349,13 @@ header {
     /*ram runt kategori-bilder*/
     .item[CatId] {
         border: 3px inset #E0A82F !important;
-        -moz-box-sizing: border-box  !important;
-        -webkit-box-sizing: border-box  !important;
-        box-sizing: border-box  !important;
+        -moz-box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        box-sizing: border-box !important;
     }
 
 /*update panel of itemsunit*/
-#Content_pnlInnerTablet > div {
+#Content_pnlInnerTablet > div:not(#Content_pnlErrorBox) {
     display: inline-block;
     width: 0;
     height: 0;
@@ -357,46 +367,44 @@ header {
         background-color: none;
     }
 
-#Content_pnlInnerTablet > div > .item > img, #Content_pnlInnerTablet > div > .itemFull > img {
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-}
+        #Content_pnlInnerTablet > div > .item > img, #Content_pnlInnerTablet > div > .itemFull > img {
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
 
-#Content_pnlInnerTablet > div > .item > span, #Content_pnlInnerTablet > div > .itemFull > span {
+        #Content_pnlInnerTablet > div > .item > span, #Content_pnlInnerTablet > div > .itemFull > span {
+            display: block;
+            width: 100%;
+            position: absolute;
+            font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'DejaVu Sans Condensed', sans-serif;
+            line-height: 1;
+            font-weight: 100;
+            color: rgba(0, 0, 0, 0.6);
+        }
 
-    display: block;
-    width: 100%;
-    position: absolute;
-    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', 'DejaVu Sans Condensed', sans-serif;
-    line-height: 1;
-    font-weight: 100;
-    color: rgba(0, 0, 0, 0.6)
+        #Content_pnlInnerTablet > div > .item > span {
+            font-size: 0.8em;
+            text-align: left;
+            text-indent: 6%;
+            z-index: 2;
+        }
 
-}
-
-#Content_pnlInnerTablet > div > .item > span {
-    font-size: 0.8em;
-    text-align: left;
-    text-indent: 6%;
-    z-index: 2;
-}
-
-#Content_pnlInnerTablet > div > .itemFull > span {
-     font-size: 1.6em;
-     text-align: center;
-     top: 92%;
-     z-index: 4;
- }
+    #Content_pnlInnerTablet > div > .itemFull > span {
+        font-size: 1.6em;
+        text-align: center;
+        top: 92%;
+        z-index: 4;
+    }
 
 #dimmer {
-    background:black;
-    opacity:0.7;
-    position:absolute;
-    top:0;
-    left:0;
-    width:100% !important;
-    height:100% !important;
+    background: black;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
     z-index: 2 !important;
 }
 
@@ -408,6 +416,7 @@ header {
     height: 100% !important;
     z-index: 3 !important;
 }
+
 .itemFull {
     position: absolute !important;
     height: 90% !important;
@@ -455,6 +464,55 @@ header {
     top: 79%;
 }
 
+
+.boxes {
+    display: block;
+    position: absolute;
+    background: #f6cac9 !important;
+    z-index: 20 !important;
+    width: 60% !important;
+    min-height: 60% !important;
+    overflow: auto;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    top: 20%;
+    left: 20%;
+    border: 2px solid #cb0201;
+    box-shadow: rgba(0, 0, 0, 0.45) 0 0 20px;
+}
+
+.boximages {
+    display: block;
+    margin: auto;
+    height: 64px !important;
+    max-width: 64px !important;
+}
+
+#Content_vsErrors {
+    position: absolute;
+    display: inline-block;
+    text-align: left !important;
+    left: 5%;
+}
+
+#Content_pnlErrorBox {
+    display: none;  /*ändras vid !Page_IsValid*/
+}
+
+.okbutton {
+    position: absolute;
+    display: block;
+    margin: auto;
+    top: 80%;
+    left: 75%;
+    min-width: 20%;
+    background-color: rgba(0, 0, 0, 0.20);
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
 /*START: page-five-eight template*/
 #Content_imbUnit1.page-five-eight {
     top: 1%;
@@ -518,6 +576,7 @@ header {
     width: 21%;
     height: 21%;
 }
+
 #Content_imbUnit10.page-five-eight {
     top: 78%;
     left: 1%;
@@ -603,6 +662,7 @@ header {
     width: 21%;
     height: 21%;
 }
+
 #Content_imbUnit9.page-four-eight {
     top: 78%;
     left: 1%;
@@ -688,6 +748,7 @@ header {
     width: 21%;
     height: 21%;
 }
+
 #Content_imbUnit9.page-eight-four {
     top: 78%;
     left: 1%;

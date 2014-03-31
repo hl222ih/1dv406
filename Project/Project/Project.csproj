@@ -327,6 +327,7 @@
     <Content Include="Images\ComPics\rt-törstig.svg" />
     <Content Include="Images\ComPics\rt-vatten.svg" />
     <Content Include="Images\ComPics\rt-video.svg" />
+    <Content Include="Images\failed.png" />
     <Content Include="Images\home.png" />
     <Content Include="Images\ComPics\bliss-adjektiv-kat.svg" />
     <Content Include="Images\ComPics\bliss-assistent.svg" />
@@ -451,7 +452,9 @@
     <Content Include="Global.asax" />
     <Content Include="Images\right.png" />
     <Content Include="Images\settings.png" />
+    <Content Include="Images\success.png" />
     <Content Include="Images\tablet-PD.svg" />
+    <Content Include="Images\warning.png" />
     <Content Include="Model\Other classes in DB.txt" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
