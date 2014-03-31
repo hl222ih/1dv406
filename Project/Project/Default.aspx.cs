@@ -128,13 +128,13 @@ namespace Project
 
         protected void RenderImages()
         {
-            imbCancel.OnClientClick = "toggleNavButtons(false, false, false, false, false); undim(); return false;";
+            imbCancel.OnClientClick = "BlissKom.toggleNavButtons(false, false, false, false, false); BlissKom.undim(); return false;";
 
             //lägg till händelsehanterare (javascript) för om användaren klickar på vänster-
             //respektive högerknappen som visas vid förstorad bild (om det finns fler bilder
             //som hör till samma ItemsUnit.
-            imbLeft.OnClientClick = "showLeftImage(); return false;";
-            imbRight.OnClientClick = "showRightImage(); return false;";
+            imbLeft.OnClientClick = "BlissKom.showLeftImage(); return false;";
+            imbRight.OnClientClick = "BlissKom.showRightImage(); return false;";
 
             //osynliggör navigeringsknappar som inte används i aktuell vy.
             imbOK.Style["display"] = "none";
@@ -199,7 +199,7 @@ namespace Project
                     var hasNextRight = (nextRight != null);
                     var info = String.Format("{0}\n{1}", pi.MeaningComment, pi.ImageComment);
                     var hasInfo = (info != "\n");
-                    lb.OnClientClick = String.Format("dim({0}); toggleNavButtons({1}, {2}, {3}, {4}, {5}); return false;", pi.Position, "true", "true", hasNextLeft ? "true" : "false", hasNextRight ? "true" : "false", hasInfo ? "true" : "false");
+                    lb.OnClientClick = String.Format("BlissKom.dim({0}); BlissKom.toggleNavButtons({1}, {2}, {3}, {4}, {5}); return false;", pi.Position, "true", "true", hasNextLeft ? "true" : "false", hasNextRight ? "true" : "false", hasInfo ? "true" : "false");
                 }
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {

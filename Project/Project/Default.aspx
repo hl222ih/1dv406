@@ -18,7 +18,7 @@
                 <asp:Image ID="imgFailed" runat="server" ImageUrl="~/Images/failed.png" CssClass="boximages" />
                 <asp:ValidationSummary ID="vsErrors" runat="server" />
                 <asp:Button ID="btnOK" runat="server" Text="OK" CausesValidation="False"  
-                    OnClientClick="hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
+                    OnClientClick="BlissKom.hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
                     CssClass="okbutton" />
             </asp:Panel>
             <asp:Panel ID="pnlConfirmBox" runat="server" Visible="false" CssClass="boxes">
@@ -77,7 +77,7 @@
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
                 <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" 
-                    OnClientClick="removeDisplayNoneIfNotValid();"/>
+                    OnClientClick="BlissKom.removeDisplayNoneIfNotValid();"/>
                 <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
                 <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" />
                 <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />
