@@ -49,22 +49,31 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Image imgFailed;
         
         /// <summary>
-        /// vsErrors control.
+        /// vsErrorsMeaning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsErrors;
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrorsMeaning;
         
         /// <summary>
-        /// btnOK control.
+        /// vsErrorsItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOK;
+        protected global::System.Web.UI.WebControls.ValidationSummary vsErrorsItem;
+        
+        /// <summary>
+        /// btnOKError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKError;
         
         /// <summary>
         /// pnlConfirmBox control.
@@ -101,6 +110,24 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgSuccess;
+        
+        /// <summary>
+        /// lblSuccess control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSuccess;
+        
+        /// <summary>
+        /// btnOKSuccess control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKSuccess;
         
         /// <summary>
         /// imbOK control.

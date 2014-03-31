@@ -16,8 +16,9 @@
         <asp:Panel ID="pnlInnerTablet" runat="server">
             <asp:Panel ID="pnlErrorBox" runat="server" CssClass="boxes">
                 <asp:Image ID="imgFailed" runat="server" ImageUrl="~/Images/failed.png" CssClass="boximages" />
-                <asp:ValidationSummary ID="vsErrors" runat="server" />
-                <asp:Button ID="btnOK" runat="server" Text="OK" CausesValidation="False"  
+                <asp:ValidationSummary ID="vsErrorsMeaning" runat="server" ValidationGroup="MeaningGroup" />
+                <asp:ValidationSummary ID="vsErrorsItem" runat="server" ValidationGroup="ItemGroup" />
+                <asp:Button ID="btnOKError" runat="server" Text="OK" CausesValidation="False"  
                     OnClientClick="BlissKom.hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
                     CssClass="okbutton" />
             </asp:Panel>
@@ -26,10 +27,13 @@
                     ImageUrl="~/Images/warning.png" CssClass="boximages" />
                     yy
             </asp:Panel>
-            <asp:Panel ID="pnlSuccessBox" runat="server" Visible="false" CssClass="boxes">
+            <asp:Panel ID="pnlSuccessBox" runat="server" CssClass="boxes">
                 <asp:Image ID="imgSuccess" runat="server"
-                    ImageUrl="~/Images/success.png" CssClass="boximages" />                
-                   zzz
+                    ImageUrl="~/Images/success.png" CssClass="boximages" />
+                <asp:Label ID="lblSuccess" runat="server"></asp:Label>
+                <asp:Button ID="btnOKSuccess" runat="server" Text="OK" CausesValidation="False"  
+                    OnClientClick="BlissKom.hideControl('Content_pnlSuccessBox'); return false;" UseSubmitBehavior="False"
+                    CssClass="okbutton" />
             </asp:Panel>
             <%-- Navigeringsknappar --%>
             <asp:ImageButton ID="imbOK" runat="server" ImageUrl="~/Images/ok.png" CssClass="navImbs" CausesValidation="False" />
@@ -62,14 +66,15 @@
                 </asp:ListBox>
                 <asp:RequiredFieldValidator ID="rfvLstMeaning" runat="server" 
                     ErrorMessage="En betydelse måste väljas."
-                    ControlToValidate="lstMeaning" Display="None"></asp:RequiredFieldValidator>
+                    ControlToValidate="lstMeaning" Display="None" ValidationGroup="MeaningGroup"></asp:RequiredFieldValidator>
                 <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
-                <asp:TextBox ID="txtWord" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtWord" runat="server" MaxLength="30"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvTxtWord" runat="server" 
                      ErrorMessage="Fältet för 'Ord' får inte vara tomt."
-                     ControlToValidate="txtWord" Display="None"></asp:RequiredFieldValidator>                
+                     ControlToValidate="txtWord" Display="None" ValidationGroup="MeaningGroup"></asp:RequiredFieldValidator>  
+                              
                 <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
-                <asp:TextBox ID="txtWordComment" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtWordComment" runat="server" MaxLength="100"></asp:TextBox>
                 <asp:Label ID="lblItem" runat="server" Text="Vald betydelses bildfiler"></asp:Label>                                 
                 <asp:ListBox ID="lstItem" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True" 
@@ -77,10 +82,13 @@
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
                 <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" 
-                    OnClientClick="BlissKom.removeDisplayNoneIfNotValid();"/>
-                <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" />
-                <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" />
-                <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" />
+                    OnClientClick="BlissKom.removeDisplayNoneIfNotValid();" ValidationGroup="MeaningGroup"/>
+                <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" 
+                    ValidationGroup="MeaningGroup" />
+                <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" 
+                    CausesValidation="False" />
+                <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" 
+                    CausesValidation="False" />
                 <asp:Panel ID="pnlHorizontalRule" runat="server"></asp:Panel>
                 <%-- OK! Lite roligt med dropdownlistor som går utanför "surfplatteskärmen"! Men... Det får vara så. --%>
                 <asp:DropDownList ID="ddlPosition" runat="server"
@@ -94,10 +102,10 @@
                 <asp:DropDownList ID="ddlCategoryLink" runat="server" Enabled="False"
                     DataValueField="Key" DataTextField="Value" SelectMethod="IsCategoryGetCategoryData" OnDataBound="ddlCategoryLink_DataBound">
                 </asp:DropDownList>
-                <asp:Button ID="btnUpdateItem" runat="server" Text="Uppdatera" OnClick="btnUpdateItem_Click" />
-                <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" />
-                <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" />
-                <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" />
+                <asp:Button ID="btnUpdateItem" runat="server" Text="Uppdatera" OnClick="btnUpdateItem_Click" ValidationGroup="ItemGroup" />
+                <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" ValidationGroup="ItemGroup" />
+                <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" CausesValidation="False" />
+                <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" CausesValidation="False" />
                 <asp:Image ID="imgImage" runat="server" />
                 <asp:ListBox ID="lstFileName" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True"

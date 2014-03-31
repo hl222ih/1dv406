@@ -1,11 +1,14 @@
 ﻿var BlissKom = BlissKom || {};
 
 BlissKom = {
+    setDisplayBlock: function (id) {
+        var control = document.getElementById(id);
+        control.style.display = "block";
+    },
     removeDisplayNoneIfNotValid: function () {
         Page_ClientValidate();
         if (!Page_IsValid) {
-            var pnlErrorBox = document.getElementById("Content_pnlErrorBox");
-            pnlErrorBox.style.display = "block";
+            this.setDisplayBlock("Content_pnlErrorBox");
         }
     },
     enableControl: function (id) {

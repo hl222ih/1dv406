@@ -36,6 +36,8 @@ namespace Project
             set { Session["IsSettingsMode"] = value.ToString(); }
         }
 
+        private string successMessage;
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
         }
@@ -112,6 +114,11 @@ namespace Project
                 }
             }
 
+            if (successMessage != null)
+            {
+                lblSuccess.Text = successMessage;
+                pnlSuccessBox.Style["display"] = "block";
+            }
         }
 
         //metod som körs precis innan page cycle avslutas.
@@ -344,12 +351,18 @@ namespace Project
                 {
                     Word = txtWord.Text,
                     Comment = txtWordComment.Text,
-                    WTypeId = Convert.ToByte(ddlPageWordType.SelectedItem.Value)
                 };
+
+                if (ddlPageWordType.SelectedIndex > -1)
+                {
+                    meaning.WTypeId = Convert.ToByte(ddlPageWordType.SelectedItem.Value);
+                }
+
                 if (lstMeaning.SelectedIndex > -1)
                 {
                     meaning.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
                 }
+
                 ICollection<ValidationResult> validationResults;
                 if (!meaning.Validate(out validationResults))
                 {
@@ -360,13 +373,20 @@ namespace Project
                 }
                 else
                 {
-                    Service.SaveOrUpdateMeaning(meaning);
+                    try
+                    {
+                        Service.SaveOrUpdateMeaning(meaning);
+                        successMessage = "Betydelsen har uppdaterats.";
+                        //bekräfta (och hämta om sidan?)
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("", "Uppdateringen misslyckades.");
+                    }
                 }
-                //bekräfta och gör postback
             }
             else
             //Visa inte ModelErrors om det finns PageErrors...
-            if (!IsValid)
             {
                 //behövs egentligen inte, men...
                 ModelState.Clear();

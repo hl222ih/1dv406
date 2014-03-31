@@ -355,7 +355,7 @@ header {
     }
 
 /*update panel of itemsunit*/
-#Content_pnlInnerTablet > div:not(#Content_pnlErrorBox) {
+#Content_pnlInnerTablet > div:not(.boxes) {
     display: inline-block;
     width: 0;
     height: 0;
@@ -477,10 +477,26 @@ header {
     word-wrap: break-word;
     top: 20%;
     left: 20%;
-    border: 2px solid #cb0201;
     box-shadow: rgba(0, 0, 0, 0.45) 0 0 20px;
 }
 
+#Content_pnlErrorBox {
+    display: none;  /*ändras vid !Page_IsValid*/
+    background: #f6cac9 !important;
+    border: 2px solid #cb0201;
+}
+
+#Content_pnlConfirmBox {
+    display: none;  /*ändras då användaren behöver bekräfta ett val*/
+    background: #fff6cb !important;
+    border: 2px solid #E0A82F;
+}
+
+#Content_pnlSuccessBox {
+    display: none;  /*ändras vid success message*/
+    background: #f2e8b9 !important;
+    border: 2px solid green;
+}
 .boximages {
     display: block;
     margin: auto;
@@ -488,15 +504,11 @@ header {
     max-width: 64px !important;
 }
 
-#Content_vsErrors {
+#Content_vsErrorsMeaning, #Content_vsErrorsItem {
     position: absolute;
     display: inline-block;
     text-align: left !important;
     left: 5%;
-}
-
-#Content_pnlErrorBox {
-    display: none;  /*ändras vid !Page_IsValid*/
 }
 
 .okbutton {
