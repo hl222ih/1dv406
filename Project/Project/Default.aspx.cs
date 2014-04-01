@@ -412,9 +412,8 @@ namespace Project
         {
             if (lstMeaning.SelectedIndex >= 0)
             {
-                //varna användaren först
                 Service.DeleteMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-                //bekräfta och gör postback
+                successMessage = "Betydelsen har raderats.";
             }
         }
 

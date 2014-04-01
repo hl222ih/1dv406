@@ -502,6 +502,7 @@ header {
     margin: auto;
     height: 64px !important;
     max-width: 64px !important;
+    margin-bottom: 10%;
 }
 
 #Content_vsErrorsMeaning, #Content_vsErrorsItem {
@@ -511,15 +512,20 @@ header {
     left: 5%;
 }
 
-.okbutton {
+.okbutton, .cancelbutton {
     position: absolute;
     display: block;
     margin: auto;
     top: 80%;
-    left: 75%;
     min-width: 20%;
     background-color: rgba(0, 0, 0, 0.20);
 }
+    .okbutton {
+        left: 70%;
+    }
+    .cancelbutton {
+        left: 10%;
+    }
 ul, li {
     margin: 0;
     padding: 0;

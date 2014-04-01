@@ -22,10 +22,16 @@
                     OnClientClick="BlissKom.hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
                     CssClass="okbutton" />
             </asp:Panel>
-            <asp:Panel ID="pnlConfirmBox" runat="server" Visible="false" CssClass="boxes">
+            <asp:Panel ID="pnlConfirmBox" runat="server" CssClass="boxes">
                 <asp:Image ID="imgWarning" runat="server" 
                     ImageUrl="~/Images/warning.png" CssClass="boximages" />
-                    yy
+                <asp:Button ID="btnCancelConfirm" runat="server" Text="Avbryt" CausesValidation="False"  
+                    OnClientClick="BlissKom.hideControl('Content_pnlConfirmBox'); return false;" UseSubmitBehavior="False"
+                    CssClass="cancelbutton" />
+                <asp:Button ID="btnOKConfirm" runat="server" Text="OK" CausesValidation="False"  
+                    OnClientClick="BlissKom.confirmDeleteMeaning(); return false;" UseSubmitBehavior="False"
+                    CssClass="okbutton" />
+                <asp:Label ID="lblConfirm" runat="server"></asp:Label>
             </asp:Panel>
             <asp:Panel ID="pnlSuccessBox" runat="server" CssClass="boxes">
                 <asp:Image ID="imgSuccess" runat="server"
@@ -85,8 +91,11 @@
                     OnClientClick="BlissKom.removeDisplayNoneIfNotValid();" ValidationGroup="MeaningGroup"/>
                 <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" 
                     ValidationGroup="MeaningGroup" />
+                <%-- returnerar false och orsaker därför inte postback förrän användaren klickat på
+                    "ok"-knappen i pnlConfirmBox --%>
                 <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" 
-                    CausesValidation="False" />
+                    OnClientClick="return BlissKom.deleteMeaningIfConfirmed('Är du säker på att du vill radera betydelsen?');" 
+                    CausesValidation="False"/>
                 <asp:Button ID="btnResetMeaning" runat="server" Text="Återställ" OnClick="btnResetMeaning_Click" 
                     CausesValidation="False" />
                 <asp:Panel ID="pnlHorizontalRule" runat="server"></asp:Panel>

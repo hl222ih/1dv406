@@ -1,9 +1,25 @@
-﻿var BlissKom = BlissKom || {};
+﻿"use strict";
+
+var BlissKom = BlissKom || {};
 
 BlissKom = {
+    deleteMeaningConfirmed: false,
+    deleteMeaningIfConfirmed: function (message) {
+        if (this.deleteMeaningConfirmed === true) {
+            return true;
+        }
+        
+        document.getElementById('Content_lblConfirm').innerText = message; //appendChild(document.createTextNode(message));
+        this.showControl('Content_pnlConfirmBox');
+        return false;
+    },
+    confirmDeleteMeaning: function () {
+        this.deleteMeaningConfirmed = true;
+        this.hideControl('Content_pnlConfirmBox');
+        document.getElementById('Content_btnDeleteMeaning').click();   
+    },
     setDisplayBlock: function (id) {
-        var control = document.getElementById(id);
-        control.style.display = "block";
+        document.getElementById(id).style.display = "block";
     },
     removeDisplayNoneIfNotValid: function () {
         Page_ClientValidate();
@@ -20,6 +36,9 @@ BlissKom = {
     hideControl: function (id) {
         document.getElementById(id).style.display = "none";
     },
+    showControl: function (id) {
+        document.getElementById(id).style.display = "block";
+    },
     dim: function (pos) {
         var pnl = document.getElementById("Content_pnlInnerTablet");
         var dimmer = document.createElement("div");
@@ -34,9 +53,13 @@ BlissKom = {
     undim: function () {
         this.showCenterImage();
         var dimmer = document.getElementById("dimmer");
-        if (dimmer) dimmer.parentElement.removeChild(dimmer);
+        if (dimmer) {
+            dimmer.parentElement.removeChild(dimmer);
+        }
         var unclickable = document.getElementById("unclickable");
-        if (unclickable) unclickable.parentElement.removeChild(unclickable);
+        if (unclickable) {
+            unclickable.parentElement.removeChild(unclickable);
+        }
         var itemFull = document.getElementsByClassName("itemFull")[0];
         itemFull.className = itemFull.className.replace("itemFull", "item");
     },
