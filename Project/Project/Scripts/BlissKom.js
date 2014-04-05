@@ -1,4 +1,10 @@
-﻿"use strict";
+﻿/** Denna filen innehåller ett antal script främst för att visa/gömma element och därigenom 
+    exempelvis göra navigeringen inom ramen för en enskild sida mer responsiv.
+    Hade detta inte varit ett asp.net- (och databas-)projekt hade jag lagt mer funktionalitet här eftersom
+    det hade inneburit en mer responsiv användarupplevelse.
+    */
+
+"use strict";
 
 var BlissKom = BlissKom || {};
 

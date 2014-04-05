@@ -1,4 +1,5 @@
-﻿html {
+﻿/* Genererad CSS */
+html {
     height: 100%;
     background-color: #e2e2e2;
     margin: 0;
@@ -70,18 +71,23 @@ h5, h6 {
         padding: 0;
         text-decoration: none;
     }
+/* Slut på genererad CSS */
 
-/* Egen CSS */
-
-ul {
+/* Egen CSS: resten */
+ul, li {
     list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
 }
+
 footer {
     position: absolute;
     height: 5%;
     top: 95%;
 }
 
+/* huvudsidan */
 #Content_pnlForm {
     top: 0 !important;
     position: absolute !important;
@@ -92,12 +98,7 @@ footer {
     z-index: -10 !important;
 }
 
-#Content_imbHome2 {
-    z-index: -10 !important;
-    top: 85%;
-    left: 90%;
-}
-
+/* START: För inställningsläget */
 #Content_imbSettings {
     top: 45%;
     left: 45%;
@@ -243,44 +244,6 @@ footer {
     height: 27%;
 }
 
-header {
-    display: inline-block;
-}
-
-#imgLogo {
-    display: inline-block;
-    height: 200px;
-    width: 300px;
-    overflow: visible;
-    position: absolute;
-    border-left: 10px double purple;
-    top: 0;
-    left: 0;
-}
-
-#Content_pnlTablet {
-    position: relative;
-    display: inline-block;
-    width: 900px;
-    height: 600px;
-    background-image: url(Images/tablet-PD.svg);
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    margin-left: 320px;
-    margin-top: 10px;
-    margin-bottom: 2px;
-    padding-bottom: 8px;
-}
-
-#Content_pnlInnerTablet {
-    position: relative;
-    height: 70.5%;
-    width: 71.8%;
-    margin: 8.4% 14.1%;
-    overflow: hidden;
-}
-
 #Content_ddlPageWordType {
     position: absolute;
     left: 41%;
@@ -324,26 +287,71 @@ header {
         background-color: rgba(151, 228, 222, 0.5);
     }
 
+/* SLUT: För inställningsläget */
+
+/* START: Headern (logo) */
+header {
+    display: inline-block;
+}
+
+
+#imgLogo {
+    display: inline-block;
+    height: 200px;
+    width: 300px;
+    overflow: visible;
+    position: absolute;
+    border-left: 10px double purple;
+    top: 0;
+    left: 0;
+}
+/* SLUT: Headern (logo) */
+
+/* "plattan" */
+#Content_pnlTablet {
+    position: relative;
+    display: inline-block;
+    width: 900px;
+    height: 600px;
+    background-image: url(Images/tablet-PD.svg);
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin-left: 320px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    padding-bottom: 8px;
+}
+
+/* "plattans skärm" */
+#Content_pnlInnerTablet {
+    position: relative;
+    height: 70.5%;
+    width: 71.8%;
+    margin: 8.4% 14.1%;
+    overflow: hidden;
+}
+
+
+/* för att ge blissymbolerna lite mer liv och göra dem "klickbara" i utgångsläget*/
 .item, .itemFull, #Content_ddlPageWordType, #Content_ddlCategory, #Content_ddlPosition, #Content_ddlCategoryLink {
     position: absolute;
     color: #000;
     border-radius: 0.3em;
-    /*background-color: #CCC;*/
-    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.1), rgba(0,0,0,0.3)); /* Safari och iOS */
+    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
     background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
     text-align: center;
     text-decoration: none;
-    /*    background-color:#d3efff;*/
 }
 
     .item:hover, .item:focus {
-        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.2)); /* Safari och iOS */
+        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.2));
         background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.2));
     }
 
 
     .item:active {
-        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.2), rgba(0,0,0,0.1)); /* Safari och iOS */
+        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
         background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
     }
     /*ram runt kategori-bilder*/
@@ -354,7 +362,7 @@ header {
         box-sizing: border-box !important;
     }
 
-/*update panel of itemsunit*/
+/*update panel of itemsunit, exkluderar meddelanderutor som annars hade träffats av urvalet*/
 #Content_pnlInnerTablet > div:not(.boxes) {
     display: inline-block;
     width: 0;
@@ -366,13 +374,14 @@ header {
         position: absolute;
         background-color: none;
     }
-
+        /*för bilder att fylla innehållet av omgivande länk-element*/
         #Content_pnlInnerTablet > div > .item > img, #Content_pnlInnerTablet > div > .itemFull > img {
             width: 100%;
             height: 100%;
             z-index: 3;
         }
 
+        /*för texten som visas ovanpå bilderna*/
         #Content_pnlInnerTablet > div > .item > span, #Content_pnlInnerTablet > div > .itemFull > span {
             display: block;
             width: 100%;
@@ -397,6 +406,7 @@ header {
         z-index: 4;
     }
 
+/*skuggar bakgrunden när en bild eller ruta visas i förgrunden*/
 #dimmer {
     background: black;
     opacity: 0.7;
@@ -408,6 +418,7 @@ header {
     z-index: 2 !important;
 }
 
+/*ser till att den dimmade bakgrunden inte är klickbar*/
 #unclickable {
     position: absolute;
     top: 0;
@@ -417,6 +428,8 @@ header {
     z-index: 3 !important;
 }
 
+/*element som omger bilden, i förstorat läge*/
+/*växlas mellan .item och .itemFull*/
 .itemFull {
     position: absolute !important;
     height: 90% !important;
@@ -426,11 +439,18 @@ header {
     z-index: 3 !important;
 }
 
+/* START: navigeringsknappar */
 .navImbs {
     position: absolute;
     z-index: 5;
     height: 15%;
     width: 10%;
+}
+
+#Content_imbHome2 {
+    z-index: -10 !important;
+    top: 85%;
+    left: 90%;
 }
 
 #Content_imbOK {
@@ -464,7 +484,9 @@ header {
     top: 79%;
 }
 
+/* SLUT: Navigeringsknappar */
 
+/* START: Meddelandeboxar */
 .boxes {
     display: block;
     position: absolute;
@@ -529,11 +551,8 @@ header {
     .cancelbutton {
         left: 10%;
     }
-ul, li {
-    margin: 0;
-    padding: 0;
-    text-align: left;
-}
+/* SLUT: Meddelandeboxar */
+
 
 #Content_pnlErrorPage {
     position: absolute;
@@ -546,6 +565,10 @@ ul, li {
 #Content_pnlErrorPage p {
     font-size: 16px;
 }
+/*Nedan positionering och storleksangivelse för bildrutorna 
+    i enlighet med de olika CSS-mallarna som finns som egenskap
+    på PagePage-objekten som skapas från information från databasen.*/
+
 /*START: page-five-eight template*/
 #Content_imbUnit1.page-five-eight {
     top: 1%;

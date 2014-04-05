@@ -18,10 +18,9 @@
     <form runat="server">
     <asp:ScriptManager runat="server">
         <Scripts>
-           
-            <%--Site Scripts--%>
+            <%--Mitt eget script--%>
             <asp:ScriptReference Path="~/Scripts/BlissKom.js" />
-            <%--Framework Scripts--%>
+            <%--Framework Scripts. --%>
             <asp:ScriptReference Name="MsAjaxBundle" />
             <asp:ScriptReference Name="jquery" />
             <asp:ScriptReference Name="jquery.ui.combined" />
@@ -39,6 +38,7 @@
     <header>
         <asp:Image ID="imgLogo" runat="server" AlternateText="logo" ImageUrl="~/Images/BlissKom.png" />
     </header>
+    <%-- Platshållare för Default.aspx och Error.aspx --%>
     <asp:ContentPlaceHolder runat="server" ID="Content" />
     <footer>
         <p>&copy; <%: DateTime.Now.Year %> - BlissKom (prototyp), Hannes Ljusås, Projektarbete i kursen 1DV406 vid Linnéuniversitetet</p>
