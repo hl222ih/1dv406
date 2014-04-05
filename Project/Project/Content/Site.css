@@ -534,6 +534,18 @@ ul, li {
     padding: 0;
     text-align: left;
 }
+
+#Content_pnlErrorPage {
+    position: absolute;
+    top: 20%;
+    left: 25%;
+}
+#Content_pnlErrorPage h1 {
+    font-size: 26px;
+}
+#Content_pnlErrorPage p {
+    font-size: 16px;
+}
 /*START: page-five-eight template*/
 #Content_imbUnit1.page-five-eight {
     top: 1%;

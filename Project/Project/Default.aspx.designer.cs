@@ -265,13 +265,13 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Label lblMeaning;
         
         /// <summary>
-        /// ddlPageWordType control.
+        /// lstMeaning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPageWordType;
+        protected global::System.Web.UI.WebControls.ListBox lstMeaning;
         
         /// <summary>
         /// lblWordType control.
@@ -283,13 +283,13 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Label lblWordType;
         
         /// <summary>
-        /// lstMeaning control.
+        /// ddlPageWordType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstMeaning;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPageWordType;
         
         /// <summary>
         /// lblWord control.
@@ -346,15 +346,6 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Label lblItem;
         
         /// <summary>
-        /// lstItem control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstItem;
-        
-        /// <summary>
         /// btnUpdateMeaning control.
         /// </summary>
         /// <remarks>
@@ -398,6 +389,15 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlHorizontalRule;
+        
+        /// <summary>
+        /// lstItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstItem;
         
         /// <summary>
         /// ddlPosition control.
