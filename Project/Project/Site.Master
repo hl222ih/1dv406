@@ -41,7 +41,7 @@
     </header>
     <asp:ContentPlaceHolder runat="server" ID="Content" />
     <footer>
-        <p>&copy; <%: DateTime.Now.Year %> - BlissKom, Hannes Ljusås, Projektarbete i kursen 1DV406 på LNU</p>
+        <p>&copy; <%: DateTime.Now.Year %> - BlissKom (prototyp), Hannes Ljusås, Projektarbete i kursen 1DV406 vid Linnéuniversitetet</p>
     </footer>
     </form>
 </body>
