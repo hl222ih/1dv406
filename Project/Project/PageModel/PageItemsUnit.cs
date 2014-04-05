@@ -15,9 +15,9 @@ namespace Project.PageModel
 
         public PageItem GetPageParentItem()
         {
-            return PageItems.First(pi =>
-                pi.PageItemType == PageItemType.ParentCategoryItem ||
-                pi.PageItemType == PageItemType.ParentWordItem);
+            return PageItems.FirstOrDefault(pi =>
+            pi.PageItemType == PageItemType.ParentCategoryItem ||
+            pi.PageItemType == PageItemType.ParentWordItem);
         }
 
         public IEnumerable<PageItem> GetPageChildItems()

@@ -38,10 +38,6 @@ namespace Project
 
         private string successMessage;
 
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-        }
-
         protected void Page_Init(object sender, EventArgs e)
         {
             //Om applikationen är i inställningsläge, visa inställningar i förgrunden,
@@ -67,12 +63,14 @@ namespace Project
 
             //I debug-syfte: Inaktivera client side validation genom att
             //sätta värdet på disableClientScript till true.
-            var disableClientScript = false;
+            var disableClientScript = true;
 
             if (disableClientScript)
             {
-                rfvLstMeaning.EnableClientScript = false;
-                rfvTxtWord.EnableClientScript = false;
+                rfvWord.EnableClientScript = false;
+                rfvPosition.EnableClientScript = false;
+                rfvCategory.EnableClientScript = false;
+                rfvFileName.EnableClientScript = false;
             }
 
         }
@@ -96,13 +94,13 @@ namespace Project
             //(tillgänglig som default).
             if (!lstMeaning.Enabled)
             {
-                csm.RegisterStartupScript(this.GetType(), "DisableControl", "disableControl('Content_lstMeaning')", true);
+                csm.RegisterStartupScript(this.GetType(), "DisableControl", "BlissKom.disableControl('Content_lstMeaning')", true);
             }
-            //användarvänlighet, ddlCategoryLink för tydligare otillgänglig på klientsidan (default).
+            //användarvänlighet, ddlCategoryLink tydligare otillgänglig på klientsidan (default).
             //här görs den tillgänglig igen om chkIsCategory är ikryssad.
             if (chkIsCategory.Checked)
             {
-                csm.RegisterStartupScript(this.GetType(), "EnableControl", "enableControl('Content_ddlCategoryLink')", true);
+                csm.RegisterStartupScript(this.GetType(), "EnableControl", "BlissKom.enableControl('Content_ddlCategoryLink')", true);
             }
 
             else
@@ -174,6 +172,12 @@ namespace Project
             {
                 counter++;
                 var pi = piu.GetPageParentItem();
+
+                //om pageitemunit saknar en pageparentitem, hoppa till nästa pageitemunit
+                if (pi == null)
+                {
+                    continue;
+                }
 
                 var lb = new LinkButton()
                 {
@@ -285,14 +289,15 @@ namespace Project
             return null;
         }
 
-        public Dictionary<int, string> GetImageFileNameData()
+        public IEnumerable<KeyValuePair<int, string>> GetImageFileNameData()
         {
-            lstFileName.Items.Clear();
-            if (lstItem.SelectedIndex > -1)
-            {
-                return Service.GetAllFileNames();
-            }
-            return null;
+            //lstFileName.Items.Clear();
+            //if (lstMeaning.SelectedIndex > -1)
+            //{
+            //    return Service.GetAllFileNames();
+            //}
+            //return null;
+            return Service.GetAllFileNames().OrderBy(fn => fn.Value);
         }
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
@@ -314,11 +319,11 @@ namespace Project
 
         protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //uppdatera bara beroende kontroller om lstMeaning-Listboxen orsakar postback.
-            if (GetControlCausingPostBack().Equals(lstMeaning))
+            //uppdatera bara beroende kontroller om lstMeaning-Listboxen orsakade postback
+            //eller om användaren klickade på återställ-knappen
+            if (GetControlCausingPostBack().Equals(lstMeaning) || sender.Equals(btnResetMeaning))
             {
                 var meaning = Service.GetMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-                btnUpdateItem.Text = "Uppdatera";
                 txtWord.Text = meaning.Word;
                 txtWordComment.Text = meaning.Comment;
                 ddlPageWordType.ClearSelection();
@@ -376,19 +381,24 @@ namespace Project
                     try
                     {
                         Service.SaveOrUpdateMeaning(meaning);
-                        successMessage = "Betydelsen har uppdaterats.";
-                        //bekräfta (och hämta om sidan?)
+                        if (meaning.MeaningId == 0)
+                        {
+                            successMessage = String.Format("Den nya betydelsen {0} har sparats.", meaning.Word);
+                        }
+                        else
+                        {
+                            successMessage = String.Format("Betydelsen {0} har uppdaterats.", meaning.Word);
+                        }
                     }
                     catch
                     {
-                        ModelState.AddModelError("", "Uppdateringen misslyckades.");
+                        ModelState.AddModelError("", String.Format("Sparandet eller uppdateringen av {0} misslyckades.", meaning.Word));
                     }
                 }
             }
             else
-            //Visa inte ModelErrors om det finns PageErrors...
             {
-                //behövs egentligen inte, men...
+                //Visa inte ModelErrors om det finns PageErrors...
                 ModelState.Clear();
                 //default för pnlErrorBox är display: none, 
                 //så den måste visas om page innehåller Page-valideringsfel
@@ -406,6 +416,7 @@ namespace Project
             txtWordComment.Text = String.Empty;
             lstItem.Items.Clear();
             btnUpdateMeaning.Text = "Spara";
+            //...
         }
 
         protected void btnDeleteMeaning_Click(object sender, EventArgs e)
@@ -414,6 +425,10 @@ namespace Project
             {
                 Service.DeleteMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
                 successMessage = "Betydelsen har raderats.";
+            }
+            else
+            {
+                ModelState.AddModelError("", "En betydelse att radera måste först markeras.");
             }
         }
 
@@ -433,7 +448,8 @@ namespace Project
 
         protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //index ändras vid varje omladdning av sidan.
+            //effektivare om information bara hämtas när det valda lstItem verkligen ändrats.
             if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
             {
                 imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstItem.SelectedItem.Text);
@@ -449,36 +465,105 @@ namespace Project
                     var posInfo = Service.GetPositionOfItem(Convert.ToInt16(lstItem.SelectedItem.Value));
                     ddlPosition.ClearSelection();
                     ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
+
+                    //endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
+                    if (posInfo > 30)
+                    {
+                        chkIsCategory.Checked = false;
+                    }
                 }
             }
         }
 
         protected void btnUpdateItem_Click(object sender, EventArgs e)
         {
-            //Item item = new Item();
-
-            //if (lstItem.SelectedIndex > 0)
-            //{
-            //    item = Service.GetItem(Convert.ToInt16(lstItem.SelectedItem.Value));
-            //}
-
-            var item = new Item()
+            if (IsValid)
             {
-                MeaningId = 0,
-                PosId = 0,
-                ImageId = 0,
-                CatId = 0,
-                CatRefId = 0
-            };
+                var item = new Item();
 
-            // större än 0 eftersom den första listitem är tom.
-            if (lstItem.SelectedIndex > 0)
-            {
-                item.ItemId = Convert.ToInt16(lstItem.SelectedItem.Value);
+                //läs in värden (id:n) från listboxar och dropdown-listor. 
+                if (lstItem.SelectedIndex > -1)
+                {
+                    item.ItemId = Convert.ToInt16(lstItem.SelectedItem.Value);
+                }
+
+                if (lstMeaning.SelectedIndex > -1)
+                {
+                    item.MeaningId = Convert.ToInt16(lstMeaning.SelectedItem.Value);
+                }
+
+                if (ddlPosition.SelectedIndex > -1)
+                {
+                    item.PosId = Convert.ToByte(ddlPosition.SelectedItem.Value);
+                }
+
+                if (lstFileName.SelectedIndex > -1)
+                {
+                    item.ImageId = Convert.ToInt16(lstFileName.SelectedItem.Value);
+                }
+
+                if (ddlCategory.SelectedIndex > -1)
+                {
+                    item.CatId = Convert.ToInt16(ddlCategory.SelectedItem.Value);
+                }
+
+                if (chkIsCategory.Checked)
+                {
+                    //endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
+                    if (item.PosId > 30)
+                    {
+                        ModelState.AddModelError("", "Endast 'ParentItem':s kan vara kategorilänkar.");
+                    }
+                    else
+                    {
+                        if (ddlCategoryLink.SelectedIndex > -1)
+                        {
+                            item.CatRefId = Convert.ToInt16(ddlCategoryLink.SelectedItem.Value);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "För betydelser som är kategorilänkar måste denna väljas.");
+                        }
+                    }
+                }
+
+                ICollection<ValidationResult> validationResults;
+                if (!item.Validate(out validationResults))
+                {
+                    foreach (var v in validationResults)
+                    {
+                        ModelState.AddModelError("", v.ErrorMessage);
+                    }
+                }
+                
+                if (ModelState.Count == 0)
+                {
+                    try
+                    {
+                        Service.SaveOrUpdateItem(item);
+                        if (item.ItemId == 0)
+                        {
+                            successMessage = "Bilden har lagts till markerad betydelse.";
+                        }
+                        else
+                        {
+                            successMessage = "Bilden har ändrats för markerad betydelse.";
+                        }
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("", "Tilläggande eller ändrandet av bilden misslyckades.");
+                    }
+                }
             }
-//            Service.SaveOrUpdateItem(item);
-
-            //bekräfta och gör postback
+            else
+            {
+                //Visa inte ModelErrors om det finns PageErrors...
+                ModelState.Clear();
+                //default för pnlErrorBox är display: none, 
+                //så den måste visas om page innehåller Page-valideringsfel
+                pnlErrorBox.Style["display"] = "block";
+            }
 
         }
 
@@ -491,7 +576,14 @@ namespace Project
             chkIsCategory.Checked = false;
             lstFileName.ClearSelection();
 
-            btnUpdateItem.Text = "Spara";
+
+            lstMeaning.ClearSelection();
+            lstMeaning.Enabled = false;
+            ddlPageWordType.SelectedIndex = 0;
+            txtWord.Text = String.Empty;
+            txtWordComment.Text = String.Empty;
+            lstItem.Items.Clear();
+            btnUpdateMeaning.Text = "Spara";
 
         }
 
@@ -499,11 +591,13 @@ namespace Project
         {
             if (lstItem.SelectedIndex >= 1)
             {
-                //varna användaren först
                 Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
-                //bekräfta och gör postback
+                successMessage = "Den valda bilden har tagits bort från betydelsen";
             }
-
+            else
+            {
+                ModelState.AddModelError("", "En bildfil för vald betydelse att radera måste först markeras.");
+            }
         }
 
         protected void btnResetItem_Click(object sender, EventArgs e)
@@ -518,16 +612,22 @@ namespace Project
 
         protected void lstFileName_DataBound(object sender, EventArgs e)
         {
-            if (lstItem.SelectedIndex > -1)
+            if (lstMeaning.SelectedIndex > -1)
             {
-                lstFileName.ClearSelection();
-                lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
+                if (lstItem.SelectedIndex > -1)
+                {
+                    lstFileName.ClearSelection();
+                    if (lstFileName.Items.FindByText(lstItem.SelectedItem.Text) != null)
+                    {
+                        lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
+                    }
+                }
             }
         }
 
         public Dictionary<int, string> GetCategoryData()
         {
-            if (lstItem.SelectedIndex > -1)
+            if (lstMeaning.SelectedIndex > -1)
             {
                 return Service.GetAllCategories();
             }
@@ -547,22 +647,12 @@ namespace Project
         {
             if (lstMeaning.SelectedIndex > -1)
             {
-                if (lstItem.SelectedIndex > -1)
+                var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                if (catInfo.Key != 0)
                 {
-                    var catInfo = Service.GetCatInfoOfMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-                    //Value innehåller CatRefId
-                    //if (catInfo.Value != null)
-                    //{
-                    //    chkIsCategory.Checked = true;
-                    //}
-                    if (catInfo.Key != 0)
+                    if (ddlCategory.Items.Count > 0)
                     {
-                        //chkIsCategory.Checked = false;
-                        //Key innehåller CatId
-                        if (ddlCategory.Items.Count > 0)
-                        {
-                            ddlCategory.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
-                        }
+                        ddlCategory.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
                     }
                 }
             }
@@ -586,7 +676,7 @@ namespace Project
 
         public Dictionary<int, string> GetPositionData()
         {
-            if (lstItem.SelectedIndex > -1)
+            if (lstMeaning.SelectedIndex > -1)
             {
                 Dictionary<int, string> positions = Service.GetAllPositions();
                 return positions;

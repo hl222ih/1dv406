@@ -667,7 +667,7 @@ namespace Project.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("appSchema.usp_InsertMeaning", conn);
+                    var cmd = new SqlCommand("appSchema.usp_InsertItem", conn);
                     cmd.Parameters.Add("@MeaningId", SqlDbType.SmallInt, 2);
                     cmd.Parameters["@MeaningId"].Value = item.MeaningId;
                     cmd.Parameters.Add("@ImageId", SqlDbType.SmallInt, 2);

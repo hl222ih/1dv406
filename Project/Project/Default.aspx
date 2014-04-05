@@ -28,8 +28,11 @@
                 <asp:Button ID="btnCancelConfirm" runat="server" Text="Avbryt" CausesValidation="False"  
                     OnClientClick="BlissKom.hideControl('Content_pnlConfirmBox'); return false;" UseSubmitBehavior="False"
                     CssClass="cancelbutton" />
-                <asp:Button ID="btnOKConfirm" runat="server" Text="OK" CausesValidation="False"  
+                <asp:Button ID="btnOKConfirmDeleteMeaning" runat="server" Text="OK" CausesValidation="False"  
                     OnClientClick="BlissKom.confirmDeleteMeaning(); return false;" UseSubmitBehavior="False"
+                    CssClass="okbutton" />
+                <asp:Button ID="btnOKConfirmDeleteItem" runat="server" Text="OK" CausesValidation="False"  
+                    OnClientClick="BlissKom.confirmDeleteItem(); return false;" UseSubmitBehavior="False"
                     CssClass="okbutton" />
                 <asp:Label ID="lblConfirm" runat="server"></asp:Label>
             </asp:Panel>
@@ -70,15 +73,11 @@
                     DataTextField="Word" SelectMethod="GetMeaningData" 
                     AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
                 </asp:ListBox>
-                <asp:RequiredFieldValidator ID="rfvLstMeaning" runat="server" 
-                    ErrorMessage="En betydelse måste väljas."
-                    ControlToValidate="lstMeaning" Display="None" ValidationGroup="MeaningGroup"></asp:RequiredFieldValidator>
                 <asp:Label ID="lblWord" runat="server" Text="Ord"></asp:Label>
-                <asp:TextBox ID="txtWord" runat="server" MaxLength="30"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvTxtWord" runat="server" 
+                <asp:TextBox ID="txtWord" runat="server" MaxLength="30" AutoCompleteType="None"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvWord" runat="server" 
                      ErrorMessage="Fältet för 'Ord' får inte vara tomt."
                      ControlToValidate="txtWord" Display="None" ValidationGroup="MeaningGroup"></asp:RequiredFieldValidator>  
-                              
                 <asp:Label ID="lblWordComment" runat="server" Text="Kommentar"></asp:Label>
                 <asp:TextBox ID="txtWordComment" runat="server" MaxLength="100"></asp:TextBox>
                 <asp:Label ID="lblItem" runat="server" Text="Vald betydelses bildfiler"></asp:Label>                                 
@@ -87,10 +86,9 @@
                     OnSelectedIndexChanged="lstItem_SelectedIndexChanged" SelectMethod="GetImageFileNameDataOfPage" >
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
-                <asp:Button ID="btnUpdateMeaning" runat="server" Text="Uppdatera" OnClick="btnUpdateMeaning_Click" 
+                <asp:Button ID="btnUpdateMeaning" runat="server" Text="Spara" OnClick="btnUpdateMeaning_Click" 
                     OnClientClick="BlissKom.removeDisplayNoneIfNotValid();" ValidationGroup="MeaningGroup"/>
-                <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" 
-                    ValidationGroup="MeaningGroup" />
+                <asp:Button ID="btnAddNewMeaning" runat="server" Text="Skapa ny" OnClick="btnAddNewMeaning_Click" CausesValidation="false" />
                 <%-- returnerar false och orsaker därför inte postback förrän användaren klickat på
                     "ok"-knappen i pnlConfirmBox --%>
                 <asp:Button ID="btnDeleteMeaning" runat="server" Text="Radera" OnClick="btnDeleteMeaning_Click" 
@@ -103,25 +101,37 @@
                 <asp:DropDownList ID="ddlPosition" runat="server"
                     DataValueField="Key" DataTextField="Value" SelectMethod="GetPositionData" OnDataBound="ddlPosition_DataBound">
                 </asp:DropDownList>
+                <asp:RequiredFieldValidator ID="rfvPosition" runat="server" 
+                    ErrorMessage="En position måste anges."
+                    ControlToValidate="ddlPosition" Display="None" ValidationGroup="ItemGroup" />
                 <asp:DropDownList ID="ddlCategory" runat="server"
                     DataValueField="Key" DataTextField="Value" SelectMethod="GetCategoryData" OnDataBound="ddlCategory_DataBound">
                 </asp:DropDownList>
+                <asp:RequiredFieldValidator ID="rfvCategory" runat="server" 
+                    ErrorMessage="En kategori måste anges."
+                    ControlToValidate="ddlCategory" Display="None" ValidationGroup="ItemGroup" />
                 <asp:CheckBox ID="chkIsCategory" runat="server" AutoPostBack="True" />
                 <asp:Label ID="lblIsCategory" runat="server" Text="Är en kategorilänk"></asp:Label>
                 <asp:DropDownList ID="ddlCategoryLink" runat="server" Enabled="False"
                     DataValueField="Key" DataTextField="Value" SelectMethod="IsCategoryGetCategoryData" OnDataBound="ddlCategoryLink_DataBound">
                 </asp:DropDownList>
-                <asp:Button ID="btnUpdateItem" runat="server" Text="Uppdatera" OnClick="btnUpdateItem_Click" ValidationGroup="ItemGroup" />
-                <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" ValidationGroup="ItemGroup" />
-                <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" CausesValidation="False" />
+                <asp:Button ID="btnUpdateItem" runat="server" Text="Spara" OnClick="btnUpdateItem_Click"
+                    ValidationGroup="ItemGroup" OnClientClick="BlissKom.removeDisplayNoneIfNotValid();"/>
+                <asp:Button ID="btnAddNewItem" runat="server" Text="Skapa ny" OnClick="btnAddNewItem_Click" CausesValidation="false"/>
+                <asp:Button ID="btnDeleteItem" runat="server" Text="Radera" OnClick="btnDeleteItem_Click" 
+                    OnClientClick="return BlissKom.deleteItemIfConfirmed('Är du säker på att du vill ta bort bildfilen från betydelsen?');"
+                    CausesValidation="False" />
                 <asp:Button ID="btnResetItem" runat="server" Text="Återställ" OnClick="btnResetItem_Click" CausesValidation="False" />
                 <asp:Image ID="imgImage" runat="server" />
                 <asp:ListBox ID="lstFileName" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True"
                     SelectMethod="GetImageFileNameData" OnDataBound="lstFileName_DataBound" 
                     OnSelectedIndexChanged="lstFileName_SelectedIndexChanged">
-                    <asp:ListItem Value="" Text="" Enabled="false" />
+                <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
+                <asp:RequiredFieldValidator ID="rfvFileName" runat="server" 
+                    ErrorMessage="En bildfil i listan över alla bildfiler måste väljas."
+                    ControlToValidate="ddlPosition" Display="None" ValidationGroup="ItemGroup" />
             </asp:Panel>
         </asp:Panel>
     </asp:Panel>

@@ -523,6 +523,9 @@ header {
     .okbutton {
         left: 70%;
     }
+    #Content_btnOKConfirmDeleteMeaning, #Content_btnOKConfirmDeleteItem {
+        display: none; /* ändras för aktuell ok-knapp när aktuellt*/
+    }
     .cancelbutton {
         left: 10%;
     }

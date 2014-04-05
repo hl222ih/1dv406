@@ -4,19 +4,38 @@ var BlissKom = BlissKom || {};
 
 BlissKom = {
     deleteMeaningConfirmed: false,
+    deleteItemConfirmed: false,
     deleteMeaningIfConfirmed: function (message) {
         if (this.deleteMeaningConfirmed === true) {
             return true;
         }
         
-        document.getElementById('Content_lblConfirm').innerText = message; //appendChild(document.createTextNode(message));
+        document.getElementById('Content_lblConfirm').innerText = message;
         this.showControl('Content_pnlConfirmBox');
+        this.showControl('Content_btnOKConfirmDeleteMeaning');
+        return false;
+    },
+    deleteItemIfConfirmed: function (message) {
+        if (this.deleteItemConfirmed === true) {
+            return true;
+        }
+        
+        document.getElementById('Content_lblConfirm').innerText = message;
+        this.showControl('Content_pnlConfirmBox');
+        this.showControl('Content_btnOKConfirmDeleteItem');
         return false;
     },
     confirmDeleteMeaning: function () {
         this.deleteMeaningConfirmed = true;
+        this.hideControl('Content_btnOKConfirmDeleteMeaning');
         this.hideControl('Content_pnlConfirmBox');
-        document.getElementById('Content_btnDeleteMeaning').click();   
+        document.getElementById('Content_btnDeleteMeaning').click();
+    },
+    confirmDeleteItem: function () {
+        this.deleteItemConfirmed = true;
+        this.hideControl('Content_btnOKConfirmDeleteItem');
+        this.hideControl('Content_pnlConfirmBox');
+        document.getElementById('Content_btnDeleteItem').click();   
     },
     setDisplayBlock: function (id) {
         document.getElementById(id).style.display = "block";

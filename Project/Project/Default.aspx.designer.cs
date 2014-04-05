@@ -103,13 +103,22 @@ namespace Project {
         protected global::System.Web.UI.WebControls.Button btnCancelConfirm;
         
         /// <summary>
-        /// btnOKConfirm control.
+        /// btnOKConfirmDeleteMeaning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOKConfirm;
+        protected global::System.Web.UI.WebControls.Button btnOKConfirmDeleteMeaning;
+        
+        /// <summary>
+        /// btnOKConfirmDeleteItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKConfirmDeleteItem;
         
         /// <summary>
         /// lblConfirm control.
@@ -283,15 +292,6 @@ namespace Project {
         protected global::System.Web.UI.WebControls.ListBox lstMeaning;
         
         /// <summary>
-        /// rfvLstMeaning control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLstMeaning;
-        
-        /// <summary>
         /// lblWord control.
         /// </summary>
         /// <remarks>
@@ -310,13 +310,13 @@ namespace Project {
         protected global::System.Web.UI.WebControls.TextBox txtWord;
         
         /// <summary>
-        /// rfvTxtWord control.
+        /// rfvWord control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTxtWord;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWord;
         
         /// <summary>
         /// lblWordComment control.
@@ -409,6 +409,15 @@ namespace Project {
         protected global::System.Web.UI.WebControls.DropDownList ddlPosition;
         
         /// <summary>
+        /// rfvPosition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPosition;
+        
+        /// <summary>
         /// ddlCategory control.
         /// </summary>
         /// <remarks>
@@ -416,6 +425,15 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCategory;
+        
+        /// <summary>
+        /// rfvCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCategory;
         
         /// <summary>
         /// chkIsCategory control.
@@ -497,5 +515,14 @@ namespace Project {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lstFileName;
+        
+        /// <summary>
+        /// rfvFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFileName;
     }
 }
