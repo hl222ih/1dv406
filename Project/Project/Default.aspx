@@ -29,7 +29,7 @@
                 <asp:ValidationSummary ID="vsErrorsMeaning" runat="server" ValidationGroup="MeaningGroup" />
                 <asp:ValidationSummary ID="vsErrorsItem" runat="server" ValidationGroup="ItemGroup" />
                 <asp:Button ID="btnOKError" runat="server" Text="OK" CausesValidation="False"  
-                    OnClientClick="BlissKom.hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
+                    OnClientClick="BlissKom.undimSimple(true); BlissKom.hideControl('Content_pnlErrorBox'); return false;" UseSubmitBehavior="False"
                     CssClass="okbutton" />
             </asp:Panel>
 
@@ -38,7 +38,7 @@
                 <asp:Image ID="imgWarning" runat="server" 
                     ImageUrl="~/Images/warning.png" CssClass="boximages" />
                 <asp:Button ID="btnCancelConfirm" runat="server" Text="Avbryt" CausesValidation="False"  
-                    OnClientClick="BlissKom.hideControl('Content_pnlConfirmBox'); return false;" UseSubmitBehavior="False"
+                    OnClientClick="BlissKom.undimSimple(true); BlissKom.hideControl('Content_pnlConfirmBox'); return false;" UseSubmitBehavior="False"
                     CssClass="cancelbutton" />
                 <asp:Button ID="btnOKConfirmDeleteMeaning" runat="server" Text="OK" CausesValidation="False"  
                     OnClientClick="BlissKom.confirmDeleteMeaning(); return false;" UseSubmitBehavior="False"
@@ -55,8 +55,8 @@
                     ImageUrl="~/Images/success.png" CssClass="boximages" />
                 <asp:Label ID="lblSuccess" runat="server"></asp:Label>
                 <asp:Button ID="btnOKSuccess" runat="server" Text="OK" CausesValidation="False"  
-                    OnClientClick="BlissKom.hideControl('Content_pnlSuccessBox'); return false;" UseSubmitBehavior="False"
-                    CssClass="okbutton" />
+                    OnClientClick="BlissKom.undimSimple(true); BlissKom.hideControl('Content_pnlSuccessBox'); return true;"
+                    CssClass="okbutton" OnClick="btnOKSuccess_Click" />
             </asp:Panel>
 
             <%-- Navigeringsknappar --%>
@@ -82,6 +82,11 @@
                     DataTextField="Word" SelectMethod="GetMeaningData" 
                     AutoPostBack="True" OnSelectedIndexChanged="lstMeaning_SelectedIndexChanged" >
                 </asp:ListBox>
+                <%-- Om betydelse valts så ändras vald betydelse, annars läggs ny betydelse till.
+                    Det är dock nödvändigt att en betydelse är vald för att lägga till en ny item. 
+                    Därför är ValidationGroup "ItemGroup" --%>
+                <asp:RequiredFieldValidator ID="rfvMeaning" runat="server" ErrorMessage="Betydelse måste anges."
+                     ValidationGroup="ItemGroup" ControlToValidate="lstMeaning"></asp:RequiredFieldValidator>
 
                 <%-- DropDown-lista för ordtyper. AutoPostBack för att SelectedIndexChanged ska köras.
                 Renderar färgerna vid varje PostBack eftersom ListItems inte har någon ViewStateMode att aktivera.

@@ -16,7 +16,11 @@ namespace Project
 {
     public partial class _Default : Page
     {
-        //Egenskap som, om det finns, returnerar innehållet i en Sessionsvariabel innehåller hela Service-objektet, annars skapar det ett nytt Service-objekt som returneras.
+        /// <summary>
+        /// Egenskap som, om det finns, returnerar innehållet i en Sessionsvariabel
+        /// innehåller hela Service-objektet, annars skapar det ett nytt Service-objekt
+        /// som returneras.
+        /// </summary>
         private Service Service
         {
             get
@@ -28,16 +32,30 @@ namespace Project
                 return Session["Service"] as Service;
             }
         }
-
-        //Sessionsvariabel för om applikationen är i inställningsläge (eller i användningsläge)
+        
+        /// <summary>
+        /// Sessionsvariabel för om applikationen är i inställningsläge (eller i användningsläge)
+        /// </summary>
         private bool IsSettingsMode
         {
             get { return (Session["IsSettingsMode"] != null && Session["IsSettingsMode"].ToString() == "True"); }
             set { Session["IsSettingsMode"] = value.ToString(); }
         }
 
+        /// <summary>
+        /// Tillfällig (under sidladdningsfasen) lagring av ett eventuellt "success"-meddelande.
+        /// </summary>
         private string successMessage;
 
+        /// <summary>
+        /// Körs vid varje sidladdning. Justerar CSS så att inställningslagret
+        /// eller användningslagret visas.
+        /// Registrerar onclickhändelser för navigeringsknappar som inte är
+        /// kopplade till specifika "ItemsUnits".
+        /// 
+        /// Här kan man ställa in så att klientvalidering stängs av.
+        /// (sätt disableClientScript till true)
+        /// </summary>
         protected void Page_Init(object sender, EventArgs e)
         {
             //Om applikationen är i inställningsläge, visa inställningar i förgrunden,
@@ -63,7 +81,7 @@ namespace Project
 
             //I debug-syfte: Inaktivera client side validation genom att
             //sätta värdet på disableClientScript till true.
-            var disableClientScript = true;
+            var disableClientScript = false;
 
             if (disableClientScript)
             {
@@ -71,19 +89,29 @@ namespace Project
                 rfvPosition.EnableClientScript = false;
                 rfvCategory.EnableClientScript = false;
                 rfvFileName.EnableClientScript = false;
+                rfvMeaning.EnableClientScript = false;
             }
 
         }
 
+        /// <summary>
+        /// Körs vid varje sidladdning. Rendera bara bilder för användningsläget om applikationen
+        /// inte är i inställningsläget.
+        /// </summary>
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Rendera bara bilder osv. om applikationen inte är i inställningsläge
+            //Optimering. Rendera bara bilder osv. om applikationen inte är i inställningsläge
             if (!IsSettingsMode)
             {
                 RenderImages();
             }            
         }
 
+        /// <summary>
+        /// Körs vid varje sidladdning. 
+        /// Registrerar startupp-script och
+        /// synliggör meddelandeboxar om det finns meddelanden att visa.
+        /// </summary>
         protected void Page_LoadComplete(object sender, EventArgs e)
         {
 
@@ -103,30 +131,30 @@ namespace Project
                 csm.RegisterStartupScript(this.GetType(), "EnableControl", "BlissKom.enableControl('Content_ddlCategoryLink')", true);
             }
 
-            else
+            //visar pnlErrorBox om ModelErrors existerar.
+            if (!ModelState.IsValid)
             {
-                //visar pnlErrorBox om ModelErrors existerar.
-                if (!ModelState.IsValid)
-                {
-                    pnlErrorBox.Style["display"] = "block";
-                }
+                pnlErrorBox.Style["display"] = "block";
             }
 
             if (successMessage != null)
             {
                 lblSuccess.Text = successMessage;
                 pnlSuccessBox.Style["display"] = "block";
+                csm.RegisterStartupScript(this.GetType(), "DimSimple", "BlissKom.dimSimple(true)", true);
             }
         }
 
-        //metod som körs precis innan page cycle avslutas.
+        /// <summary>
+        /// Körs innan varje sida avslutas. Sparar värdet för lstItem så att den kan testa
+        /// om en "äkta" SelectedIndexChanged sker.
+        /// </summary>
         protected override void OnUnload(EventArgs e)
         {
             base.OnUnload(e);
 
             if (lstItem.SelectedIndex > -1)
             {
-                //kanske borde köra på key istället?
                 Session["lstItemValue"] = lstItem.SelectedItem.Text;
             }
         }
@@ -305,7 +333,9 @@ namespace Project
             SetBackgroundColorsToDdlPageWordType();
         }
 
-        //sätter bakgrundsfärg på ddlPageWordType:s listitems i enlighet med respektive ordtyp.
+        /// <summary>
+        /// sätter bakgrundsfärg på ddlPageWordType:s listitems i enlighet med respektive ordtyp.
+        /// </summary>
         private void SetBackgroundColorsToDdlPageWordType()
         {
             if (ddlPageWordType.Items.Count > 0)
@@ -327,24 +357,72 @@ namespace Project
                 txtWord.Text = meaning.Word;
                 txtWordComment.Text = meaning.Comment;
                 ddlPageWordType.ClearSelection();
-                ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
-                var catInfo = Service.GetCatInfoOfMeaning(meaning.MeaningId);
-                if (catInfo.Value != null)
+                btnUpdateMeaning.Text = "Uppdatera";
+
+                if (ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()) != null)
                 {
-                    chkIsCategory.Checked = true;
+                    ddlPageWordType.Items.FindByValue(meaning.WTypeId.ToString()).Selected = true;
                 }
-                else
+
+                var catInfo = Service.GetCatInfoOfMeaning(meaning.MeaningId);
+
+                ddlCategory.ClearSelection();
+                if (ddlCategory.Items.FindByValue(catInfo.Key.ToString()) != null)
                 {
-                    chkIsCategory.Checked = false;
+                    ddlCategory.Items.FindByValue(catInfo.Key.ToString()).Selected = true;
+                }
+
+                chkIsCategory.Checked = (catInfo.Value != null);
+                ddlCategoryLink.ClearSelection();
+                ddlCategoryLink.Items.Clear();
+
+                ddlPosition.ClearSelection();
+                
+            }
+        }
+
+        protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //index ändras vid varje omladdning av sidan.
+            //effektivare om information bara hämtas när det valda lstItem verkligen ändrats.
+            if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
+            {
+                imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstItem.SelectedItem.Text);
+                btnUpdateItem.Text = "Uppdatera";
+
+                if (lstFileName.Items.Count > 1)
+                {
+                    lstFileName.ClearSelection();
+                    lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
+                }
+
+                if (ddlPosition.Items.Count > 0)
+                {
+                    var posInfo = Service.GetPositionOfItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                    ddlPosition.ClearSelection();
+                    ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
+
+                    //endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
+                    if (posInfo > 30)
+                    {
+                        chkIsCategory.Checked = false;
+                    }
                 }
             }
         }
 
-        //Beroende på vilken kontroll som orsakar postback så behöver olika saker ske.
-        //Därför behöver jag veta vilken kontroll som orsakade postback.
+        /// <summary>
+        /// Kontrollerar vilken, om någon, kontroll som orsakade postback och returnerar den.
+        /// </summary>
+        /// <returns>
+        /// kontrollen med det id som ges av __EVENTTARGET
+        /// Om den inte finns, en "tom" kontroll.
+        /// </returns>
         private Control GetControlCausingPostBack()
         {
-            //returnera kontrollen med det id som ges av __EVENTTARGET. Om det inte finns, returnera en "tom" kontroll.
+            //Beroende på vilken kontroll som orsakar postback så behöver olika saker ske.
+            //Därför behöver jag veta vilken kontroll som orsakade postback.
+            //returnera . 
             return FindControl(Request.Params.Get("__EVENTTARGET")) ?? new Control();
         }
 
@@ -409,14 +487,24 @@ namespace Project
 
         protected void btnAddNewMeaning_Click(object sender, EventArgs e)
         {
-            lstMeaning.ClearSelection();
-            lstMeaning.Enabled = false;
-            ddlPageWordType.SelectedIndex = 0;
-            txtWord.Text = String.Empty;
-            txtWordComment.Text = String.Empty;
-            lstItem.Items.Clear();
-            btnUpdateMeaning.Text = "Spara";
-            //...
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                lstMeaning.ClearSelection();
+                ddlPageWordType.SelectedIndex = 0;
+                txtWord.Text = String.Empty;
+                txtWordComment.Text = String.Empty;
+                lstItem.Items.Clear();
+                ddlCategory.Items.Clear();
+                ddlCategoryLink.Items.Clear();
+                chkIsCategory.Checked = false;
+                lstFileName.Items.Clear();
+                ddlPosition.Items.Clear();
+                btnUpdateMeaning.Text = "Spara";
+            }
+            else
+            {
+
+            }
         }
 
         protected void btnDeleteMeaning_Click(object sender, EventArgs e)
@@ -443,35 +531,6 @@ namespace Project
                 txtWord.Text = String.Empty;
                 txtWordComment.Text = String.Empty;
                 ddlPageWordType.SelectedIndex = 0;
-            }
-        }
-
-        protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //index ändras vid varje omladdning av sidan.
-            //effektivare om information bara hämtas när det valda lstItem verkligen ändrats.
-            if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
-            {
-                imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstItem.SelectedItem.Text);
-
-                if (lstFileName.Items.Count > 1)
-                {
-                    lstFileName.ClearSelection();
-                    lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
-                }
-
-                if (ddlPosition.Items.Count > 0)
-                {
-                    var posInfo = Service.GetPositionOfItem(Convert.ToInt16(lstItem.SelectedItem.Value));
-                    ddlPosition.ClearSelection();
-                    ddlPosition.Items.FindByValue(posInfo.ToString()).Selected = true;
-
-                    //endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
-                    if (posInfo > 30)
-                    {
-                        chkIsCategory.Checked = false;
-                    }
-                }
             }
         }
 
@@ -570,33 +629,30 @@ namespace Project
         protected void btnAddNewItem_Click(object sender, EventArgs e)
         {
             lstItem.ClearSelection();
-            lstItem.Enabled = false;
-
             ddlPosition.SelectedIndex = 0;
             chkIsCategory.Checked = false;
             lstFileName.ClearSelection();
-
-
-            lstMeaning.ClearSelection();
-            lstMeaning.Enabled = false;
-            ddlPageWordType.SelectedIndex = 0;
-            txtWord.Text = String.Empty;
-            txtWordComment.Text = String.Empty;
-            lstItem.Items.Clear();
-            btnUpdateMeaning.Text = "Spara";
-
+            imgImage.ImageUrl = "";
+            btnUpdateItem.Text = "Spara";
         }
 
         protected void btnDeleteItem_Click(object sender, EventArgs e)
         {
-            if (lstItem.SelectedIndex >= 1)
+            if (lstMeaning.SelectedIndex > -1)
             {
-                Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
-                successMessage = "Den valda bilden har tagits bort från betydelsen";
+                if (lstItem.SelectedIndex > -1)
+                {
+                    Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                    successMessage = "Den valda bilden har tagits bort från betydelsen";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "En bildfil för vald betydelse måste väljas.");
+                }
             }
             else
             {
-                ModelState.AddModelError("", "En bildfil för vald betydelse att radera måste först markeras.");
+                ModelState.AddModelError("", "Betydelse måste anges.");
             }
         }
 
@@ -622,6 +678,10 @@ namespace Project
                         lstFileName.Items.FindByText(lstItem.SelectedItem.Text).Selected = true;
                     }
                 }
+            }
+            else
+            {
+                lstFileName.Items.Clear();
             }
         }
 
@@ -698,6 +758,12 @@ namespace Project
         {
             IsSettingsMode = true;
             Response.Redirect(Request.Url.AbsoluteUri, false);
+        }
+
+        protected void btnOKSuccess_Click(object sender, EventArgs e)
+        {
+            lstFileName.ClearSelection();
+            imgImage.ImageUrl = "";
         }
     }
 }

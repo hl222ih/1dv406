@@ -418,6 +418,17 @@ header {
     z-index: 2 !important;
 }
 
+#dimmerSettings {
+    background: black;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 11 !important;
+}
+
 /*ser till att den dimmade bakgrunden inte är klickbar*/
 #unclickable {
     position: absolute;
@@ -445,7 +456,11 @@ header {
     z-index: 5;
     height: 15%;
     width: 10%;
+    opacity: 0.8;
 }
+    .navImbs:focus, .navImbs:hover, .navImbs:active {
+        opacity: 1;
+    }
 
 #Content_imbHome2 {
     z-index: -10 !important;
@@ -516,7 +531,7 @@ header {
 
 #Content_pnlSuccessBox {
     display: none;  /*ändras vid success message*/
-    background: #f2e8b9 !important;
+    background: #98ee98 !important;
     border: 2px solid green;
 }
 .boximages {

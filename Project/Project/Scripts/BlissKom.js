@@ -19,6 +19,7 @@ BlissKom = {
         document.getElementById('Content_lblConfirm').innerText = message;
         this.showControl('Content_pnlConfirmBox');
         this.showControl('Content_btnOKConfirmDeleteMeaning');
+        this.dimSimple(true);
         return false;
     },
     deleteItemIfConfirmed: function (message) {
@@ -29,19 +30,22 @@ BlissKom = {
         document.getElementById('Content_lblConfirm').innerText = message;
         this.showControl('Content_pnlConfirmBox');
         this.showControl('Content_btnOKConfirmDeleteItem');
+        this.dimSimple(true);
         return false;
     },
     confirmDeleteMeaning: function () {
         this.deleteMeaningConfirmed = true;
         this.hideControl('Content_btnOKConfirmDeleteMeaning');
         this.hideControl('Content_pnlConfirmBox');
+        this.undimSimple(true);
         document.getElementById('Content_btnDeleteMeaning').click();
     },
     confirmDeleteItem: function () {
         this.deleteItemConfirmed = true;
         this.hideControl('Content_btnOKConfirmDeleteItem');
         this.hideControl('Content_pnlConfirmBox');
-        document.getElementById('Content_btnDeleteItem').click();   
+        this.undimSimple(true);
+        document.getElementById('Content_btnDeleteItem').click();
     },
     setDisplayBlock: function (id) {
         document.getElementById(id).style.display = "block";
@@ -50,6 +54,7 @@ BlissKom = {
         Page_ClientValidate();
         if (!Page_IsValid) {
             this.setDisplayBlock("Content_pnlErrorBox");
+            this.dimSimple(true);
         }
     },
     enableControl: function (id) {
@@ -64,20 +69,26 @@ BlissKom = {
     showControl: function (id) {
         document.getElementById(id).style.display = "block";
     },
-    dim: function (pos) {
+    dimSimple: function (isSettings) {
         var pnl = document.getElementById("Content_pnlInnerTablet");
         var dimmer = document.createElement("div");
-        dimmer.id = "dimmer";
+        if (isSettings === true) {
+            dimmer.id = "dimmerSettings";
+        } else {
+            dimmer.id = "dimmer";
+        }
         var unclickable = document.createElement("div");
         unclickable.id = "unclickable";
         pnl.appendChild(dimmer);
         pnl.appendChild(unclickable);
-        var item = document.getElementById("Content_imbUnit" + pos);
-        item.className = item.className.replace("item", "itemFull");
     },
-    undim: function () {
-        this.showCenterImage();
-        var dimmer = document.getElementById("dimmer");
+    undimSimple: function (isSettings) {
+        var dimmer;
+        if (isSettings === true) {
+            dimmer = document.getElementById("dimmerSettings");
+        } else {
+            dimmer = document.getElementById("dimmer");
+        }
         if (dimmer) {
             dimmer.parentElement.removeChild(dimmer);
         }
@@ -85,6 +96,15 @@ BlissKom = {
         if (unclickable) {
             unclickable.parentElement.removeChild(unclickable);
         }
+    },
+    dim: function (pos) {
+        this.dimSimple();
+        var item = document.getElementById("Content_imbUnit" + pos);
+        item.className = item.className.replace("item", "itemFull");
+    },
+    undim: function () {
+        this.showCenterImage();
+        this.undimSimple();
         var itemFull = document.getElementsByClassName("itemFull")[0];
         itemFull.className = itemFull.className.replace("itemFull", "item");
     },
