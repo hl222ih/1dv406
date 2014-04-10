@@ -134,7 +134,7 @@
                 <%-- Lista med "items", representerad av de tillhörande bildfilernas namn. --%>
                 <asp:ListBox ID="lstItem" runat="server"
                     DataValueField="Key" DataTextField="Value" AutoPostBack="True" 
-                    OnSelectedIndexChanged="lstItem_SelectedIndexChanged" SelectMethod="GetImageFileNameDataOfPage" >
+                    OnSelectedIndexChanged="lstItem_SelectedIndexChanged" SelectMethod="GetImageFileNameDataOfPageUnit" >
                     <asp:ListItem Value="" Text="" Enabled="false" />
                 </asp:ListBox>
 

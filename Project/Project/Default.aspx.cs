@@ -159,11 +159,19 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Hämtar all info som hör till tidigare vald sida (genom klick-eventet för viss kategorilänk)
+        /// Renderar alla bilder (ParentItems) som hör till den aktuella sidan och registrerar klick-event för dessa.
+        /// Körs bara då en ny sida visas. Varje enhet med bilder (PageItemUnit) placeras i en egen UpdatePanel så
+        /// att endast den delen hämtas asynkront vid klick vilket snabbar upp lite och undviker flicker.
+        /// </summary>
         protected void RenderImages()
         {
+            //lägger till händelsehanterar för cancel-knappen. Gömmer den förstorade bildrutan och tar bort
+            //dimningseffekten och återställer bilden till ursprungsläget.
             imbCancel.OnClientClick = "BlissKom.toggleNavButtons(false, false, false, false, false); BlissKom.undim(); return false;";
 
-            //lägg till händelsehanterare (javascript) för om användaren klickar på vänster-
+            //lägger till händelsehanterare (javascript) för om användaren klickar på vänster-
             //respektive högerknappen som visas vid förstorad bild (om det finns fler bilder
             //som hör till samma ItemsUnit.
             imbLeft.OnClientClick = "BlissKom.showLeftImage(); return false;";
@@ -196,6 +204,7 @@ namespace Project
             
             var counter = 0;
 
+            //kopplar text, bild och händelsehanterare till varje PageItemUnit av aktuell sida.
             foreach (var piu in pageItemsUnits)
             {
                 counter++;
@@ -230,6 +239,11 @@ namespace Project
                 img.Attributes.Add("data-type", pi.PageItemType.ToString());
                 img.Attributes.Add("data-pos", pi.Position.ToString());
 
+                //Ser till att navigeringspilar visas åt höger respektive vänster om det finns bilder där.
+                //Inte helt optimal logik i databasen gör att det blir lite krystat här.
+                //Kopplar händelsehanterare till javascript som körs för att dimma bakgrunden, visa rätt bild
+                //beroende på om användaren klickar vänster/höger-navigeringspil och att rätt navigeringsknappar
+                //visas på den förstorade bilden.
                 if (pi.PageItemType == PageItemType.ParentWordItem)
                 {
                     var nextLeft = Service.GetNextLeftPageItem(pi.PageItemType, pi.Position, pi.MeaningId);
@@ -240,12 +254,19 @@ namespace Project
                     var hasInfo = (info != "\n");
                     lb.OnClientClick = String.Format("BlissKom.dim({0}); BlissKom.toggleNavButtons({1}, {2}, {3}, {4}, {5}); return false;", pi.Position, "true", "true", hasNextLeft ? "true" : "false", hasNextRight ? "true" : "false", hasInfo ? "true" : "false");
                 }
+                //om bildlänken länkar till en ny kategori/sida behövs inte ovanstående, 
+                //däremot måste den nya sidan med bilder visas istället genom en full postback.
+                //Anger vilken kategori som ska visas som catId. (borde vara data-catId för att vara html5-godkänd, men vill inte ändra nu)
                 else if (pi.PageItemType == PageItemType.ParentCategoryItem)
                 {
                     lb.Click += new EventHandler(lbParentCategoryItem_Click);
                     lb.Attributes.Add("catId", ((PageParentCategoryItem)pi).LinkToCategoryId.ToString());
                 }
 
+                //UpdatePanels läggs runt alla PageItemUnits, men det blir bara postback
+                //om det är en kategorilänkbild som klickas. då förhindrar det att det blir
+                //en dubbel postback. Om det är en vanlig "ord"-bild så sker navigeringen på
+                //klientsidan.
                 UpdatePanel upnl = new UpdatePanel();
                 upnl.ContentTemplateContainer.Controls.Add(lb);
                 lb.Controls.Add(lbl);
@@ -254,6 +275,7 @@ namespace Project
 
                 var pcis = piu.GetPageChildItems();
 
+                
                 foreach (var pci in pcis)
                 {
                     var imgChild = new Image()
@@ -270,11 +292,9 @@ namespace Project
             }
         }
 
-        protected void lbParentWordItem_Click(object sender, EventArgs e)
-        {
-            var lb = ((LinkButton)sender);
-        }
-
+        /// <summary>
+        /// Körs efter asynkron postback då användaren klickat på en kategorilänkbild.
+        /// </summary>
         protected void lbParentCategoryItem_Click(object sender, EventArgs e)
         {
             var lb = ((LinkButton)sender);
@@ -284,12 +304,19 @@ namespace Project
             Response.Redirect(Request.Url.AbsoluteUri, false);
         }
 
+        /// <summary>
+        /// Körs då användaren klickar på OK-knappen i en förstorad bild. Orsakar Postback som laddar startsidan med bilder.
+        /// </summary>
         protected void imbOK_Click(object sender, ImageClickEventArgs e)
         {
             Service.UpdatePageCategory(1, 1);
             Response.Redirect(Request.Url.AbsoluteUri, false);
         }
 
+        /// <summary>
+        /// Körs då användaren klickar på Home-knappen 
+        /// (som visas när någon annan bild-sida än startsidan visas, eller på inställningssidan).
+        /// </summary>
         protected void imbHome_Click(object sender, ImageClickEventArgs e)
         {
             Service.UpdatePageCategory(1, 1);
@@ -297,17 +324,30 @@ namespace Project
             Response.Redirect(Request.Url.AbsoluteUri, false);
         }
 
+        /// <summary>
+        /// Hämtar ordtyper (ordklasser) och tillhörande färger för populerande av dropdownlista med dessa i inställningsläget.
+        /// </summary>
+        /// <returns>Samlingen med alla tillgängliga PageWordType:s.</returns>
         public IEnumerable<PageWordType> GetPageWordTypeData()
         {
             return Service.PageWordTypes;
         }
 
+        /// <summary>
+        /// Hämtar och sorterar betydelse-data för populerande av lista med betydelser i inställningsläget.
+        /// </summary>
+        /// <returns>Samlingen med alla tillgängliga Meaning:s</returns>
         public IEnumerable<Meaning> GetMeaningData()
         {
             return Service.GetMeanings().OrderBy(m => m.Word);
         }
 
-        public Dictionary<int, string> GetImageFileNameDataOfPage()
+        /// <summary>
+        /// Tömmer lista med "Items" som representeras av dess respektive filnamn.
+        /// Hämtar listan med de Items som hör till vald Meaning och resurnerar till för populerande av "Item"-lista.
+        /// </summary>
+        /// <returns>Samlingen med Items som hör till vald Meaning, om det finns några Items, annars null.</returns>
+        public Dictionary<int, string> GetImageFileNameDataOfPageUnit()
         {
             lstItem.Items.Clear();
             if (lstMeaning.SelectedIndex > -1)
@@ -319,13 +359,11 @@ namespace Project
 
         public IEnumerable<KeyValuePair<int, string>> GetImageFileNameData()
         {
-            //lstFileName.Items.Clear();
-            //if (lstMeaning.SelectedIndex > -1)
-            //{
-            //    return Service.GetAllFileNames();
-            //}
-            //return null;
-            return Service.GetAllFileNames().OrderBy(fn => fn.Value);
+            if (Service.GetAllFileNames() != null)
+            {
+                return Service.GetAllFileNames().OrderBy(fn => fn.Value);
+            }
+            return null;
         }
 
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
