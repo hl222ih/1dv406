@@ -43,6 +43,15 @@ namespace Project
         }
 
         /// <summary>
+        /// Senaste valda värdet hos lstItems-kontrollen. Obs. returnerar null om inget tidigare värde är valt.
+        /// </summary>
+        private string LstItemValue
+        {
+            get { return Session["lstItemsValue"].ToString(); }
+            set { Session["lstItemsValue"] = value; }
+        }
+
+        /// <summary>
         /// Tillfällig (under sidladdningsfasen) lagring av ett eventuellt "success"-meddelande.
         /// </summary>
         private string successMessage;
@@ -81,7 +90,7 @@ namespace Project
 
             //I debug-syfte: Inaktivera client side validation genom att
             //sätta värdet på disableClientScript till true.
-            var disableClientScript = false;
+            var disableClientScript = true;
 
             if (disableClientScript)
             {
@@ -131,7 +140,7 @@ namespace Project
                 csm.RegisterStartupScript(this.GetType(), "EnableControl", "BlissKom.enableControl('Content_ddlCategoryLink')", true);
             }
 
-            //visar pnlErrorBox om ModelErrors existerar.
+            //visar pnlErrorBox om ModelStateErrors existerar.
             if (!ModelState.IsValid)
             {
                 pnlErrorBox.Style["display"] = "block";
@@ -155,7 +164,7 @@ namespace Project
 
             if (lstItem.SelectedIndex > -1)
             {
-                Session["lstItemValue"] = lstItem.SelectedItem.Text;
+                LstItemValue = lstItem.SelectedItem.Text;
             }
         }
 
@@ -316,6 +325,8 @@ namespace Project
         /// <summary>
         /// Körs då användaren klickar på Home-knappen 
         /// (som visas när någon annan bild-sida än startsidan visas, eller på inställningssidan).
+        /// Ser också till att inställningen är att navigationsläget är aktivt, om knappen klickats
+        /// från inställningsläget.
         /// </summary>
         protected void imbHome_Click(object sender, ImageClickEventArgs e)
         {
@@ -357,6 +368,10 @@ namespace Project
             return null;
         }
 
+        /// <summary>
+        /// Hämtar och sorterar alla tillgängliga bild-id:n med tillhörande filnamn.
+        /// </summary>
+        /// <returns>Samling med bild-id:n och tillhörande filnamn. Null om tom.</returns>
         public IEnumerable<KeyValuePair<int, string>> GetImageFileNameData()
         {
             if (Service.GetAllFileNames() != null)
@@ -366,6 +381,9 @@ namespace Project
             return null;
         }
 
+        /// <summary>
+        /// Körs när dropdown-listan för ordtyp bundits. Sätter bakgrundsfärger till de olika ordtyperna i dropdown-listan.
+        /// </summary>
         protected void ddlPageWordType_DataBound(object sender, EventArgs e)
         {
             SetBackgroundColorsToDdlPageWordType();
@@ -385,6 +403,9 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Uppdaterar resterande listboxar och dropdown-boxar baserat på det valda värdet i lstMeaning.
+        /// </summary>
         protected void lstMeaning_SelectedIndexChanged(object sender, EventArgs e)
         {
             //uppdatera bara beroende kontroller om lstMeaning-Listboxen orsakade postback
@@ -419,11 +440,14 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Uppdaterar beroende listboxar och dropdownlistor om en verklig ändring av index skett.
+        /// </summary>
         protected void lstItem_SelectedIndexChanged(object sender, EventArgs e)
         {
             //index ändras vid varje omladdning av sidan.
             //effektivare om information bara hämtas när det valda lstItem verkligen ändrats.
-            if (Session["lstItemValue"] == null || Session["lstItemValue"].ToString() != lstItem.SelectedItem.Text)
+            if (LstItemValue == null || LstItemValue != lstItem.SelectedItem.Text || sender.Equals(btnResetItem))
             {
                 imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstItem.SelectedItem.Text);
                 btnUpdateItem.Text = "Uppdatera";
@@ -458,14 +482,16 @@ namespace Project
         /// </returns>
         private Control GetControlCausingPostBack()
         {
-            //Beroende på vilken kontroll som orsakar postback så behöver olika saker ske.
-            //Därför behöver jag veta vilken kontroll som orsakade postback.
-            //returnera . 
+            //Beroende på vilken kontroll som orsakar postback så kan olika saker behöva ske.
             return FindControl(Request.Params.Get("__EVENTTARGET")) ?? new Control();
         }
 
+        /// <summary>
+        /// Uppdaterar befintlig eller lägger till en ny betydelse.
+        /// </summary>
         protected void btnUpdateMeaning_Click(object sender, EventArgs e)
         {
+            //kontrollerar igen om berörda kontroller är validerade.
             if (IsValid)
             {
                 var meaning = new Meaning()
@@ -523,34 +549,40 @@ namespace Project
 
         }
 
+        /// <summary>
+        /// Nollställer formuläret så att en ny betydelse kan fyllas i och läggas till.
+        /// </summary>
         protected void btnAddNewMeaning_Click(object sender, EventArgs e)
         {
-            if (lstMeaning.SelectedIndex > -1)
-            {
-                lstMeaning.ClearSelection();
-                ddlPageWordType.SelectedIndex = 0;
-                txtWord.Text = String.Empty;
-                txtWordComment.Text = String.Empty;
-                lstItem.Items.Clear();
-                ddlCategory.Items.Clear();
-                ddlCategoryLink.Items.Clear();
-                chkIsCategory.Checked = false;
-                lstFileName.Items.Clear();
-                ddlPosition.Items.Clear();
-                btnUpdateMeaning.Text = "Spara";
-            }
-            else
-            {
-
-            }
+            lstMeaning.ClearSelection();
+            ddlPageWordType.SelectedIndex = 0;
+            txtWord.Text = String.Empty;
+            txtWordComment.Text = String.Empty;
+            lstItem.Items.Clear();
+            ddlCategory.Items.Clear();
+            ddlCategoryLink.Items.Clear();
+            chkIsCategory.Checked = false;
+            lstFileName.Items.Clear();
+            ddlPosition.Items.Clear();
+            btnUpdateMeaning.Text = "Spara";
         }
 
+        /// <summary>
+        /// Raderar en betydelse.
+        /// </summary>
         protected void btnDeleteMeaning_Click(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex >= 0)
             {
-                Service.DeleteMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
-                successMessage = "Betydelsen har raderats.";
+                try
+                {
+                    Service.DeleteMeaning(Convert.ToInt16(lstMeaning.SelectedItem.Value));
+                    successMessage = "Betydelsen har raderats.";
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Raderingen av vald betydelse misslyckades.");
+                }
             }
             else
             {
@@ -558,6 +590,10 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Återställer formuläret till utgångsläget för betydelsen som valts.
+        /// Om ingen betydelse valts, återställs formuläret till utgångsläget som det var innan en betydelse valts.
+        /// </summary>
         protected void btnResetMeaning_Click(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex >= 0)
@@ -572,8 +608,12 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Lägger till nytt "Item" eller uppdaterar befintligt "Item" om sådant är valt i lstItems.
+        /// </summary>
         protected void btnUpdateItem_Click(object sender, EventArgs e)
         {
+            //kontrollerar att klientsidevalideringen lyckas även på servern.
             if (IsValid)
             {
                 var item = new Item();
@@ -604,9 +644,11 @@ namespace Project
                     item.CatId = Convert.ToInt16(ddlCategory.SelectedItem.Value);
                 }
 
+                //om kryssrutan för kategorilänk är ikryssad så kontrolleras att giltiga värden är angivna.
                 if (chkIsCategory.Checked)
                 {
-                    //endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
+                    //Endast ParentItems kan vara kategorilänkar, för närvarande PosId 1-30.
+                    //Det är ingen optimal lösning, men det är så databasen ser ut just nu.
                     if (item.PosId > 30)
                     {
                         ModelState.AddModelError("", "Endast 'ParentItem':s kan vara kategorilänkar.");
@@ -619,11 +661,13 @@ namespace Project
                         }
                         else
                         {
-                            ModelState.AddModelError("", "För betydelser som är kategorilänkar måste denna väljas.");
+                            ModelState.AddModelError("", "För kategorilänkar måste kategorin bilden länkar till väljas.");
                         }
                     }
                 }
 
+                //Triggar kontroll av ModelStateErrors manuellt, eftersom jag inte använder dubbelsidig bindning av kontrollerna.
+                //Med hjälp av extension-metod som jag själv inte skapat.
                 ICollection<ValidationResult> validationResults;
                 if (!item.Validate(out validationResults))
                 {
@@ -664,6 +708,9 @@ namespace Project
 
         }
 
+        /// <summary>
+        /// Nollställer formuläret till så som det såg ut när betydelsen valdes.
+        /// </summary>
         protected void btnAddNewItem_Click(object sender, EventArgs e)
         {
             lstItem.ClearSelection();
@@ -674,14 +721,24 @@ namespace Project
             btnUpdateItem.Text = "Spara";
         }
 
+        /// <summary>
+        /// Raderar ett "Item".
+        /// </summary>
         protected void btnDeleteItem_Click(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex > -1)
             {
                 if (lstItem.SelectedIndex > -1)
                 {
-                    Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
-                    successMessage = "Den valda bilden har tagits bort från betydelsen";
+                    try
+                    {
+                        Service.DeleteItem(Convert.ToInt16(lstItem.SelectedItem.Value));
+                        successMessage = "Den valda bilden har tagits bort från betydelsen";
+                    }
+                    catch
+                    {
+                        ModelState.AddModelError("", "Misslyckades med att ta bort den valda bilden från betydelsen.");
+                    }
                 }
                 else
                 {
@@ -694,16 +751,34 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Återställer formuläret till utgångsläget som gäller för valt "Item".
+        /// Om inget "Item" är valt, återställs utgångsläget till vad som gäller då inget "Item" är valt.
+        /// </summary>
         protected void btnResetItem_Click(object sender, EventArgs e)
         {
-
+            if (lstItem.SelectedIndex >= 0)
+            {
+                lstItem_SelectedIndexChanged(sender, e);
+            }
+            else
+            {
+                btnAddNewItem_Click(sender, e);
+            }
         }
 
+        /// <summary>
+        /// Ändra förhandsgranskning av bilden som valts i fillistan.
+        /// </summary>
         protected void lstFileName_SelectedIndexChanged(object sender, EventArgs e)
         {
             imgImage.ImageUrl = String.Format("~/Images/ComPics/{0}", lstFileName.SelectedItem.Text);
         }
 
+        /// <summary>
+        /// Körs när FileName-listan databundits. Ser till att det filnamn som valts i "Item"-listan
+        /// även markeras i FileName-listan. Om inget "betydelse" valts, ska FileName-listan vara tom.
+        /// </summary>
         protected void lstFileName_DataBound(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex > -1)
@@ -722,7 +797,11 @@ namespace Project
                 lstFileName.Items.Clear();
             }
         }
-
+        
+        /// <summary>
+        /// För populering av dropdown-listan för kategorier, med CatId som bakomliggande värde.
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int, string> GetCategoryData()
         {
             if (lstMeaning.SelectedIndex > -1)
@@ -732,6 +811,10 @@ namespace Project
             return null;
         }
 
+        /// <summary>
+        /// För (eventuell) populering av dropdown-listan för kategori-länkar.
+        /// </summary>
+        /// <returns>Om kryssrutan för kategorilänk är ikryssad, listan med kategorier, annars null.</returns>
         public Dictionary<int, string> IsCategoryGetCategoryData()
         {
             if (chkIsCategory.Checked)
@@ -741,6 +824,9 @@ namespace Project
             return null;
         }
 
+        /// <summary>
+        /// Ställer in utgångsvärden beroende på vald betydelse. Endast om betydelse är vald.
+        /// </summary>
         protected void ddlCategory_DataBound(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex > -1)
@@ -756,6 +842,9 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Ställer in utgångsvärden beroende på vald betydelse. Endast om betydelse är vald.
+        /// </summary>
         protected void ddlCategoryLink_DataBound(object sender, EventArgs e)
         {
             if (lstMeaning.SelectedIndex > -1)
@@ -772,6 +861,10 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// Populerar listan för tillgängliga positioner, med PosId som bakomliggande värde.
+        /// </summary>
+        /// <returns>Om betydelse valts, Dictionary med tillgängliga positioner, annars null.</returns>
         public Dictionary<int, string> GetPositionData()
         {
             if (lstMeaning.SelectedIndex > -1)
@@ -782,6 +875,9 @@ namespace Project
             return null;
         }
 
+        /// <summary>
+        /// Markerar positionen i dropdown-listan för positioner baserat på valt "Item".
+        /// </summary>
         protected void ddlPosition_DataBound(object sender, EventArgs e)
         {
             if (lstItem.SelectedIndex > -1)
@@ -792,12 +888,20 @@ namespace Project
             }
         }
 
+        /// <summary>
+        /// I navigationsläget kan man klicka på en ikon för inställningar. 
+        /// Denna metod ändrar inställningen i programmet så att inställningläget visas istället.
+        /// Triggar omladdning av sidan.
+        /// </summary>
         protected void imbSettings_Click(object sender, ImageClickEventArgs e)
         {
             IsSettingsMode = true;
             Response.Redirect(Request.Url.AbsoluteUri, false);
         }
 
+        /// <summary>
+        /// Körs om användaren klickar i rutan för lyckad operation.
+        /// </summary>
         protected void btnOKSuccess_Click(object sender, EventArgs e)
         {
             lstFileName.ClearSelection();
