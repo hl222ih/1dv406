@@ -47,7 +47,7 @@ namespace Project
         /// </summary>
         private string LstItemValue
         {
-            get { return Session["lstItemsValue"].ToString(); }
+            get { return (Session["lstItemsValue"] != null ? Session["lstItemsValue"].ToString() : null); }
             set { Session["lstItemsValue"] = value; }
         }
 
@@ -151,6 +151,16 @@ namespace Project
                 lblSuccess.Text = successMessage;
                 pnlSuccessBox.Style["display"] = "block";
                 csm.RegisterStartupScript(this.GetType(), "DimSimple", "BlissKom.dimSimple(true)", true);
+            }
+
+            if (lstMeaning.SelectedIndex > -1)
+            {
+                btnUpdateMeaning.Text = "Uppdatera";
+            }
+
+            if (lstItem.SelectedIndex > -1)
+            {
+                btnUpdateItem.Text = "Uppdatera";
             }
         }
 
