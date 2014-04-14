@@ -13,18 +13,19 @@ namespace Project.PageModel
     //Kärnan i ett PageItem-objekt är dess Meaning.
     abstract public class PageItem
     {
+        //egenskaperna häri är ganska självförklarande.
+
         private string backGroundRGBColor;
 
         public int PageItemId { get; set; }
         public int MeaningId { get; set; }
         public string MeaningWord { get; set; }
-        public string MeaningComment { get; set; }
+        public string MeaningComment { get; set; } //saknar fullständig implementation. Finns med i CRUD, men inte i presentationen, mer än att en ikon visas att det finns en kommentar som hör till PageItem.
         public string ImageFileName { get; set; }
         public int Position { get; set; }
-        public string ImageComment { get; set; }
+        public string ImageComment { get; set; } //saknar fullständig implementation.
         abstract public PageItemType PageItemType { get; set; }
-        public PageImageType PageImageType { get; set; }
-        public string CssTemplateName { get; set; }
+        public PageImageType PageImageType { get; set; } //saknar fullständig implementation
         public Color BackGroundColor
         {
             get

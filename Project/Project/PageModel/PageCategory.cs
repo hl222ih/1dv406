@@ -13,6 +13,9 @@ namespace Project.PageModel
         public string CatName { get; set; }
         public int CurrentPageNumber { get; set; }
 
+        /// <summary>
+        /// Returnerar aktuell sida innehållande PageItemsUnit innehållande PageItems.
+        /// </summary>
         public PagePage CurrentPage { get { return currentPage ?? (currentPage = new PagePage()); } }
 
         public string GetCurrentCssTemplateName()
@@ -33,8 +36,6 @@ namespace Project.PageModel
             else if (CurrentPageNumber == 1)
             {
                 return CurrentPage.PageItemsUnits.Where(piu => piu.GetPageParentItem() != null && piu.GetPageParentItem().Position <= 12);
-                
-                //? (piu.GetPageParentItem().Position <= 12) true : false) : null). piu.GetPageParentItem() : false); PageItems.FirstOrDefault(ToList().GetRange(0, 11).AsEnumerable();
             }
             else if (CurrentPageNumber == 2)
             {
@@ -46,6 +47,7 @@ namespace Project.PageModel
 
         public PageCategory()
         {
+            //Alltid sidnummer 1 som default.
             CurrentPageNumber = 1;
         }
 

@@ -6,6 +6,6 @@
         <h1>Serverfel</h1>
         <p>Ett oidentifierat undantagsfel har inträffat.</p>
         <p>Försök igen om en stund.</p>
-        <p>Om felet kvarstår, vänligen kontakta oss gärna och berätta när och hur felet uppstod.</p>
+        <p>Om felet kvarstår, vänligen kontakta mig gärna och berätta när och hur felet uppstod.</p>
     </asp:Panel>
 </asp:Content>

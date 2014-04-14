@@ -16,6 +16,7 @@ namespace Project.PageModel
         public string CssTemplateName { get; set; }
         public int PageNumber { get; set; }
 
+        //default-konstruktor...
         public PagePage()
         {
         }

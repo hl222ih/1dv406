@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace Project.PageModel
 {
+    //Motsvarar egentligen WordType i databasen, men jag vill ha med färgen för ColorId i presentationen,
+    //så denna klass innehåller en egenskap för det också.
     public class PageWordType
     {
         private string colorRGBCode;
