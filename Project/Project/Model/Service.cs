@@ -201,7 +201,6 @@ namespace Project.Model
             return pageCategory;
         }
 
-
         /// <summary>
         /// Uppdaterar aktuell PageCategory med den PageCategory som har inskickat kategori-id och sidnummer.
         /// </summary>
@@ -212,26 +211,52 @@ namespace Project.Model
             currentPageCategory = GetPageCategory(categoryId, pageNumber);
         }
 
-        public IEnumerable<PageItem> GetPageItems(int categoryId, int pageNumbers)
+        /// <summary>
+        /// Hämtar och returnerar en samling med PageItems som tillhör inskickat kategori-id och sidnummer.
+        /// </summary>
+        /// <param name="categoryId">kategori-id:t</param>
+        /// <param name="pageNumber">sidnumret</param>
+        /// <returns>samlingen med PageItem:s</returns>
+        public IEnumerable<PageItem> GetPageItems(int categoryId, int pageNumber)
         {
-            return BlissKomDAL.SelectPageItemsOfPage(categoryId, pageNumbers);
+            return BlissKomDAL.SelectPageItemsOfPage(categoryId, pageNumber);
         }
 
+        /// <summary>
+        /// Hämtar och returnerar en samling med alla Meaning-objekt.
+        /// </summary>
+        /// <returns>Samlilngen med Meaning:s</returns>
         public IEnumerable<Meaning> GetMeanings()
         {
             return BlissKomDAL.SelectAllMeanings();
         }
 
+        /// <summary>
+        /// Hämtar och returnerar det Meaning-objekt som har inskickat meaningId.
+        /// </summary>
+        /// <param name="meaningId">MeaningId</param>
+        /// <returns>Meaning-objektet.</returns>
         public Meaning GetMeaning(Int16 meaningId)
         {
             return BlissKomDAL.SelectMeaning(meaningId);
         }
 
+        /// <summary>
+        /// Hämtar och returnerar en associativ vektor med de ItemId:n och FileName:s som
+        /// tillhör betydelse-id:t MeaningId.
+        /// </summary>
+        /// <param name="meaningId">MeaningId.</param>
+        /// <returns>Associativ vektor med ItemId (key) och FileName (value)</returns>
         public Dictionary<int, string> GetPageItemFileNames(Int16 meaningId)
         {
             return BlissKomDAL.SelectPageItemFileNames(meaningId);
         }
 
+        /// <summary>
+        /// Sparar nytt eller uppdaterar befintligt Meaning-objekt.
+        /// Nytt om Meaning-objektets egenskap MeaningId är 0, annars uppdatera.
+        /// </summary>
+        /// <param name="meaning">Meaning-objektet</param>
         public void SaveOrUpdateMeaning(Meaning meaning)
         {
             if (meaning.MeaningId > 0)
@@ -244,36 +269,68 @@ namespace Project.Model
             }
         }
 
+        /// <summary>
+        /// Raderar Meaning med inskickat MeaningId.
+        /// </summary>
+        /// <param name="meaningId">MeaningId</param>
         public void DeleteMeaning(Int16 meaningId)
         {
             BlissKomDAL.DeleteMeaning(meaningId);
         }
 
+        /// <summary>
+        /// Hämtar och returnerar en associativ vektor med alla Image-objekts ImageId respektive FileName
+        /// </summary>
+        /// <returns>Associativ vektor med ImageId (key) och FileName (value)</returns>
         public Dictionary<int, string> GetAllFileNames()
         {
             return BlissKomDAL.SelectAllFileNames();
         }
 
+        /// <summary>
+        /// Hämtar och returnerar en associativ vecktor med alla kategoriers CatId respektive CatName.
+        /// </summary>
+        /// <returns>Associativ vektor med CatId (key) och CatName (value)</returns>
         public Dictionary<int, string> GetAllCategories()
         {
             return BlissKomDAL.SelectAllCategories();
         }
 
+        /// <summary>
+        /// Hämta och returnera kategori-info som hör till inskickat MeaningId. 
+        /// CatId (key - den kategori Item:s tillhör) och
+        /// CatRefId (value - den kategori ParentItem länkar till), om någon, annars null.
+        /// </summary>
+        /// <param name="meaningId">MeaningId</param>
+        /// <returns>CatId (key) och eventuellt CatRefId (value), annars null.</returns>
         public KeyValuePair<int, int?> GetCatInfoOfMeaning(Int16 meaningId)
         {
             return BlissKomDAL.SelectCatInfoOfMeaning(meaningId);
         }
 
+        /// <summary>
+        /// Hämta och returnera all positions-info som består av PosId och en strängrepresentation av respektive PosId.
+        /// </summary>
+        /// <returns>PosId (key), Strängrepresentation av PosId (value)</returns>
         public Dictionary<int, string> GetAllPositions()
         {
             return BlissKomDAL.SelectAllPositions();
         }
 
+        /// <summary>
+        /// Hämtar och returnerar PosId för Item med inskickat ItemId.
+        /// </summary>
+        /// <param name="itemId">ItemId</param>
+        /// <returns>PosId</returns>
         public int GetPositionOfItem(Int16 itemId)
         {
             return BlissKomDAL.SelectPositionIdOfItem(itemId);
         }
 
+        /// <summary>
+        /// Spara nytt eller uppdatera befintligt Item.
+        /// </summary>
+        /// <param name="item">Item-objektet</param>
         public void SaveOrUpdateItem(Item item)
         {
             if (item.ItemId > 0)
@@ -286,6 +343,10 @@ namespace Project.Model
             }
         }
 
+        /// <summary>
+        /// Radera befintligt Item.
+        /// </summary>
+        /// <param name="itemId">ItemId för det Item-objekt som ska raderas.</param>
         public void DeleteItem(Int16 itemId)
         {
             BlissKomDAL.DeleteItem(itemId);

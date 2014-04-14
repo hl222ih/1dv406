@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Model
 {
+    //Motsvarar WordType i databas-tabellen. Ingen CRUD på denna, så felmeddelanden inte nödvändiga.
     public class WordType
     {
         [Key]

@@ -12,6 +12,7 @@ namespace Project.Model
         //motsvarande PK i andra tabeller. Den informationen saknas här,
         //men ett tal 0 eller mindre är iallafall garanterat felaktigt så jag
         //har lagt till dataannotations för det.
+        //I övrigt motsvarar denna Item-tabellen i databasen.
         
         [Key]
         public Int16 ItemId { get; set; }
