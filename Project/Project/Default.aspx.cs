@@ -90,7 +90,7 @@ namespace Project
 
             //I debug-syfte: Inaktivera client side validation genom att
             //sätta värdet på disableClientScript till true.
-            var disableClientScript = true;
+            var disableClientScript = false;
 
             if (disableClientScript)
             {
